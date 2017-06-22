@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#66BB6A</color>
+    <color name="colorPrimaryDark">#43A047</color>
+    <color name="colorAccent">#1abc9c</color>
+
+    <color name="white">#fff</color>
+    <color name="background">#3C3F41</color>
+
+    <color name="blue">#2196F3</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="teal">#009688</color>
+    <color name="green">#4CAF50</color>
+    <color name="brown">#795548</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="blueGrey">#607D8B</color>
+    <color name="deepOrange">#FF5722</color>
+    <color name="turquoise">#1abc9c</color>
+    <color name="transperent">#00000000</color>
+
+    <color name="trans_gary">#99000000</color>
+    <color name="trans_white">#00000000</color>
+    <color name="fruit_salad">#43A047</color>
+    <color name="fern">#66BB6A</color>
+    <color name="jaguar">#2A2A2A</color>
+    <color name="charade">#3C3F41</color>
+    <color name="mine_shaft">#313334</color>
 </resources>

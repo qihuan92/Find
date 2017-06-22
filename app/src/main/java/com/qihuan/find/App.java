@@ -1,9 +1,12 @@
 package com.qihuan.find;
 
 import android.app.Application;
+import android.support.v4.content.ContextCompat;
 
 import com.blankj.utilcode.util.Utils;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * App
@@ -18,7 +21,15 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Utils.init(getApplicationContext());
+        initToasty();
         sharedPrefsCookiePersistor = new SharedPrefsCookiePersistor(getApplicationContext());
+    }
+
+    private void initToasty() {
+        Toasty.Config
+                .getInstance()
+                .setInfoColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary))
+                .apply();
     }
 
     public static SharedPrefsCookiePersistor getSharedPrefsCookiePersistor() {

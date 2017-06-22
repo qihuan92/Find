@@ -39,9 +39,15 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile('com.jakewharton.rxbinding2:rxbinding-design:2.0.0') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0') {
+        exclude group: 'com.android.support'
+    }
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
-    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -56,13 +62,9 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
-    compile('com.jakewharton.rxbinding2:rxbinding-design:2.0.0') {
-        exclude group: 'com.android.support'
-    }
-    compile('com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0') {
-        exclude group: 'com.android.support'
-    }
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.20'
     compile 'com.blankj:utilcode:1.7.1'
+    compile 'com.github.GrenderG:Toasty:1.2.5'
+    testCompile 'junit:junit:4.12'
 }

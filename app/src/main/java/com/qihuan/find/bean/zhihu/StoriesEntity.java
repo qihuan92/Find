@@ -59,4 +59,15 @@ public class StoriesEntity implements Serializable {
     public void setImages(List<String> images) {
         this.images = images;
     }
+
+    @Override
+    public String toString() {
+        return "StoriesEntity{" +
+                "type=" + type +
+                ", id=" + id +
+                ", ga_prefix='" + ga_prefix + '\'' +
+                ", title='" + title + '\'' +
+                ", images=" + images +
+                '}';
+    }
 }

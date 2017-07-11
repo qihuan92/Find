@@ -56,4 +56,15 @@ public class TopStoriesEntity implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "TopStoriesEntity{" +
+                "title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", ga_prefix='" + ga_prefix + '\'' +
+                ", type=" + type +
+                ", id=" + id +
+                '}';
+    }
 }

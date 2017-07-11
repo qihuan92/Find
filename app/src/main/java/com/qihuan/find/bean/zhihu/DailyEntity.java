@@ -3,7 +3,7 @@ package com.qihuan.find.bean.zhihu;
 import java.io.Serializable;
 import java.util.List;
 
-public class LatestDailyEntity implements Serializable {
+public class DailyEntity implements Serializable {
 
     /**
      * date : 20140523
@@ -41,7 +41,7 @@ public class LatestDailyEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "LatestDailyEntity{" +
+        return "DailyEntity{" +
                 "date='" + date + '\'' +
                 ", stories=" + stories +
                 ", top_stories=" + top_stories +

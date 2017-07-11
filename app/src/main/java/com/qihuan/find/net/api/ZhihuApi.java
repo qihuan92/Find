@@ -1,14 +1,13 @@
 package com.qihuan.find.net.api;
 
-import com.qihuan.find.bean.zhihu.BeforeDailyEntity;
-import com.qihuan.find.bean.zhihu.LatestDailyEntity;
-import com.qihuan.find.bean.zhihu.LongCommentsEntity;
-import com.qihuan.find.bean.zhihu.ShortCommentsEntity;
-import com.qihuan.find.bean.zhihu.SplashImgEntity;
+import com.qihuan.find.bean.zhihu.CommentsEntity;
+import com.qihuan.find.bean.zhihu.DailyEntity;
 import com.qihuan.find.bean.zhihu.StoryContentEntity;
 import com.qihuan.find.bean.zhihu.StoryExtraEntity;
 import com.qihuan.find.bean.zhihu.ThemeContentListEntity;
 import com.qihuan.find.bean.zhihu.ThemesEntity;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -20,21 +19,6 @@ import retrofit2.http.Path;
  */
 
 public interface ZhihuApi {
-    /**
-     * 获取启动界面图像
-     *
-     * @return
-     */
-    @GET("start-image/1080*1776")
-    Observable<SplashImgEntity> getSplashImg();
-
-    /**
-     * 获取android最新版本
-     *
-     * @return
-     */
-    @GET("version/android/{versionCode}")
-    Observable<SplashImgEntity> getLatestVersion(@Path("versionCode") String versionCode);
 
     /**
      * 获取最新文章列表
@@ -42,7 +26,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("news/latest")
-    Observable<LatestDailyEntity> getLatestDaily();
+    Observable<DailyEntity> getLatestDaily();
 
     /**
      * 获取以前的文章列表
@@ -50,7 +34,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("news/before/{date}")
-    Observable<BeforeDailyEntity> getBeforeDaily(@Path("date") String date);
+    Observable<DailyEntity> getBeforeDaily(@Path("date") String date);
 
     /**
      * 获取相应文章内容
@@ -76,7 +60,7 @@ public interface ZhihuApi {
      * @param storyId
      */
     @GET("story/{storyId}/long-comments")
-    Observable<LongCommentsEntity> getLongComments(@Path("storyId") int storyId);
+    Observable<List<CommentsEntity>> getLongComments(@Path("storyId") int storyId);
 
     /**
      * 获取文章短评论
@@ -84,7 +68,7 @@ public interface ZhihuApi {
      * @param storyId
      */
     @GET("story/{storyId}/short-comments")
-    Observable<ShortCommentsEntity> getShortComments(@Path("storyId") int storyId);
+    Observable<List<CommentsEntity>> getShortComments(@Path("storyId") int storyId);
 
     /**
      * 获取主题日报列表theme

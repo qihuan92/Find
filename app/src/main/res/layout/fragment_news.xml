@@ -5,6 +5,7 @@
     tools:context="com.qihuan.find.view.NewsFragment">
 
     <TextView
+        android:id="@+id/tv_test"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/title_news" />

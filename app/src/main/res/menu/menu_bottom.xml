@@ -9,7 +9,11 @@
         android:icon="@drawable/icon_movie"
         android:title="@string/title_movie" />
     <item
-        android:id="@+id/bb_menu_hot"
-        android:icon="@drawable/icon_bottom_hot"
-        android:title="@string/title_hot" />
+        android:id="@+id/bb_menu_discover"
+        android:icon="@drawable/icon_discover"
+        android:title="@string/title_discover" />
+    <item
+        android:id="@+id/bb_menu_me"
+        android:icon="@drawable/icon_me"
+        android:title="@string/title_me" />
 </menu>

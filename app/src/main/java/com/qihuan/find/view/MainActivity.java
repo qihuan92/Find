@@ -19,7 +19,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private Fragment content = NewsFragment.newInstance();
     private NewsFragment newsFragment = NewsFragment.newInstance();
     private MovieFragment movieFragment = MovieFragment.newInstance();
-    private HotFragment hotFragment = HotFragment.newInstance();
+    private DiscoverFragment discoverFragment = DiscoverFragment.newInstance();
+    private MeFragment meFragment = MeFragment.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.bb_menu_movie:
                 switchContent(movieFragment);
                 break;
-            case R.id.bb_menu_hot:
-                switchContent(hotFragment);
+            case R.id.bb_menu_discover:
+                switchContent(discoverFragment);
+                break;
+            case R.id.bb_menu_me:
+                switchContent(meFragment);
                 break;
         }
         toolbar.setTitle(item.getTitle());

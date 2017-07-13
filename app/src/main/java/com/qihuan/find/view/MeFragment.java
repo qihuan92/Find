@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import com.qihuan.find.R;
 
 /**
- * HotFragment
+ * MeFragment
  */
-public class HotFragment extends Fragment {
+public class MeFragment extends Fragment {
 
-    public static HotFragment newInstance() {
-        return new HotFragment();
+    public static MeFragment newInstance() {
+        return new MeFragment();
     }
 
     @Override

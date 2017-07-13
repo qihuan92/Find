@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.qihuan.find.R;
 import com.qihuan.find.bean.zhihu.DailyEntity;
 import com.qihuan.find.bean.zhihu.DailyItem;
@@ -19,6 +20,7 @@ import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.presenter.NewsPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
+import com.qihuan.find.view.adapter.DailyBannerAdapter;
 import com.qihuan.find.view.base.BaseFragment;
 import com.qihuan.find.view.i.INewsView;
 
@@ -50,6 +52,8 @@ public class NewsFragment extends BaseFragment implements INewsView,
     private List<DailyItem> stories = new ArrayList<>();
     private DailyAdapter dailyAdapter;
     private String date = DateKit.getNowDate();
+    private HorizontalInfiniteCycleViewPager vpBanner;
+    private DailyBannerAdapter dailyBannerAdapter;
 
     public static NewsFragment newInstance() {
         return new NewsFragment();
@@ -73,6 +77,14 @@ public class NewsFragment extends BaseFragment implements INewsView,
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvList.setAdapter(dailyAdapter);
 
+        View bannerLayout = LayoutInflater.from(getContext()).inflate(R.layout.layout_banner, rvList, false);
+        vpBanner = (HorizontalInfiniteCycleViewPager) bannerLayout.findViewById(R.id.vp_banner);
+        dailyBannerAdapter = new DailyBannerAdapter(getContext(), topStories);
+        vpBanner.setAdapter(dailyBannerAdapter);
+        dailyAdapter.addHeaderView(bannerLayout);
+
+//        vpBanner.startAutoScroll(false);
+
         Observable.timer(500, TimeUnit.MILLISECONDS)
                 .subscribe(new Consumer<Long>() {
                     @Override
@@ -81,6 +93,18 @@ public class NewsFragment extends BaseFragment implements INewsView,
                     }
                 });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        vpBanner.startAutoScroll(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+//        vpBanner.stopAutoScroll();
     }
 
     @Override
@@ -103,6 +127,9 @@ public class NewsFragment extends BaseFragment implements INewsView,
     public void topDaily(DailyEntity dailyEntity) {
         topStories.clear();
         topStories.addAll(dailyEntity.getTop_stories());
+        dailyBannerAdapter.notifyDataSetChanged();
+        vpBanner.notifyDataSetChanged();
+
         stories.clear();
         stories.add(new DailyItem(true, "今日热闻"));
         for (StoriesEntity storiesEntity : dailyEntity.getStories()) {

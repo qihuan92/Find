@@ -20,7 +20,20 @@ import io.reactivex.subjects.BehaviorSubject;
 public class BasePresenter<V> extends RxPresenter<V> implements LifecycleProvider<PresenterEvent> {
 
     private final BehaviorSubject<PresenterEvent> lifecycleSubject = BehaviorSubject.create();
-
+    private static final Function<PresenterEvent, PresenterEvent> PRESENTER_LIFECYCLE =
+            new Function<PresenterEvent, PresenterEvent>() {
+                @Override
+                public PresenterEvent apply(PresenterEvent lastEvent) throws Exception {
+                    switch (lastEvent) {
+                        case ATTACHED:
+                            return PresenterEvent.DETACHED;
+                        case DESTROYED:
+                            throw new OutsideLifecycleException("Cannot bind to Activity lifecycle when outside of it.");
+                        default:
+                            throw new UnsupportedOperationException("Binding to " + lastEvent + " not yet implemented");
+                    }
+                }
+            };
 
     @Nonnull
     @Override
@@ -58,18 +71,4 @@ public class BasePresenter<V> extends RxPresenter<V> implements LifecycleProvide
         super.onDestroyed();
     }
 
-    private static final Function<PresenterEvent, PresenterEvent> PRESENTER_LIFECYCLE =
-            new Function<PresenterEvent, PresenterEvent>() {
-                @Override
-                public PresenterEvent apply(PresenterEvent lastEvent) throws Exception {
-                    switch (lastEvent) {
-                        case ATTACHED:
-                            return PresenterEvent.DETACHED;
-                        case DESTROYED:
-                            throw new OutsideLifecycleException("Cannot bind to Activity lifecycle when outside of it.");
-                        default:
-                            throw new UnsupportedOperationException("Binding to " + lastEvent + " not yet implemented");
-                    }
-                }
-            };
 }

@@ -1,6 +1,7 @@
 package com.qihuan.find.bean.zhihu;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,6 +54,9 @@ public class StoriesEntity implements Serializable {
     }
 
     public List<String> getImages() {
+        if (images == null) {
+            return new ArrayList<>();
+        }
         return images;
     }
 

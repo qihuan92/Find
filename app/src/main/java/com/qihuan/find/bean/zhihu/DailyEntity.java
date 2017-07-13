@@ -1,6 +1,7 @@
 package com.qihuan.find.bean.zhihu;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DailyEntity implements Serializable {
@@ -24,6 +25,9 @@ public class DailyEntity implements Serializable {
     }
 
     public List<StoriesEntity> getStories() {
+        if (stories == null) {
+            return new ArrayList<>();
+        }
         return stories;
     }
 
@@ -32,6 +36,9 @@ public class DailyEntity implements Serializable {
     }
 
     public List<TopStoriesEntity> getTop_stories() {
+        if (top_stories == null) {
+            return new ArrayList<>();
+        }
         return top_stories;
     }
 

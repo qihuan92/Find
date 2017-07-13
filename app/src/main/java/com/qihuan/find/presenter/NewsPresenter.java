@@ -18,7 +18,8 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class NewsPresenter extends BasePresenter<INewsView> {
-    public void load() {
+
+    public void getLatestDaily() {
         Client.getZhihuApi()
                 .getLatestDaily()
                 .compose(this.<DailyEntity>bindUntilEvent(PresenterEvent.DETACHED))
@@ -27,12 +28,12 @@ public class NewsPresenter extends BasePresenter<INewsView> {
                 .subscribe(new Observer<DailyEntity>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        getView().s();
+                        getView().start();
                     }
 
                     @Override
                     public void onNext(@NonNull DailyEntity dailyEntity) {
-                        getView().get(dailyEntity);
+                        getView().topDaily(dailyEntity);
                     }
 
                     @Override
@@ -42,7 +43,36 @@ public class NewsPresenter extends BasePresenter<INewsView> {
 
                     @Override
                     public void onComplete() {
+                        getView().end();
+                    }
+                });
+    }
 
+    public void getBeforeDaily(String date) {
+        Client.getZhihuApi()
+                .getBeforeDaily(date)
+                .compose(this.<DailyEntity>bindUntilEvent(PresenterEvent.DETACHED))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DailyEntity>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        getView().start();
+                    }
+
+                    @Override
+                    public void onNext(@NonNull DailyEntity dailyEntity) {
+                        getView().beforeDaily(dailyEntity);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        getView().error(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        getView().end();
                     }
                 });
     }

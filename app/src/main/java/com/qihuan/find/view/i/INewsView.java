@@ -1,17 +1,15 @@
 package com.qihuan.find.view.i;
 
 import com.qihuan.find.bean.zhihu.DailyEntity;
+import com.qihuan.find.view.i.base.IBaseView;
 
 /**
  * INewsView
  * Created by Qi on 2017/6/22.
  */
 
-public interface INewsView {
+public interface INewsView extends IBaseView {
+    void topDaily(DailyEntity dailyEntity);
 
-    void s();
-
-    void get(DailyEntity dailyEntity);
-
-    void error(String message);
+    void beforeDaily(DailyEntity dailyEntity);
 }

@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:layout_behavior="com.qihuan.find.view.custom.behavior.BottomNavigationBehavior"
-        app:menu="@menu/menu_bottom" />
+        app:menu="@menu/menu_bottom"
+        android:background="@color/white"/>
 
 </android.support.design.widget.CoordinatorLayout>

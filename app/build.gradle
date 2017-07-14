@@ -70,7 +70,7 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.24'
     compile 'com.blankj:utilcode:1.7.1'
     compile 'com.github.GrenderG:Toasty:1.2.5'
-    compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
+    compile 'cn.bingoogolapple:bga-banner:2.1.7@aar'
     testCompile 'junit:junit:4.12'
 }
 

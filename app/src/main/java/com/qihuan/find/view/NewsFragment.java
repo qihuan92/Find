@@ -8,9 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.qihuan.find.R;
 import com.qihuan.find.bean.zhihu.DailyEntity;
 import com.qihuan.find.bean.zhihu.DailyItem;
@@ -20,14 +24,15 @@ import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.presenter.NewsPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
-import com.qihuan.find.view.adapter.DailyBannerAdapter;
 import com.qihuan.find.view.base.BaseFragment;
+import com.qihuan.find.view.custom.weight.GlideRoundTransform;
 import com.qihuan.find.view.i.INewsView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import cn.bingoogolapple.bgabanner.BGABanner;
 import easymvp.annotation.FragmentView;
 import easymvp.annotation.Presenter;
 import io.reactivex.Observable;
@@ -41,7 +46,9 @@ import io.reactivex.functions.Consumer;
 public class NewsFragment extends BaseFragment implements INewsView,
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.OnItemClickListener,
-        BaseQuickAdapter.RequestLoadMoreListener {
+        BaseQuickAdapter.RequestLoadMoreListener,
+        BGABanner.Adapter<RelativeLayout, TopStoriesEntity>,
+        BGABanner.Delegate<RelativeLayout, TopStoriesEntity> {
 
     @Presenter
     NewsPresenter newsPresenter;
@@ -52,8 +59,7 @@ public class NewsFragment extends BaseFragment implements INewsView,
     private List<DailyItem> stories = new ArrayList<>();
     private DailyAdapter dailyAdapter;
     private String date = DateKit.getNowDate();
-    private HorizontalInfiniteCycleViewPager vpBanner;
-    private DailyBannerAdapter dailyBannerAdapter;
+    private BGABanner bannerView;
 
     public static NewsFragment newInstance() {
         return new NewsFragment();
@@ -77,13 +83,10 @@ public class NewsFragment extends BaseFragment implements INewsView,
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvList.setAdapter(dailyAdapter);
 
-        View bannerLayout = LayoutInflater.from(getContext()).inflate(R.layout.layout_banner, rvList, false);
-        vpBanner = (HorizontalInfiniteCycleViewPager) bannerLayout.findViewById(R.id.vp_banner);
-        dailyBannerAdapter = new DailyBannerAdapter(getContext(), topStories);
-        vpBanner.setAdapter(dailyBannerAdapter);
-        dailyAdapter.addHeaderView(bannerLayout);
-
-//        vpBanner.startAutoScroll(false);
+        bannerView = (BGABanner) LayoutInflater.from(getContext()).inflate(R.layout.layout_banner, rvList, false);
+        bannerView.setAdapter(this);
+        bannerView.setDelegate(this);
+        dailyAdapter.addHeaderView(bannerView);
 
         Observable.timer(500, TimeUnit.MILLISECONDS)
                 .subscribe(new Consumer<Long>() {
@@ -98,13 +101,13 @@ public class NewsFragment extends BaseFragment implements INewsView,
     @Override
     public void onResume() {
         super.onResume();
-//        vpBanner.startAutoScroll(true);
+        bannerView.startAutoPlay();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        vpBanner.stopAutoScroll();
+        bannerView.stopAutoPlay();
     }
 
     @Override
@@ -127,8 +130,7 @@ public class NewsFragment extends BaseFragment implements INewsView,
     public void topDaily(DailyEntity dailyEntity) {
         topStories.clear();
         topStories.addAll(dailyEntity.getTop_stories());
-        dailyBannerAdapter.notifyDataSetChanged();
-        vpBanner.notifyDataSetChanged();
+        bannerView.setData(R.layout.item_daily_banner, dailyEntity.getTop_stories(), null);
 
         stories.clear();
         stories.add(new DailyItem(true, "今日热闻"));
@@ -170,5 +172,22 @@ public class NewsFragment extends BaseFragment implements INewsView,
             return;
         }
         ToastKit.success(dailyItem.t.getTitle());
+    }
+
+    @Override
+    public void fillBannerItem(BGABanner banner, RelativeLayout itemView, TopStoriesEntity model, int position) {
+        ImageView ivBanner = (ImageView) itemView.findViewById(R.id.iv_banner);
+        TextView tvBanner = (TextView) itemView.findViewById(R.id.tv_banner);
+        Glide.with(this)
+                .load(model.getImage())
+                .transform(new CenterCrop(getContext()), new GlideRoundTransform(getContext(), 4))
+                .crossFade()
+                .into(ivBanner);
+        tvBanner.setText(model.getTitle());
+    }
+
+    @Override
+    public void onBannerItemClick(BGABanner banner, RelativeLayout itemView, TopStoriesEntity model, int position) {
+        ToastKit.success(model.getTitle());
     }
 }

@@ -1,6 +1,6 @@
 package com.qihuan.find.view.i;
 
-import com.qihuan.find.bean.zhihu.DailyEntity;
+import com.qihuan.find.model.bean.zhihu.DailyEntity;
 import com.qihuan.find.view.i.base.IBaseView;
 
 /**

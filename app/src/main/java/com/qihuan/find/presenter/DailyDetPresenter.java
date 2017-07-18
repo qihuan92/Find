@@ -1,10 +1,11 @@
 package com.qihuan.find.presenter;
 
-import com.qihuan.find.model.bean.zhihu.DailyEntity;
+import com.qihuan.find.model.bean.zhihu.StoryContentEntity;
+import com.qihuan.find.model.bean.zhihu.StoryExtraEntity;
 import com.qihuan.find.model.net.Client;
 import com.qihuan.find.presenter.base.BasePresenter;
 import com.qihuan.find.presenter.base.PresenterEvent;
-import com.qihuan.find.view.i.INewsView;
+import com.qihuan.find.view.i.IDailyDetView;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -13,27 +14,27 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * NewsPresenter
+ * DailyDetPresenter
  * Created by Qi on 2017/6/22.
  */
 
-public class NewsPresenter extends BasePresenter<INewsView> {
+public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
 
-    public void getLatestDaily() {
+    public void getStoryContent(int id) {
         Client.getZhihuApi()
-                .getLatestDaily()
-                .compose(this.<DailyEntity>bindUntilEvent(PresenterEvent.DETACHED))
+                .getStoryContent(id)
+                .compose(this.<StoryContentEntity>bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DailyEntity>() {
+                .subscribe(new Observer<StoryContentEntity>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         getView().start();
                     }
 
                     @Override
-                    public void onNext(@NonNull DailyEntity dailyEntity) {
-                        getView().topDaily(dailyEntity);
+                    public void onNext(@NonNull StoryContentEntity storyContentEntity) {
+                        getView().storyContent(storyContentEntity);
                     }
 
                     @Override
@@ -48,21 +49,21 @@ public class NewsPresenter extends BasePresenter<INewsView> {
                 });
     }
 
-    public void getBeforeDaily(String date) {
+    public void getStoryExtra(int id) {
         Client.getZhihuApi()
-                .getBeforeDaily(date)
-                .compose(this.<DailyEntity>bindUntilEvent(PresenterEvent.DETACHED))
+                .getStoryExtra(id)
+                .compose(this.<StoryExtraEntity>bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DailyEntity>() {
+                .subscribe(new Observer<StoryExtraEntity>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         getView().start();
                     }
 
                     @Override
-                    public void onNext(@NonNull DailyEntity dailyEntity) {
-                        getView().beforeDaily(dailyEntity);
+                    public void onNext(@NonNull StoryExtraEntity storyExtraEntity) {
+                        getView().storyExtra(storyExtraEntity);
                     }
 
                     @Override
@@ -76,4 +77,6 @@ public class NewsPresenter extends BasePresenter<INewsView> {
                     }
                 });
     }
+
+
 }

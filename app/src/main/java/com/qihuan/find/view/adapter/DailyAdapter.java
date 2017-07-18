@@ -7,8 +7,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.qihuan.find.R;
-import com.qihuan.find.bean.zhihu.DailyItem;
-import com.qihuan.find.bean.zhihu.StoriesEntity;
+import com.qihuan.find.model.bean.zhihu.DailyItem;
+import com.qihuan.find.model.bean.zhihu.StoriesEntity;
 import com.qihuan.find.view.custom.weight.GlideRoundTransform;
 
 import java.util.List;

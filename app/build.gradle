@@ -20,6 +20,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -50,6 +56,7 @@ dependencies {
     compile('com.jakewharton.rxbinding2:rxbinding-design:2.0.0') {
         exclude group: 'com.android.support'
     }
+    compile files('libs/tbs_sdk_thirdapp_v3.2.0.1104_43200_sharewithdownload_withfilereader_withoutGame_obfs_20170609_115346.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -71,6 +78,9 @@ dependencies {
     compile 'com.blankj:utilcode:1.7.1'
     compile 'com.github.GrenderG:Toasty:1.2.5'
     compile 'cn.bingoogolapple:bga-banner:2.1.7@aar'
+    compile 'com.alibaba:arouter-api:1.2.1.1'
+    compile 'net.opacapp:multiline-collapsingtoolbar:1.4.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
     testCompile 'junit:junit:4.12'
 }
 

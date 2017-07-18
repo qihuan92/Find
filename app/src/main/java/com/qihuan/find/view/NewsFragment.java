@@ -12,16 +12,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.find.R;
-import com.qihuan.find.bean.zhihu.DailyEntity;
-import com.qihuan.find.bean.zhihu.DailyItem;
-import com.qihuan.find.bean.zhihu.StoriesEntity;
-import com.qihuan.find.bean.zhihu.TopStoriesEntity;
 import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.kit.ToastKit;
+import com.qihuan.find.model.bean.zhihu.DailyEntity;
+import com.qihuan.find.model.bean.zhihu.DailyItem;
+import com.qihuan.find.model.bean.zhihu.StoriesEntity;
+import com.qihuan.find.model.bean.zhihu.TopStoriesEntity;
 import com.qihuan.find.presenter.NewsPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
@@ -122,8 +124,17 @@ public class NewsFragment extends BaseFragment implements INewsView,
 
     @Override
     public void error(String message) {
-        refreshLayout.setRefreshing(false);
-        ToastKit.error(message);
+        if (date.equals(DateKit.getNowDate())) {
+            refreshLayout.setRefreshing(false);
+        } else {
+            dailyAdapter.loadMoreFail();
+        }
+        if (NetworkUtils.isConnected()) {
+            ToastKit.error(message);
+        } else {
+            ToastKit.error("请连接网络");
+            NetworkUtils.openWirelessSettings();
+        }
     }
 
     @Override
@@ -171,7 +182,10 @@ public class NewsFragment extends BaseFragment implements INewsView,
         if (dailyItem.t == null) {
             return;
         }
-        ToastKit.success(dailyItem.t.getTitle());
+        ARouter.getInstance()
+                .build("/zhihu/det")
+                .withInt("id", dailyItem.t.getId())
+                .navigation();
     }
 
     @Override
@@ -188,6 +202,9 @@ public class NewsFragment extends BaseFragment implements INewsView,
 
     @Override
     public void onBannerItemClick(BGABanner banner, RelativeLayout itemView, TopStoriesEntity model, int position) {
-        ToastKit.success(model.getTitle());
+        ARouter.getInstance()
+                .build("/zhihu/det")
+                .withInt("id", model.getId())
+                .navigation();
     }
 }

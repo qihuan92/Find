@@ -23,7 +23,7 @@ public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
     public void getStoryContent(int id) {
         Client.getZhihuApi()
                 .getStoryContent(id)
-                .compose(this.<StoryContentEntity>bindUntilEvent(PresenterEvent.DETACHED))
+                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<StoryContentEntity>() {
@@ -52,7 +52,7 @@ public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
     public void getStoryExtra(int id) {
         Client.getZhihuApi()
                 .getStoryExtra(id)
-                .compose(this.<StoryExtraEntity>bindUntilEvent(PresenterEvent.DETACHED))
+                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<StoryExtraEntity>() {

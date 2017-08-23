@@ -14,10 +14,11 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.find.R;
+import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.model.bean.zhihu.DailyEntity;
@@ -27,7 +28,6 @@ import com.qihuan.find.model.bean.zhihu.TopStoriesEntity;
 import com.qihuan.find.presenter.NewsPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
-import com.qihuan.find.view.custom.weight.GlideRoundTransform;
 import com.qihuan.find.view.i.INewsView;
 
 import java.util.ArrayList;
@@ -38,8 +38,6 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 import easymvp.annotation.FragmentView;
 import easymvp.annotation.Presenter;
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 
 /**
  * NewsFragment
@@ -75,8 +73,8 @@ public class NewsFragment extends BaseFragment implements INewsView,
     }
 
     private void initView(View view) {
-        rvList = (RecyclerView) view.findViewById(R.id.rv_list);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+        rvList = view.findViewById(R.id.rv_list);
+        refreshLayout = view.findViewById(R.id.refresh_layout);
 
         refreshLayout.setOnRefreshListener(this);
         dailyAdapter = new DailyAdapter(stories);
@@ -91,12 +89,7 @@ public class NewsFragment extends BaseFragment implements INewsView,
         dailyAdapter.addHeaderView(bannerView);
 
         Observable.timer(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(@NonNull Long aLong) throws Exception {
-                        newsPresenter.getLatestDaily();
-                    }
-                });
+                .subscribe(aLong -> newsPresenter.getLatestDaily());
 
     }
 
@@ -190,12 +183,12 @@ public class NewsFragment extends BaseFragment implements INewsView,
 
     @Override
     public void fillBannerItem(BGABanner banner, RelativeLayout itemView, TopStoriesEntity model, int position) {
-        ImageView ivBanner = (ImageView) itemView.findViewById(R.id.iv_banner);
-        TextView tvBanner = (TextView) itemView.findViewById(R.id.tv_banner);
-        Glide.with(this)
+        ImageView ivBanner = itemView.findViewById(R.id.iv_banner);
+        TextView tvBanner = itemView.findViewById(R.id.tv_banner);
+        GlideApp.with(this)
                 .load(model.getImage())
-                .transform(new CenterCrop(getContext()), new GlideRoundTransform(getContext(), 4))
-                .crossFade()
+                .transform(new RoundedCorners(10))
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivBanner);
         tvBanner.setText(model.getTitle());
     }

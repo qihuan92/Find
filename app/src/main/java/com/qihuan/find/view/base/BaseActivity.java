@@ -1,5 +1,6 @@
 package com.qihuan.find.view.base;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by Qi on 2017/6/20.
  */
 
+@SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
 
     protected Context context;

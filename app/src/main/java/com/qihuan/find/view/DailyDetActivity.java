@@ -1,12 +1,10 @@
 package com.qihuan.find.view;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +12,9 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.qihuan.find.R;
+import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.model.bean.zhihu.StoryContentEntity;
@@ -33,8 +32,6 @@ import java.util.concurrent.TimeUnit;
 import easymvp.annotation.ActivityView;
 import easymvp.annotation.Presenter;
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 
 @Route(path = "/zhihu/det")
 @ActivityView(presenter = DailyDetPresenter.class)
@@ -46,7 +43,6 @@ public class DailyDetActivity extends AppCompatActivity implements IDailyDetView
     @Autowired
     public int id;
 
-    private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private WebView webView;
     private CollapsingToolbarLayout clpToolbar;
@@ -63,15 +59,14 @@ public class DailyDetActivity extends AppCompatActivity implements IDailyDetView
     }
 
     private void initView() {
-        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        webView = (WebView) findViewById(R.id.web_view);
-        clpToolbar = (CollapsingToolbarLayout) findViewById(R.id.clp_toolbar);
-        tvCopyright = (TextView) findViewById(R.id.tv_copyright);
-        fabFavorite = (FloatingActionButton) findViewById(R.id.fab_favorite);
-        ivDaily = (ImageView) findViewById(R.id.iv_daily);
+        toolbar = findViewById(R.id.toolbar);
+        webView = findViewById(R.id.web_view);
+        clpToolbar = findViewById(R.id.clp_toolbar);
+        tvCopyright = findViewById(R.id.tv_copyright);
+        fabFavorite = findViewById(R.id.fab_favorite);
+        ivDaily = findViewById(R.id.iv_daily);
 
-        setToolBar(toolbar, null);
+        setToolBar(toolbar, "");
 
         WebSettings settings = webView.getSettings();
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -81,30 +76,17 @@ public class DailyDetActivity extends AppCompatActivity implements IDailyDetView
         webView.setWebChromeClient(new WebChromeClient());
 
         Observable.timer(500, TimeUnit.MILLISECONDS)
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(@NonNull Long aLong) throws Exception {
-                        dailyDetPresenter.getStoryContent(id);
-                    }
-                });
+                .subscribe(aLong -> dailyDetPresenter.getStoryContent(id));
     }
 
     protected void setToolBar(Toolbar toolbar, String title) {
-        if (title == null) {
-            title = "";
-        }
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override
@@ -147,10 +129,10 @@ public class DailyDetActivity extends AppCompatActivity implements IDailyDetView
         }
         clpToolbar.setTitle(storyContentEntity.getTitle());
         tvCopyright.setText(storyContentEntity.getImage_source());
-        Glide.with(this)
+        GlideApp.with(this)
                 .load(storyContentEntity.getImage())
                 .centerCrop()
-                .crossFade()
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivDaily);
     }
 

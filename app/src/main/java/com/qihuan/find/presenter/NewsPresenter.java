@@ -22,7 +22,7 @@ public class NewsPresenter extends BasePresenter<INewsView> {
     public void getLatestDaily() {
         Client.getZhihuApi()
                 .getLatestDaily()
-                .compose(this.<DailyEntity>bindUntilEvent(PresenterEvent.DETACHED))
+                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DailyEntity>() {
@@ -51,7 +51,7 @@ public class NewsPresenter extends BasePresenter<INewsView> {
     public void getBeforeDaily(String date) {
         Client.getZhihuApi()
                 .getBeforeDaily(date)
-                .compose(this.<DailyEntity>bindUntilEvent(PresenterEvent.DETACHED))
+                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DailyEntity>() {

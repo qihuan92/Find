@@ -2,14 +2,14 @@ package com.qihuan.find.view.adapter;
 
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.qihuan.find.R;
+import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.model.bean.zhihu.DailyItem;
 import com.qihuan.find.model.bean.zhihu.StoriesEntity;
-import com.qihuan.find.view.custom.weight.GlideRoundTransform;
 
 import java.util.List;
 
@@ -40,10 +40,10 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItem, BaseViewHol
         StoriesEntity storiesEntity = item.t;
         helper.setText(R.id.tv_news, storiesEntity.getTitle());
         try {
-            Glide.with(mContext)
+            GlideApp.with(mContext)
                     .load(storiesEntity.getImages().get(0))
-                    .transform(new CenterCrop(mContext), new GlideRoundTransform(mContext, 2))
-                    .crossFade()
+                    .transform(new RoundedCorners(10))
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     .into((ImageView) helper.getView(R.id.iv_news));
         } catch (Exception e) {
             e.printStackTrace();

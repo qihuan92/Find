@@ -5,7 +5,7 @@ import com.qihuan.find.model.bean.douban.MoviesBean;
 import com.qihuan.find.model.bean.douban.SubjectBean;
 import com.qihuan.find.model.bean.douban.USboxBean;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -17,20 +17,20 @@ import retrofit2.http.Query;
 
 public interface DoubanApi {
     @GET("movie/top250")
-    Observable<MoviesBean> getTopMovie(@Query("start") int start,
-                                       @Query("count") int count);
+    Flowable<MoviesBean> getTopMovie(@Query("start") int start,
+                                     @Query("count") int count);
 
     @GET("movie/us_box")
-    Observable<USboxBean> getUSBox();
+    Flowable<USboxBean> getUSBox();
 
     @GET("movie/subject/{id}")
-    Observable<SubjectBean> getSubject(@Path("id") String id);
+    Flowable<SubjectBean> getSubject(@Path("id") String id);
 
     @GET("movie/celebrity/{id}")
-    Observable<CastsBean> getCastDetail(@Path("id") String id);
+    Flowable<CastsBean> getCastDetail(@Path("id") String id);
 
     @GET("movie/search")
-    Observable<MoviesBean> search(@Query("q") String q,
+    Flowable<MoviesBean> search(@Query("q") String q,
                                   @Query("start") int start,
                                   @Query("count") int count);
 }

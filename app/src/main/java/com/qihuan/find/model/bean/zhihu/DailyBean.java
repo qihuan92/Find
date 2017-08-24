@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DailyEntity implements Serializable {
+public class DailyBean implements Serializable {
 
     /**
      * date : 20140523
@@ -13,8 +13,8 @@ public class DailyEntity implements Serializable {
      */
 
     private String date;
-    private List<StoriesEntity> stories;
-    private List<TopStoriesEntity> top_stories;
+    private List<StoryBean> stories;
+    private List<TopStoryBean> top_stories;
 
     public String getDate() {
         return date;
@@ -24,31 +24,31 @@ public class DailyEntity implements Serializable {
         this.date = date;
     }
 
-    public List<StoriesEntity> getStories() {
+    public List<StoryBean> getStories() {
         if (stories == null) {
             return new ArrayList<>();
         }
         return stories;
     }
 
-    public void setStories(List<StoriesEntity> stories) {
+    public void setStories(List<StoryBean> stories) {
         this.stories = stories;
     }
 
-    public List<TopStoriesEntity> getTop_stories() {
+    public List<TopStoryBean> getTop_stories() {
         if (top_stories == null) {
             return new ArrayList<>();
         }
         return top_stories;
     }
 
-    public void setTop_stories(List<TopStoriesEntity> top_stories) {
+    public void setTop_stories(List<TopStoryBean> top_stories) {
         this.top_stories = top_stories;
     }
 
     @Override
     public String toString() {
-        return "DailyEntity{" +
+        return "DailyBean{" +
                 "date='" + date + '\'' +
                 ", stories=" + stories +
                 ", top_stories=" + top_stories +

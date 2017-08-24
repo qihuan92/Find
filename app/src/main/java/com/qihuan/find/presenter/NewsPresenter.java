@@ -1,6 +1,6 @@
 package com.qihuan.find.presenter;
 
-import com.qihuan.find.model.bean.zhihu.DailyEntity;
+import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.model.net.Client;
 import com.qihuan.find.presenter.base.BasePresenter;
 import com.qihuan.find.presenter.base.PresenterEvent;
@@ -25,15 +25,15 @@ public class NewsPresenter extends BasePresenter<INewsView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DailyEntity>() {
+                .subscribe(new Observer<DailyBean>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         getView().start();
                     }
 
                     @Override
-                    public void onNext(@NonNull DailyEntity dailyEntity) {
-                        getView().topDaily(dailyEntity);
+                    public void onNext(@NonNull DailyBean dailyBean) {
+                        getView().topDaily(dailyBean);
                     }
 
                     @Override
@@ -54,15 +54,15 @@ public class NewsPresenter extends BasePresenter<INewsView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DailyEntity>() {
+                .subscribe(new Observer<DailyBean>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         getView().start();
                     }
 
                     @Override
-                    public void onNext(@NonNull DailyEntity dailyEntity) {
-                        getView().beforeDaily(dailyEntity);
+                    public void onNext(@NonNull DailyBean dailyBean) {
+                        getView().beforeDaily(dailyBean);
                     }
 
                     @Override

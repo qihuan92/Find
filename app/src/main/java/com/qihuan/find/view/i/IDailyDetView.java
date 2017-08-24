@@ -1,7 +1,7 @@
 package com.qihuan.find.view.i;
 
-import com.qihuan.find.model.bean.zhihu.StoryContentEntity;
-import com.qihuan.find.model.bean.zhihu.StoryExtraEntity;
+import com.qihuan.find.model.bean.zhihu.StoryContentBean;
+import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 import com.qihuan.find.view.i.base.IBaseView;
 
 /**
@@ -11,7 +11,7 @@ import com.qihuan.find.view.i.base.IBaseView;
 
 public interface IDailyDetView extends IBaseView {
 
-    void storyContent(StoryContentEntity storyContentEntity);
+    void storyContent(StoryContentBean storyContentBean);
 
-    void storyExtra(StoryExtraEntity storyExtraEntity);
+    void storyExtra(StoryExtraBean storyExtraBean);
 }

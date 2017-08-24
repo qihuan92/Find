@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StoriesEntity implements Serializable {
+public class StoryBean implements Serializable {
 
     /**
      * images : ["http://pic4.zhimg.com/5615a788a32c2cc9469f825c4622879b.jpg"]
@@ -66,7 +66,7 @@ public class StoriesEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "StoriesEntity{" +
+        return "StoryBean{" +
                 "type=" + type +
                 ", id=" + id +
                 ", ga_prefix='" + ga_prefix + '\'' +

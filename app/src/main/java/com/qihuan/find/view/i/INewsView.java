@@ -1,6 +1,6 @@
 package com.qihuan.find.view.i;
 
-import com.qihuan.find.model.bean.zhihu.DailyEntity;
+import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.view.i.base.IBaseView;
 
 /**
@@ -9,7 +9,7 @@ import com.qihuan.find.view.i.base.IBaseView;
  */
 
 public interface INewsView extends IBaseView {
-    void topDaily(DailyEntity dailyEntity);
+    void topDaily(DailyBean dailyBean);
 
-    void beforeDaily(DailyEntity dailyEntity);
+    void beforeDaily(DailyBean dailyBean);
 }

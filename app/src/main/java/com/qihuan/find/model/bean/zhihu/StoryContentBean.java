@@ -3,7 +3,7 @@ package com.qihuan.find.model.bean.zhihu;
 import java.io.Serializable;
 import java.util.List;
 
-public class StoryContentEntity implements Serializable {
+public class StoryContentBean implements Serializable {
 
     /**
      * body : <div class="main-wrap content-wrap">...</div>

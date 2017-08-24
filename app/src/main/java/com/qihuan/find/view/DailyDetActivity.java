@@ -16,8 +16,8 @@ import com.qihuan.find.R;
 import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.kit.WebKit;
-import com.qihuan.find.model.bean.zhihu.StoryContentEntity;
-import com.qihuan.find.model.bean.zhihu.StoryExtraEntity;
+import com.qihuan.find.model.bean.zhihu.StoryContentBean;
+import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 import com.qihuan.find.presenter.DailyDetPresenter;
 import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.view.i.IDailyDetView;
@@ -109,25 +109,25 @@ public class DailyDetActivity extends BaseActivity implements IDailyDetView {
     }
 
     @Override
-    public void storyContent(StoryContentEntity storyContentEntity) {
-        String url = storyContentEntity.getShare_url();
-        if (TextUtils.isEmpty(storyContentEntity.getBody())) {
+    public void storyContent(StoryContentBean storyContentBean) {
+        String url = storyContentBean.getShare_url();
+        if (TextUtils.isEmpty(storyContentBean.getBody())) {
             webView.loadUrl(url);
         } else {
-            String data = WebKit.buildHtmlWithCss(storyContentEntity.getBody(), storyContentEntity.getCss(), false);
+            String data = WebKit.buildHtmlWithCss(storyContentBean.getBody(), storyContentBean.getCss(), false);
             webView.loadDataWithBaseURL(WebKit.BASE_URL, data, WebKit.MIME_TYPE, WebKit.ENCODING, WebKit.FAIL_URL);
         }
-        clpToolbar.setTitle(storyContentEntity.getTitle());
-        tvCopyright.setText(storyContentEntity.getImage_source());
+        clpToolbar.setTitle(storyContentBean.getTitle());
+        tvCopyright.setText(storyContentBean.getImage_source());
         GlideApp.with(this)
-                .load(storyContentEntity.getImage())
+                .load(storyContentBean.getImage())
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivDaily);
     }
 
     @Override
-    public void storyExtra(StoryExtraEntity storyExtraEntity) {
+    public void storyExtra(StoryExtraBean storyExtraBean) {
 
     }
 }

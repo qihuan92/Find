@@ -1,7 +1,7 @@
 package com.qihuan.find.presenter;
 
-import com.qihuan.find.model.bean.zhihu.StoryContentEntity;
-import com.qihuan.find.model.bean.zhihu.StoryExtraEntity;
+import com.qihuan.find.model.bean.zhihu.StoryContentBean;
+import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 import com.qihuan.find.model.net.Client;
 import com.qihuan.find.presenter.base.BasePresenter;
 import com.qihuan.find.presenter.base.PresenterEvent;
@@ -26,15 +26,15 @@ public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<StoryContentEntity>() {
+                .subscribe(new Observer<StoryContentBean>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         getView().start();
                     }
 
                     @Override
-                    public void onNext(@NonNull StoryContentEntity storyContentEntity) {
-                        getView().storyContent(storyContentEntity);
+                    public void onNext(@NonNull StoryContentBean storyContentBean) {
+                        getView().storyContent(storyContentBean);
                     }
 
                     @Override
@@ -55,15 +55,15 @@ public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<StoryExtraEntity>() {
+                .subscribe(new Observer<StoryExtraBean>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         getView().start();
                     }
 
                     @Override
-                    public void onNext(@NonNull StoryExtraEntity storyExtraEntity) {
-                        getView().storyExtra(storyExtraEntity);
+                    public void onNext(@NonNull StoryExtraBean storyExtraBean) {
+                        getView().storyExtra(storyExtraBean);
                     }
 
                     @Override

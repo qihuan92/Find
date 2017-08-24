@@ -21,10 +21,10 @@ import com.qihuan.find.R;
 import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.kit.ToastKit;
-import com.qihuan.find.model.bean.zhihu.DailyEntity;
-import com.qihuan.find.model.bean.zhihu.DailyItem;
-import com.qihuan.find.model.bean.zhihu.StoriesEntity;
-import com.qihuan.find.model.bean.zhihu.TopStoriesEntity;
+import com.qihuan.find.model.bean.zhihu.DailyBean;
+import com.qihuan.find.model.bean.zhihu.DailyItemBean;
+import com.qihuan.find.model.bean.zhihu.StoryBean;
+import com.qihuan.find.model.bean.zhihu.TopStoryBean;
 import com.qihuan.find.presenter.NewsPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
@@ -47,16 +47,16 @@ public class NewsFragment extends BaseFragment implements INewsView,
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.OnItemClickListener,
         BaseQuickAdapter.RequestLoadMoreListener,
-        BGABanner.Adapter<RelativeLayout, TopStoriesEntity>,
-        BGABanner.Delegate<RelativeLayout, TopStoriesEntity> {
+        BGABanner.Adapter<RelativeLayout, TopStoryBean>,
+        BGABanner.Delegate<RelativeLayout, TopStoryBean> {
 
     @Presenter
     NewsPresenter newsPresenter;
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvList;
-    private List<TopStoriesEntity> topStories = new ArrayList<>();
-    private List<DailyItem> stories = new ArrayList<>();
+    private List<TopStoryBean> topStories = new ArrayList<>();
+    private List<DailyItemBean> stories = new ArrayList<>();
     private DailyAdapter dailyAdapter;
     private String date = DateKit.getNowDate();
     private BGABanner bannerView;
@@ -131,24 +131,24 @@ public class NewsFragment extends BaseFragment implements INewsView,
     }
 
     @Override
-    public void topDaily(DailyEntity dailyEntity) {
+    public void topDaily(DailyBean dailyBean) {
         topStories.clear();
-        topStories.addAll(dailyEntity.getTop_stories());
-        bannerView.setData(R.layout.item_daily_banner, dailyEntity.getTop_stories(), null);
+        topStories.addAll(dailyBean.getTop_stories());
+        bannerView.setData(R.layout.item_daily_banner, dailyBean.getTop_stories(), null);
 
         stories.clear();
-        stories.add(new DailyItem(true, "今日热闻"));
-        for (StoriesEntity storiesEntity : dailyEntity.getStories()) {
-            stories.add(new DailyItem(storiesEntity));
+        stories.add(new DailyItemBean(true, "今日热闻"));
+        for (StoryBean storyBean : dailyBean.getStories()) {
+            stories.add(new DailyItemBean(storyBean));
         }
         dailyAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void beforeDaily(DailyEntity dailyEntity) {
-        stories.add(new DailyItem(true, DateKit.parseDate(dailyEntity.getDate())));
-        for (StoriesEntity storiesEntity : dailyEntity.getStories()) {
-            stories.add(new DailyItem(storiesEntity));
+    public void beforeDaily(DailyBean dailyBean) {
+        stories.add(new DailyItemBean(true, DateKit.parseDate(dailyBean.getDate())));
+        for (StoryBean storyBean : dailyBean.getStories()) {
+            stories.add(new DailyItemBean(storyBean));
         }
         dailyAdapter.notifyDataSetChanged();
         dailyAdapter.loadMoreComplete();
@@ -168,21 +168,21 @@ public class NewsFragment extends BaseFragment implements INewsView,
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        DailyItem dailyItem = stories.get(position);
-        if (dailyItem.isHeader) {
+        DailyItemBean dailyItemBean = stories.get(position);
+        if (dailyItemBean.isHeader) {
             return;
         }
-        if (dailyItem.t == null) {
+        if (dailyItemBean.t == null) {
             return;
         }
         ARouter.getInstance()
                 .build("/zhihu/det")
-                .withInt("id", dailyItem.t.getId())
+                .withInt("id", dailyItemBean.t.getId())
                 .navigation();
     }
 
     @Override
-    public void fillBannerItem(BGABanner banner, RelativeLayout itemView, TopStoriesEntity model, int position) {
+    public void fillBannerItem(BGABanner banner, RelativeLayout itemView, TopStoryBean model, int position) {
         ImageView ivBanner = itemView.findViewById(R.id.iv_banner);
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
         GlideApp.with(this)
@@ -194,7 +194,7 @@ public class NewsFragment extends BaseFragment implements INewsView,
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, RelativeLayout itemView, TopStoriesEntity model, int position) {
+    public void onBannerItemClick(BGABanner banner, RelativeLayout itemView, TopStoryBean model, int position) {
         ARouter.getInstance()
                 .build("/zhihu/det")
                 .withInt("id", model.getId())

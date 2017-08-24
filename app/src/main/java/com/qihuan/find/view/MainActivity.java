@@ -30,8 +30,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        bottomView = (BottomNavigationView) findViewById(R.id.bottom_view);
+        toolbar = findViewById(R.id.toolbar);
+        bottomView = findViewById(R.id.bottom_view);
         bottomView.setOnNavigationItemSelectedListener(this);
         switchContent(newsFragment);
         toolbar.setTitle(R.string.title_news);

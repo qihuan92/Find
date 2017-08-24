@@ -2,7 +2,6 @@ package com.qihuan.find.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -20,6 +19,7 @@ import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.model.bean.zhihu.StoryContentEntity;
 import com.qihuan.find.model.bean.zhihu.StoryExtraEntity;
 import com.qihuan.find.presenter.DailyDetPresenter;
+import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.view.i.IDailyDetView;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -35,7 +35,7 @@ import io.reactivex.Observable;
 
 @Route(path = "/zhihu/det")
 @ActivityView(presenter = DailyDetPresenter.class)
-public class DailyDetActivity extends AppCompatActivity implements IDailyDetView {
+public class DailyDetActivity extends BaseActivity implements IDailyDetView {
 
     @Presenter
     DailyDetPresenter dailyDetPresenter;
@@ -77,16 +77,6 @@ public class DailyDetActivity extends AppCompatActivity implements IDailyDetView
 
         Observable.timer(500, TimeUnit.MILLISECONDS)
                 .subscribe(aLong -> dailyDetPresenter.getStoryContent(id));
-    }
-
-    protected void setToolBar(Toolbar toolbar, String title) {
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override

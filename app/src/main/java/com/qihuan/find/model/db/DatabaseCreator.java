@@ -6,14 +6,14 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.qihuan.find.config.AppConfig;
-import com.qihuan.find.model.bean.zhihu.StoryContentBean;
-import com.qihuan.find.model.db.dao.StoryDao;
+import com.qihuan.find.model.bean.find.CollectionBean;
+import com.qihuan.find.model.db.dao.CollectionDao;
 
 /**
  * DatabaseCreator
  * Created by Qi on 2017/8/24.
  */
-@Database(entities = {StoryContentBean.class}, version = 1)
+@Database(entities = {CollectionBean.class}, version = 1)
 public abstract class DatabaseCreator extends RoomDatabase {
     private static DatabaseCreator sInstance;
 
@@ -26,5 +26,5 @@ public abstract class DatabaseCreator extends RoomDatabase {
         return sInstance;
     }
 
-    public abstract StoryDao storyDao();
+    public abstract CollectionDao collectionDao();
 }

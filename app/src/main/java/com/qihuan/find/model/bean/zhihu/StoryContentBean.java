@@ -1,36 +1,21 @@
 package com.qihuan.find.model.bean.zhihu;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-
 import java.io.Serializable;
 import java.util.List;
 
-@Entity(tableName = "t_story")
 public class StoryContentBean implements Serializable {
 
-    @PrimaryKey
     private int id;
     private boolean isFavorite;
     private String title;
-    @Ignore
     private int type;
-    @Ignore
     private String body;
-    @Ignore
     private String image;
-    @Ignore
     private String image_source;
-    @Ignore
     private String share_url;
-    @Ignore
     private String ga_prefix;
-    @Ignore
     private List<String> js;
-    @Ignore
     private List<String> images;
-    @Ignore
     private List<String> css;
 
     public int getId() {

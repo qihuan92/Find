@@ -12,12 +12,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.qihuan.find.R;
 import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.model.bean.zhihu.StoryContentBean;
 import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
+import com.qihuan.find.model.db.DatabaseCreator;
 import com.qihuan.find.presenter.DailyDetPresenter;
 import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.view.i.IDailyDetView;
@@ -32,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 import easymvp.annotation.ActivityView;
 import easymvp.annotation.Presenter;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @Route(path = "/zhihu/det")
 @ActivityView(presenter = DailyDetPresenter.class)
@@ -77,6 +80,18 @@ public class DailyDetActivity extends BaseActivity implements IDailyDetView {
 
         Observable.timer(500, TimeUnit.MILLISECONDS)
                 .subscribe(aLong -> dailyDetPresenter.getStoryContent(id));
+
+
+        RxView.clicks(fabFavorite)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+//                .flatMap((Function<Object, ObservableSource<StoryContentBean>>) o -> DatabaseCreator.getInstance(this).storyDao().selecteById(id))
+                .subscribe(o -> {
+                    StoryContentBean storyContentBean = new StoryContentBean();
+                    storyContentBean.setId(id);
+                    storyContentBean.setFavorite(true);
+                    DatabaseCreator.getInstance(this).storyDao().insertAll(storyContentBean);
+                });
     }
 
     @Override

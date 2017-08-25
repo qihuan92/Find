@@ -1,35 +1,61 @@
 package com.qihuan.find.model.bean.zhihu;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Entity(tableName = "t_story")
 public class StoryContentBean implements Serializable {
 
-    /**
-     * body : <div class="main-wrap content-wrap">...</div>
-     * image_source : 《四月物语》
-     * title : 我喜欢你，但你别喜欢我：囚禁在单相思中的性单恋者
-     * image : http://pic3.zhimg.com/4d37a2dff96d07f6a01e7b8aabd63032.jpg
-     * share_url : http://daily.zhihu.com/story/9100667
-     * js : []
-     * ga_prefix : 122713
-     * images : ["http://pic4.zhimg.com/a32e73507ebe9a963f48c3bcc9808773.jpg"]
-     * type : 0
-     * id : 9100667
-     * css : ["http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3"]
-     */
-
-    private String body;
-    private String image_source;
-    private String title;
-    private String image;
-    private String share_url;
-    private String ga_prefix;
-    private int type;
+    @PrimaryKey
     private int id;
+    private boolean isFavorite;
+    private String title;
+    @Ignore
+    private int type;
+    @Ignore
+    private String body;
+    @Ignore
+    private String image;
+    @Ignore
+    private String image_source;
+    @Ignore
+    private String share_url;
+    @Ignore
+    private String ga_prefix;
+    @Ignore
     private List<String> js;
+    @Ignore
     private List<String> images;
+    @Ignore
     private List<String> css;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 
     public String getBody() {
         return body;
@@ -77,22 +103,6 @@ public class StoryContentBean implements Serializable {
 
     public void setGa_prefix(String ga_prefix) {
         this.ga_prefix = ga_prefix;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public List<String> getJs() {

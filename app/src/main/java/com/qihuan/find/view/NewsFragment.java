@@ -72,6 +72,18 @@ public class NewsFragment extends BaseFragment implements INewsView,
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        bannerView.startAutoPlay();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bannerView.stopAutoPlay();
+    }
+
     private void initView(View view) {
         rvList = view.findViewById(R.id.rv_list);
         refreshLayout = view.findViewById(R.id.refresh_layout);
@@ -91,18 +103,6 @@ public class NewsFragment extends BaseFragment implements INewsView,
         Observable.timer(500, TimeUnit.MILLISECONDS)
                 .subscribe(aLong -> newsPresenter.getLatestDaily());
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        bannerView.startAutoPlay();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        bannerView.stopAutoPlay();
     }
 
     @Override

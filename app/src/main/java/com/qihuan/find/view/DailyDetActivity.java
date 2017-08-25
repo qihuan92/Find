@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,9 +26,6 @@ import com.qihuan.find.model.db.DatabaseCreator;
 import com.qihuan.find.presenter.DailyDetPresenter;
 import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.view.i.IDailyDetView;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 

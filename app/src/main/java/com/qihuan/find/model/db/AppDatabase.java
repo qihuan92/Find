@@ -10,20 +10,22 @@ import com.qihuan.find.model.bean.find.CollectionBean;
 import com.qihuan.find.model.db.dao.CollectionDao;
 
 /**
- * DatabaseCreator
+ * AppDatabase
  * Created by Qi on 2017/8/24.
  */
 @Database(entities = {CollectionBean.class}, version = 1)
-public abstract class DatabaseCreator extends RoomDatabase {
-    private static DatabaseCreator sInstance;
+public abstract class AppDatabase extends RoomDatabase {
+    private static volatile AppDatabase INSTANCE;
 
-    public synchronized static DatabaseCreator getInstance(Context context) {
-        if (sInstance == null) {
-            synchronized (DatabaseCreator.class) {
-                sInstance = Room.databaseBuilder(context, DatabaseCreator.class, AppConfig.DATABASE_NAME).build();
+    public synchronized static AppDatabase getInstance(Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context, AppDatabase.class, AppConfig.DATABASE_NAME).build();
+                }
             }
         }
-        return sInstance;
+        return INSTANCE;
     }
 
     public abstract CollectionDao collectionDao();

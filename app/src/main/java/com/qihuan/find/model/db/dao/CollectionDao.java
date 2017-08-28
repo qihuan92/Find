@@ -32,7 +32,7 @@ public interface CollectionDao {
     Flowable<CollectionBean> selectByTitle(String title);
 
     @Insert
-    void insertAll(CollectionBean... collectionBeans);
+    void insert(CollectionBean collectionBeans);
 
     @Delete
     void delete(CollectionBean collectionBean);

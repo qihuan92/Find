@@ -7,10 +7,11 @@ import com.qihuan.find.presenter.base.BasePresenter;
 import com.qihuan.find.presenter.base.PresenterEvent;
 import com.qihuan.find.view.i.IDailyDetView;
 
-import io.reactivex.Observer;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -26,9 +27,10 @@ public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<StoryContentBean>() {
+                .subscribe(new Subscriber<StoryContentBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
                         getView().start();
                     }
 
@@ -55,9 +57,10 @@ public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<StoryExtraBean>() {
+                .subscribe(new Subscriber<StoryExtraBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
                         getView().start();
                     }
 

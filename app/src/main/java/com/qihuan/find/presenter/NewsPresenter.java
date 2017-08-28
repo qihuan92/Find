@@ -6,10 +6,11 @@ import com.qihuan.find.presenter.base.BasePresenter;
 import com.qihuan.find.presenter.base.PresenterEvent;
 import com.qihuan.find.view.i.INewsView;
 
-import io.reactivex.Observer;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -25,9 +26,10 @@ public class NewsPresenter extends BasePresenter<INewsView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DailyBean>() {
+                .subscribe(new Subscriber<DailyBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
                         getView().start();
                     }
 
@@ -54,9 +56,10 @@ public class NewsPresenter extends BasePresenter<INewsView> {
                 .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DailyBean>() {
+                .subscribe(new Subscriber<DailyBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(Subscription s) {
+                        s.request(Long.MAX_VALUE);
                         getView().start();
                     }
 

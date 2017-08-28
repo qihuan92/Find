@@ -7,7 +7,7 @@ import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -26,7 +26,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("news/latest")
-    Observable<DailyBean> getLatestDaily();
+    Flowable<DailyBean> getLatestDaily();
 
     /**
      * 获取以前的文章列表
@@ -34,7 +34,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("news/before/{date}")
-    Observable<DailyBean> getBeforeDaily(@Path("date") String date);
+    Flowable<DailyBean> getBeforeDaily(@Path("date") String date);
 
     /**
      * 获取相应文章内容
@@ -43,7 +43,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("news/{storyId}")
-    Observable<StoryContentBean> getStoryContent(@Path("storyId") int storyId);
+    Flowable<StoryContentBean> getStoryContent(@Path("storyId") int storyId);
 
     /**
      * 获取相应文章的额外信息，如评论数量，获得的赞等
@@ -52,7 +52,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("story-extra/{storyId}")
-    Observable<StoryExtraBean> getStoryExtra(@Path("storyId") int storyId);
+    Flowable<StoryExtraBean> getStoryExtra(@Path("storyId") int storyId);
 
     /**
      * 获取文章长评论
@@ -60,7 +60,7 @@ public interface ZhihuApi {
      * @param storyId
      */
     @GET("story/{storyId}/long-comments")
-    Observable<List<CommentsBean>> getLongComments(@Path("storyId") int storyId);
+    Flowable<List<CommentsBean>> getLongComments(@Path("storyId") int storyId);
 
     /**
      * 获取文章短评论
@@ -68,6 +68,6 @@ public interface ZhihuApi {
      * @param storyId
      */
     @GET("story/{storyId}/short-comments")
-    Observable<List<CommentsBean>> getShortComments(@Path("storyId") int storyId);
+    Flowable<List<CommentsBean>> getShortComments(@Path("storyId") int storyId);
 
 }

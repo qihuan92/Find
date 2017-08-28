@@ -16,6 +16,8 @@ import retrofit2.http.Query;
  */
 
 public interface DoubanApi {
+    String DOUBAN_URL = "https://api.douban.com/v2";
+
     @GET("movie/top250")
     Observable<MoviesBean> getTopMovie(@Query("start") int start,
                                      @Query("count") int count);

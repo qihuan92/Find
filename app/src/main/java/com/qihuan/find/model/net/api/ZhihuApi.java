@@ -18,6 +18,8 @@ import retrofit2.http.Path;
 
 public interface ZhihuApi {
 
+    String ZHIHU_URL = "http://news-at.zhihu.com/api/4/";
+
     /**
      * 获取最新文章列表
      *

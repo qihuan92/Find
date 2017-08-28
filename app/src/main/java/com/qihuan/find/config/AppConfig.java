@@ -6,7 +6,5 @@ package com.qihuan.find.config;
  */
 
 public class AppConfig {
-    public final static String ZHIHU_URL = "http://news-at.zhihu.com/api/4/";
-    public final static String DOUBAN_URL = "https://api.douban.com/v2";
     public final static String DATABASE_NAME = "find";
 }

@@ -6,7 +6,6 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.qihuan.find.App;
 import com.qihuan.find.BuildConfig;
-import com.qihuan.find.config.AppConfig;
 import com.qihuan.find.model.net.api.DoubanApi;
 import com.qihuan.find.model.net.api.ZhihuApi;
 
@@ -74,7 +73,7 @@ public class Client {
         synchronized (monitor) {
             if (zhihuApi == null) {
                 zhihuApi = new Retrofit.Builder()
-                        .baseUrl(AppConfig.ZHIHU_URL)
+                        .baseUrl(ZhihuApi.ZHIHU_URL)
                         .client(getClient())
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -89,7 +88,7 @@ public class Client {
         synchronized (monitor) {
             if (doubanApi == null) {
                 doubanApi = new Retrofit.Builder()
-                        .baseUrl(AppConfig.DOUBAN_URL)
+                        .baseUrl(DoubanApi.DOUBAN_URL)
                         .client(getClient())
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

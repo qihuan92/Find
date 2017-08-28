@@ -1,17 +1,17 @@
 package com.qihuan.find.view.base;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.LifecycleFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 /**
  * BaseFragment
  * Created by Qi on 2017/6/22.
  */
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends LifecycleFragment {
 
     private ProgressDialog progressDialog;
     protected Context context;

@@ -2,6 +2,8 @@ package com.qihuan.find.view.base;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.arch.lifecycle.LifecycleRegistry;
+import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,15 +16,21 @@ import android.support.v7.widget.Toolbar;
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements LifecycleRegistryOwner {
 
     protected Context context;
     private ProgressDialog progressDialog;
+    private final LifecycleRegistry mRegistry = new LifecycleRegistry(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = this;
+    }
+
+    @Override
+    public LifecycleRegistry getLifecycle() {
+        return mRegistry;
     }
 
     public void showProgressDialog() {

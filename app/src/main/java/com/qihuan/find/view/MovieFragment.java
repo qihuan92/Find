@@ -2,17 +2,17 @@ package com.qihuan.find.view;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.qihuan.find.R;
+import com.qihuan.find.view.base.BaseFragment;
 
 /**
  * MovieFragment
  */
-public class MovieFragment extends Fragment {
+public class MovieFragment extends BaseFragment {
 
     public static MovieFragment newInstance() {
         return new MovieFragment();

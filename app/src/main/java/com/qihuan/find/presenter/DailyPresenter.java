@@ -14,11 +14,11 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * NewsPresenter
+ * DailyPresenter
  * Created by Qi on 2017/6/22.
  */
 
-public class NewsPresenter extends BasePresenter<INewsView> {
+public class DailyPresenter extends BasePresenter<INewsView> {
 
     public void getLatestDaily() {
         Client.getZhihuApi()

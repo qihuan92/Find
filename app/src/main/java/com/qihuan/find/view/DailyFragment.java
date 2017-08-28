@@ -25,7 +25,7 @@ import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
 import com.qihuan.find.model.bean.zhihu.TopStoryBean;
-import com.qihuan.find.presenter.NewsPresenter;
+import com.qihuan.find.presenter.DailyPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
 import com.qihuan.find.view.i.INewsView;
@@ -40,10 +40,10 @@ import easymvp.annotation.Presenter;
 import io.reactivex.Observable;
 
 /**
- * NewsFragment
+ * DailyFragment
  */
-@FragmentView(presenter = NewsPresenter.class)
-public class NewsFragment extends BaseFragment implements INewsView,
+@FragmentView(presenter = DailyPresenter.class)
+public class DailyFragment extends BaseFragment implements INewsView,
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.OnItemClickListener,
         BaseQuickAdapter.RequestLoadMoreListener,
@@ -51,7 +51,7 @@ public class NewsFragment extends BaseFragment implements INewsView,
         BGABanner.Delegate<RelativeLayout, TopStoryBean> {
 
     @Presenter
-    NewsPresenter newsPresenter;
+    DailyPresenter dailyPresenter;
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvList;
@@ -61,8 +61,8 @@ public class NewsFragment extends BaseFragment implements INewsView,
     private String date = DateKit.getNowDate();
     private BGABanner bannerView;
 
-    public static NewsFragment newInstance() {
-        return new NewsFragment();
+    public static DailyFragment newInstance() {
+        return new DailyFragment();
     }
 
     @Override
@@ -101,7 +101,7 @@ public class NewsFragment extends BaseFragment implements INewsView,
         dailyAdapter.addHeaderView(bannerView);
 
         Observable.timer(500, TimeUnit.MILLISECONDS)
-                .subscribe(aLong -> newsPresenter.getLatestDaily());
+                .subscribe(aLong -> dailyPresenter.getLatestDaily());
 
     }
 
@@ -157,13 +157,13 @@ public class NewsFragment extends BaseFragment implements INewsView,
     @Override
     public void onRefresh() {
         date = DateKit.getNowDate();
-        newsPresenter.getLatestDaily();
+        dailyPresenter.getLatestDaily();
     }
 
     @Override
     public void onLoadMoreRequested() {
         date = DateKit.timeSub(date);
-        newsPresenter.getBeforeDaily(date);
+        dailyPresenter.getBeforeDaily(date);
     }
 
     @Override

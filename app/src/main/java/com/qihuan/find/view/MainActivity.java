@@ -16,8 +16,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private Toolbar toolbar;
     private BottomNavigationView bottomView;
-    private Fragment content = NewsFragment.newInstance();
-    private NewsFragment newsFragment = NewsFragment.newInstance();
+    private Fragment content = DailyFragment.newInstance();
+    private DailyFragment dailyFragment = DailyFragment.newInstance();
     private MovieFragment movieFragment = MovieFragment.newInstance();
     private DiscoverFragment discoverFragment = DiscoverFragment.newInstance();
     private MeFragment meFragment = MeFragment.newInstance();
@@ -33,15 +33,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         toolbar = findViewById(R.id.toolbar);
         bottomView = findViewById(R.id.bottom_view);
         bottomView.setOnNavigationItemSelectedListener(this);
-        switchContent(newsFragment);
+        switchContent(dailyFragment);
         toolbar.setTitle(R.string.title_news);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.bb_menu_news:
-                switchContent(newsFragment);
+            case R.id.bb_menu_daily:
+                switchContent(dailyFragment);
                 break;
             case R.id.bb_menu_movie:
                 switchContent(movieFragment);

@@ -2,7 +2,7 @@ package com.qihuan.find.model.bean.zhihu;
 
 import java.io.Serializable;
 
-public class TopStoriesEntity implements Serializable {
+public class TopStoryBean implements Serializable {
     /**
      * title : 商场和很多人家里，竹制家具越来越多（多图）
      * image : http://p2.zhimg.com/9a/15/9a1570bb9e5fa53ae9fb9269a56ee019.jpg
@@ -59,7 +59,7 @@ public class TopStoriesEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "TopStoriesEntity{" +
+        return "TopStoryBean{" +
                 "title='" + title + '\'' +
                 ", image='" + image + '\'' +
                 ", ga_prefix='" + ga_prefix + '\'' +

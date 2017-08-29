@@ -2,7 +2,7 @@ package com.qihuan.find.model.bean.zhihu;
 
 import java.io.Serializable;
 
-public class StoryExtraEntity implements Serializable {
+public class StoryExtraBean implements Serializable {
 
     /**
      * long_comments : 1

@@ -1,6 +1,6 @@
 package com.qihuan.find.model.bean.zhihu;
 
-public class CommentsEntity {
+public class CommentsBean {
     /**
      * author : 张肸
      * content : 嗯……适合养猫
@@ -17,7 +17,7 @@ public class CommentsEntity {
     private int time;
     private int id;
     private int likes;
-    private ReplyToEntity reply_to;
+    private ReplyToBean reply_to;
 
     public String getAuthor() {
         return author;
@@ -67,11 +67,11 @@ public class CommentsEntity {
         this.likes = likes;
     }
 
-    public ReplyToEntity getReply_to() {
+    public ReplyToBean getReply_to() {
         return reply_to;
     }
 
-    public void setReply_to(ReplyToEntity reply_to) {
+    public void setReply_to(ReplyToBean reply_to) {
         this.reply_to = reply_to;
     }
 }

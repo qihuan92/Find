@@ -1,13 +1,13 @@
 package com.qihuan.find.model.net.api;
 
-import com.qihuan.find.model.bean.zhihu.CommentsEntity;
-import com.qihuan.find.model.bean.zhihu.DailyEntity;
-import com.qihuan.find.model.bean.zhihu.StoryContentEntity;
-import com.qihuan.find.model.bean.zhihu.StoryExtraEntity;
+import com.qihuan.find.model.bean.zhihu.CommentsBean;
+import com.qihuan.find.model.bean.zhihu.DailyBean;
+import com.qihuan.find.model.bean.zhihu.StoryContentBean;
+import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -18,13 +18,15 @@ import retrofit2.http.Path;
 
 public interface ZhihuApi {
 
+    String ZHIHU_URL = "http://news-at.zhihu.com/api/4/";
+
     /**
      * 获取最新文章列表
      *
      * @return
      */
     @GET("news/latest")
-    Observable<DailyEntity> getLatestDaily();
+    Flowable<DailyBean> getLatestDaily();
 
     /**
      * 获取以前的文章列表
@@ -32,7 +34,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("news/before/{date}")
-    Observable<DailyEntity> getBeforeDaily(@Path("date") String date);
+    Flowable<DailyBean> getBeforeDaily(@Path("date") String date);
 
     /**
      * 获取相应文章内容
@@ -41,7 +43,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("news/{storyId}")
-    Observable<StoryContentEntity> getStoryContent(@Path("storyId") int storyId);
+    Flowable<StoryContentBean> getStoryContent(@Path("storyId") int storyId);
 
     /**
      * 获取相应文章的额外信息，如评论数量，获得的赞等
@@ -50,7 +52,7 @@ public interface ZhihuApi {
      * @return
      */
     @GET("story-extra/{storyId}")
-    Observable<StoryExtraEntity> getStoryExtra(@Path("storyId") int storyId);
+    Flowable<StoryExtraBean> getStoryExtra(@Path("storyId") int storyId);
 
     /**
      * 获取文章长评论
@@ -58,7 +60,7 @@ public interface ZhihuApi {
      * @param storyId
      */
     @GET("story/{storyId}/long-comments")
-    Observable<List<CommentsEntity>> getLongComments(@Path("storyId") int storyId);
+    Flowable<List<CommentsBean>> getLongComments(@Path("storyId") int storyId);
 
     /**
      * 获取文章短评论
@@ -66,6 +68,6 @@ public interface ZhihuApi {
      * @param storyId
      */
     @GET("story/{storyId}/short-comments")
-    Observable<List<CommentsEntity>> getShortComments(@Path("storyId") int storyId);
+    Flowable<List<CommentsBean>> getShortComments(@Path("storyId") int storyId);
 
 }

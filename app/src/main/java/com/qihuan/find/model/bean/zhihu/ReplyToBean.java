@@ -1,6 +1,6 @@
 package com.qihuan.find.model.bean.zhihu;
 
-public class ReplyToEntity {
+public class ReplyToBean {
     /**
      * content : “我喜欢你，与你无关”
      * status : 0

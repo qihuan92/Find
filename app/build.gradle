@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'easymvp'
-apply plugin: 'easymvp-rx2'
 
 android {
     signingConfigs {
@@ -11,19 +9,23 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.qihuan.find"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [
+                        moduleName           : project.getName(),
+                        // fix Schema export directory is not provided to the annotation processor so we cannot export the schema. You can either provide `room.schemaLocation` annotation processor argument OR set exportSchema to false
+                        "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
             }
         }
     }
@@ -33,55 +35,81 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
-        exclude 'META-INF/rxjava.properties'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile('com.jakewharton.rxbinding2:rxbinding-design:2.0.0') {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.0'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
+
+    // android support
+    implementation 'com.android.support:appcompat-v7:26.0.1'
+    implementation 'com.android.support:support-v4:26.0.1'
+    implementation 'com.android.support:design:26.0.1'
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.1'
+
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
+
+    // rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+
+    // rxbinding
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
+    implementation('com.jakewharton.rxbinding2:rxbinding-design:2.0.0') {
         exclude group: 'com.android.support'
     }
-    compile files('libs/tbs_sdk_thirdapp_v3.2.0.1104_43200_sharewithdownload_withfilereader_withoutGame_obfs_20170609_115346.jar')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.github.bumptech.glide:glide:3.8.0'
-    compile 'com.google.code.gson:gson:2.8.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    compile 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
-    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.24'
-    compile 'com.blankj:utilcode:1.7.1'
-    compile 'com.github.GrenderG:Toasty:1.2.5'
-    compile 'cn.bingoogolapple:bga-banner:2.1.7@aar'
-    compile 'com.alibaba:arouter-api:1.2.1.1'
-    compile 'net.opacapp:multiline-collapsingtoolbar:1.4.0'
+
+    // rxpermissions
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+
+    // AdapterHelper
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.24'
+
+    // utilcode
+    implementation 'com.blankj:utilcode:1.7.1'
+
+    // Toasty
+    implementation 'com.github.GrenderG:Toasty:1.2.5'
+
+    // banner
+    implementation 'cn.bingoogolapple:bga-banner:2.1.7@aar'
+
+    // multiline-collapsingtoolbar
+    implementation 'net.opacapp:multiline-collapsingtoolbar:1.4.0'
+
+    // Arouter
+    implementation 'com.alibaba:arouter-api:1.2.1.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
-    testCompile 'junit:junit:4.12'
+
+    // room
+    implementation "android.arch.persistence.room:runtime:1.0.0-alpha9"
+    implementation "android.arch.persistence.room:rxjava2:1.0.0-alpha9"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha9"
+
+    // Google Architecture Components
+    implementation "android.arch.lifecycle:runtime:1.0.0-alpha9"
+    implementation "android.arch.lifecycle:extensions:1.0.0-alpha9"
+    implementation "android.arch.lifecycle:reactivestreams:1.0.0-alpha9"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9"
 }
 
 // copy apk files to build/bakApk/buildType

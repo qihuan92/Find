@@ -1,5 +1,6 @@
 package com.qihuan.find.view;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -19,26 +20,13 @@ import com.qihuan.find.R;
 import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.kit.WebKit;
-import com.qihuan.find.model.bean.zhihu.StoryContentBean;
-import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
-import com.qihuan.find.presenter.DailyDetPresenter;
 import com.qihuan.find.view.base.BaseActivity;
-import com.qihuan.find.view.i.IDailyDetView;
+import com.qihuan.find.viewmodel.DailyDetViewModel;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
-import java.util.concurrent.TimeUnit;
-
-import easymvp.annotation.ActivityView;
-import easymvp.annotation.Presenter;
-import io.reactivex.Observable;
-
 @Route(path = "/zhihu/det")
-@ActivityView(presenter = DailyDetPresenter.class)
-public class DailyDetActivity extends BaseActivity implements IDailyDetView {
-
-    @Presenter
-    DailyDetPresenter dailyDetPresenter;
+public class DailyDetActivity extends BaseActivity {
 
     @Autowired
     public int id;
@@ -49,12 +37,44 @@ public class DailyDetActivity extends BaseActivity implements IDailyDetView {
     private TextView tvCopyright;
     private FloatingActionButton fabFavorite;
     private ImageView ivDaily;
+    private DailyDetViewModel dailyDetViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_det);
         ARouter.getInstance().inject(this);
+        dailyDetViewModel = ViewModelProviders.of(this).get(DailyDetViewModel.class);
+        dailyDetViewModel.storyContent.observe(this, storyContentBean -> {
+            String url = storyContentBean.getShare_url();
+            if (TextUtils.isEmpty(storyContentBean.getBody())) {
+                webView.loadUrl(url);
+            } else {
+                String data = WebKit.buildHtmlWithCss(storyContentBean.getBody(), storyContentBean.getCss(), false);
+                webView.loadDataWithBaseURL(WebKit.BASE_URL, data, WebKit.MIME_TYPE, WebKit.ENCODING, WebKit.FAIL_URL);
+            }
+            clpToolbar.setTitle(storyContentBean.getTitle());
+            tvCopyright.setText(storyContentBean.getImage_source());
+            GlideApp.with(this)
+                    .load(storyContentBean.getImage())
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(ivDaily);
+        });
+        dailyDetViewModel.storyExtra.observe(this, storyExtraBean -> {
+
+        });
+        dailyDetViewModel.error.observe(this, throwable -> {
+            if (NetworkUtils.isConnected()) {
+                ToastKit.error(throwable.getMessage());
+            } else {
+                ToastKit.warning("请连接网络");
+                NetworkUtils.openWirelessSettings();
+            }
+        });
+        dailyDetViewModel.complete.observe(this, aVoid -> {
+
+        });
         initView();
     }
 
@@ -75,8 +95,7 @@ public class DailyDetActivity extends BaseActivity implements IDailyDetView {
         settings.setDatabaseEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
 
-        Observable.timer(500, TimeUnit.MILLISECONDS)
-                .subscribe(aLong -> dailyDetPresenter.getStoryContent(id));
+        dailyDetViewModel.getStoryContent(id);
     }
 
     @Override
@@ -88,46 +107,4 @@ public class DailyDetActivity extends BaseActivity implements IDailyDetView {
         }
     }
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void end() {
-
-    }
-
-    @Override
-    public void error(String throwable) {
-        if (NetworkUtils.isConnected()) {
-            ToastKit.error(throwable);
-        } else {
-            ToastKit.warning("请连接网络");
-            NetworkUtils.openWirelessSettings();
-        }
-    }
-
-    @Override
-    public void storyContent(StoryContentBean storyContentBean) {
-        String url = storyContentBean.getShare_url();
-        if (TextUtils.isEmpty(storyContentBean.getBody())) {
-            webView.loadUrl(url);
-        } else {
-            String data = WebKit.buildHtmlWithCss(storyContentBean.getBody(), storyContentBean.getCss(), false);
-            webView.loadDataWithBaseURL(WebKit.BASE_URL, data, WebKit.MIME_TYPE, WebKit.ENCODING, WebKit.FAIL_URL);
-        }
-        clpToolbar.setTitle(storyContentBean.getTitle());
-        tvCopyright.setText(storyContentBean.getImage_source());
-        GlideApp.with(this)
-                .load(storyContentBean.getImage())
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(ivDaily);
-    }
-
-    @Override
-    public void storyExtra(StoryExtraBean storyExtraBean) {
-
-    }
 }

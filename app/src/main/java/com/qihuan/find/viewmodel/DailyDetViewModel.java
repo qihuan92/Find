@@ -1,11 +1,12 @@
-package com.qihuan.find.presenter;
+package com.qihuan.find.viewmodel;
+
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.qihuan.find.model.bean.zhihu.StoryContentBean;
 import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 import com.qihuan.find.model.net.Client;
-import com.qihuan.find.presenter.base.BasePresenter;
-import com.qihuan.find.presenter.base.PresenterEvent;
-import com.qihuan.find.view.i.IDailyDetView;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -15,38 +16,45 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * DailyDetPresenter
- * Created by Qi on 2017/6/22.
+ * DailyDetViewModel
+ * Created by Qi on 2017/8/29.
  */
 
-public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
+public class DailyDetViewModel extends AndroidViewModel {
+
+    public MutableLiveData<StoryContentBean> storyContent = new MutableLiveData<>();
+    public MutableLiveData<StoryExtraBean> storyExtra = new MutableLiveData<>();
+    public MutableLiveData<Throwable> error = new MutableLiveData<>();
+    public MutableLiveData<Void> complete = new MutableLiveData<>();
+
+    public DailyDetViewModel(Application application) {
+        super(application);
+    }
 
     public void getStoryContent(int id) {
         Client.getZhihuApi()
                 .getStoryContent(id)
-                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<StoryContentBean>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         s.request(Long.MAX_VALUE);
-                        getView().start();
                     }
 
                     @Override
                     public void onNext(@NonNull StoryContentBean storyContentBean) {
-                        getView().storyContent(storyContentBean);
+                        storyContent.postValue(storyContentBean);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        getView().error(e.getMessage());
+                        error.postValue(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        getView().end();
+                        complete.postValue(null);
                     }
                 });
     }
@@ -54,32 +62,28 @@ public class DailyDetPresenter extends BasePresenter<IDailyDetView> {
     public void getStoryExtra(int id) {
         Client.getZhihuApi()
                 .getStoryExtra(id)
-                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<StoryExtraBean>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         s.request(Long.MAX_VALUE);
-                        getView().start();
                     }
 
                     @Override
                     public void onNext(@NonNull StoryExtraBean storyExtraBean) {
-                        getView().storyExtra(storyExtraBean);
+                        storyExtra.postValue(storyExtraBean);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        getView().error(e.getMessage());
+                        error.postValue(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        getView().end();
+                        complete.postValue(null);
                     }
                 });
     }
-
-
 }

@@ -1,7 +1,9 @@
 package com.qihuan.find.view;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,37 +23,27 @@ import com.qihuan.find.R;
 import com.qihuan.find.config.GlideApp;
 import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.kit.ToastKit;
-import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
 import com.qihuan.find.model.bean.zhihu.TopStoryBean;
-import com.qihuan.find.presenter.DailyPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
-import com.qihuan.find.view.i.INewsView;
+import com.qihuan.find.viewmodel.DailyViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
-import easymvp.annotation.FragmentView;
-import easymvp.annotation.Presenter;
-import io.reactivex.Observable;
 
 /**
  * DailyFragment
  */
-@FragmentView(presenter = DailyPresenter.class)
-public class DailyFragment extends BaseFragment implements INewsView,
+public class DailyFragment extends BaseFragment implements
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.OnItemClickListener,
         BaseQuickAdapter.RequestLoadMoreListener,
         BGABanner.Adapter<RelativeLayout, TopStoryBean>,
         BGABanner.Delegate<RelativeLayout, TopStoryBean> {
-
-    @Presenter
-    DailyPresenter dailyPresenter;
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvList;
@@ -60,9 +52,52 @@ public class DailyFragment extends BaseFragment implements INewsView,
     private DailyAdapter dailyAdapter;
     private String date = DateKit.getNowDate();
     private BGABanner bannerView;
+    private DailyViewModel dailyViewModel;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel.class);
+        dailyViewModel.topDaily.observe(this, dailyBean -> {
+            topStories.clear();
+            topStories.addAll(dailyBean.getTop_stories());
+            bannerView.setData(R.layout.item_daily_banner, dailyBean.getTop_stories(), null);
+
+            stories.clear();
+            stories.add(new DailyItemBean(true, "今日热闻"));
+            for (StoryBean storyBean : dailyBean.getStories()) {
+                stories.add(new DailyItemBean(storyBean));
+            }
+            dailyAdapter.notifyDataSetChanged();
+
+            refreshLayout.setRefreshing(false);
+        });
+        dailyViewModel.beforeDaily.observe(this, dailyBean -> {
+            stories.add(new DailyItemBean(true, DateKit.parseDate(dailyBean.getDate())));
+            for (StoryBean storyBean : dailyBean.getStories()) {
+                stories.add(new DailyItemBean(storyBean));
+            }
+            dailyAdapter.notifyDataSetChanged();
+            dailyAdapter.loadMoreComplete();
+        });
+        dailyViewModel.error.observe(this, throwable -> {
+            if (date.equals(DateKit.getNowDate())) {
+                refreshLayout.setRefreshing(false);
+            } else {
+                dailyAdapter.loadMoreFail();
+            }
+            if (NetworkUtils.isConnected()) {
+                ToastKit.error(throwable.getMessage());
+            } else {
+                ToastKit.error("请连接网络");
+                NetworkUtils.openWirelessSettings();
+            }
+        });
+        dailyViewModel.complete.observe(this, aVoid -> refreshLayout.setRefreshing(false));
     }
 
     @Override
@@ -100,70 +135,19 @@ public class DailyFragment extends BaseFragment implements INewsView,
         bannerView.setDelegate(this);
         dailyAdapter.addHeaderView(bannerView);
 
-        Observable.timer(500, TimeUnit.MILLISECONDS)
-                .subscribe(aLong -> dailyPresenter.getLatestDaily());
-
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void end() {
-        refreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void error(String message) {
-        if (date.equals(DateKit.getNowDate())) {
-            refreshLayout.setRefreshing(false);
-        } else {
-            dailyAdapter.loadMoreFail();
-        }
-        if (NetworkUtils.isConnected()) {
-            ToastKit.error(message);
-        } else {
-            ToastKit.error("请连接网络");
-            NetworkUtils.openWirelessSettings();
-        }
-    }
-
-    @Override
-    public void topDaily(DailyBean dailyBean) {
-        topStories.clear();
-        topStories.addAll(dailyBean.getTop_stories());
-        bannerView.setData(R.layout.item_daily_banner, dailyBean.getTop_stories(), null);
-
-        stories.clear();
-        stories.add(new DailyItemBean(true, "今日热闻"));
-        for (StoryBean storyBean : dailyBean.getStories()) {
-            stories.add(new DailyItemBean(storyBean));
-        }
-        dailyAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void beforeDaily(DailyBean dailyBean) {
-        stories.add(new DailyItemBean(true, DateKit.parseDate(dailyBean.getDate())));
-        for (StoryBean storyBean : dailyBean.getStories()) {
-            stories.add(new DailyItemBean(storyBean));
-        }
-        dailyAdapter.notifyDataSetChanged();
-        dailyAdapter.loadMoreComplete();
+        dailyViewModel.getLatestDaily();
     }
 
     @Override
     public void onRefresh() {
         date = DateKit.getNowDate();
-        dailyPresenter.getLatestDaily();
+        dailyViewModel.getLatestDaily();
     }
 
     @Override
     public void onLoadMoreRequested() {
         date = DateKit.timeSub(date);
-        dailyPresenter.getBeforeDaily(date);
+        dailyViewModel.getBeforeDaily(date);
     }
 
     @Override

@@ -1,10 +1,11 @@
-package com.qihuan.find.presenter;
+package com.qihuan.find.viewmodel;
+
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.model.net.Client;
-import com.qihuan.find.presenter.base.BasePresenter;
-import com.qihuan.find.presenter.base.PresenterEvent;
-import com.qihuan.find.view.i.INewsView;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -14,38 +15,45 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * DailyPresenter
- * Created by Qi on 2017/6/22.
+ * DailyViewModel
+ * Created by Qi on 2017/8/28.
  */
 
-public class DailyPresenter extends BasePresenter<INewsView> {
+public class DailyViewModel extends AndroidViewModel {
+
+    public MutableLiveData<DailyBean> topDaily = new MutableLiveData<>();
+    public MutableLiveData<DailyBean> beforeDaily = new MutableLiveData<>();
+    public MutableLiveData<Throwable> error = new MutableLiveData<>();
+    public MutableLiveData<Void> complete = new MutableLiveData<>();
+
+    public DailyViewModel(Application application) {
+        super(application);
+    }
 
     public void getLatestDaily() {
         Client.getZhihuApi()
                 .getLatestDaily()
-                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DailyBean>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         s.request(Long.MAX_VALUE);
-                        getView().start();
                     }
 
                     @Override
                     public void onNext(@NonNull DailyBean dailyBean) {
-                        getView().topDaily(dailyBean);
+                        topDaily.postValue(dailyBean);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        getView().error(e.getMessage());
+                        error.postValue(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        getView().end();
+                        complete.postValue(null);
                     }
                 });
     }
@@ -53,29 +61,27 @@ public class DailyPresenter extends BasePresenter<INewsView> {
     public void getBeforeDaily(String date) {
         Client.getZhihuApi()
                 .getBeforeDaily(date)
-                .compose(this.bindUntilEvent(PresenterEvent.DETACHED))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DailyBean>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         s.request(Long.MAX_VALUE);
-                        getView().start();
                     }
 
                     @Override
                     public void onNext(@NonNull DailyBean dailyBean) {
-                        getView().beforeDaily(dailyBean);
+                        beforeDaily.postValue(dailyBean);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        getView().error(e.getMessage());
+                        error.postValue(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        getView().end();
+                        complete.postValue(null);
                     }
                 });
     }

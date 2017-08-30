@@ -44,8 +44,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.0'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     // android support
     implementation 'com.android.support:appcompat-v7:26.0.1'
@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 
     // AdapterHelper
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.24'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
 
     // utilcode
     implementation 'com.blankj:utilcode:1.7.1'

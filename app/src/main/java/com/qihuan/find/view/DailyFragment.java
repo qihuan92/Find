@@ -62,6 +62,10 @@ public class DailyFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
         dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel.class);
         dailyViewModel.topDaily.observe(this, dailyBean -> {
+            refreshLayout.setRefreshing(false);
+            if (dailyBean == null) {
+                return;
+            }
             bannerView.setData(R.layout.item_daily_banner, dailyBean.getTop_stories(), null);
 
             stories.clear();
@@ -70,10 +74,12 @@ public class DailyFragment extends BaseFragment implements
                 stories.add(new DailyItemBean(storyBean));
             }
             dailyAdapter.notifyDataSetChanged();
-
-            refreshLayout.setRefreshing(false);
         });
         dailyViewModel.beforeDaily.observe(this, dailyBean -> {
+            if (dailyBean == null) {
+                dailyAdapter.loadMoreEnd();
+                return;
+            }
             stories.add(new DailyItemBean(true, DateKit.parseDate(dailyBean.getDate())));
             for (StoryBean storyBean : dailyBean.getStories()) {
                 stories.add(new DailyItemBean(storyBean));

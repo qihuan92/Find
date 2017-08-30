@@ -46,6 +46,9 @@ public class DailyDetActivity extends BaseActivity {
         ARouter.getInstance().inject(this);
         dailyDetViewModel = ViewModelProviders.of(this).get(DailyDetViewModel.class);
         dailyDetViewModel.storyContent.observe(this, storyContentBean -> {
+            if (storyContentBean == null) {
+                return;
+            }
             String url = storyContentBean.getShare_url();
             if (TextUtils.isEmpty(storyContentBean.getBody())) {
                 webView.loadUrl(url);

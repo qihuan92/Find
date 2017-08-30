@@ -174,6 +174,7 @@ public class DailyFragment extends BaseFragment implements
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
         GlideApp.with(this)
                 .load(model.getImage())
+                .centerCrop()
                 .transform(new RoundedCorners(10))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivBanner);

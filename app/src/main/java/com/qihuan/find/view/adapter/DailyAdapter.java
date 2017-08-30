@@ -42,6 +42,7 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
         try {
             GlideApp.with(mContext)
                     .load(storyBean.getImages().get(0))
+                    .centerCrop()
                     .transform(new RoundedCorners(10))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into((ImageView) helper.getView(R.id.iv_news));

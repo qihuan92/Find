@@ -88,9 +88,9 @@ public class DailyFragment extends BaseFragment implements
                 dailyAdapter.loadMoreFail();
             }
             if (NetworkUtils.isConnected()) {
-                ToastKit.error(throwable.getMessage());
+                ToastKit.error(throwable);
             } else {
-                ToastKit.error("请连接网络");
+                ToastKit.error(getString(R.string.net_error_msg));
                 NetworkUtils.openWirelessSettings();
             }
         });

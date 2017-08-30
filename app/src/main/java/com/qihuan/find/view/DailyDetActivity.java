@@ -66,9 +66,9 @@ public class DailyDetActivity extends BaseActivity {
         });
         dailyDetViewModel.error.observe(this, throwable -> {
             if (NetworkUtils.isConnected()) {
-                ToastKit.error(throwable.getMessage());
+                ToastKit.error(throwable);
             } else {
-                ToastKit.warning("请连接网络");
+                ToastKit.warning(getString(R.string.net_error_msg));
                 NetworkUtils.openWirelessSettings();
             }
         });

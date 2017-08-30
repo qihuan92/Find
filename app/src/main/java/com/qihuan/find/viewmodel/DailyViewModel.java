@@ -22,7 +22,7 @@ public class DailyViewModel extends AndroidViewModel {
 
     public MutableLiveData<DailyBean> topDaily = new MutableLiveData<>();
     public MutableLiveData<DailyBean> beforeDaily = new MutableLiveData<>();
-    public MutableLiveData<Throwable> error = new MutableLiveData<>();
+    public MutableLiveData<String> error = new MutableLiveData<>();
 
     public DailyViewModel(Application application) {
         super(application);
@@ -42,7 +42,7 @@ public class DailyViewModel extends AndroidViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 dailyBean -> topDaily.postValue(dailyBean),
-                                throwable -> error.postValue(throwable)
+                                throwable -> error.postValue(throwable.getMessage())
                         )
         );
     }
@@ -55,7 +55,7 @@ public class DailyViewModel extends AndroidViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 dailyBean -> beforeDaily.postValue(dailyBean),
-                                throwable -> error.postValue(throwable)
+                                throwable -> error.postValue(throwable.getMessage())
                         )
         );
     }

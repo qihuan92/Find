@@ -23,7 +23,7 @@ public class DailyDetViewModel extends AndroidViewModel {
 
     public MutableLiveData<StoryContentBean> storyContent = new MutableLiveData<>();
     public MutableLiveData<StoryExtraBean> storyExtra = new MutableLiveData<>();
-    public MutableLiveData<Throwable> error = new MutableLiveData<>();
+    public MutableLiveData<String> error = new MutableLiveData<>();
 
     public DailyDetViewModel(Application application) {
         super(application);
@@ -43,7 +43,7 @@ public class DailyDetViewModel extends AndroidViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 storyContentBean -> storyContent.postValue(storyContentBean),
-                                throwable -> error.postValue(throwable)
+                                throwable -> error.postValue(throwable.getMessage())
                         )
         );
     }
@@ -56,7 +56,7 @@ public class DailyDetViewModel extends AndroidViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 storyExtraBean -> storyExtra.postValue(storyExtraBean),
-                                throwable -> error.postValue(throwable)
+                                throwable -> error.postValue(throwable.getMessage())
                         )
         );
     }

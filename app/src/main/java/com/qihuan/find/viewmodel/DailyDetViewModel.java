@@ -8,11 +8,8 @@ import com.qihuan.find.model.bean.zhihu.StoryContentBean;
 import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 import com.qihuan.find.model.net.Client;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -22,68 +19,45 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DailyDetViewModel extends AndroidViewModel {
 
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
     public MutableLiveData<StoryContentBean> storyContent = new MutableLiveData<>();
     public MutableLiveData<StoryExtraBean> storyExtra = new MutableLiveData<>();
     public MutableLiveData<Throwable> error = new MutableLiveData<>();
-    public MutableLiveData<Void> complete = new MutableLiveData<>();
 
     public DailyDetViewModel(Application application) {
         super(application);
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposables.clear();
+    }
+
     public void getStoryContent(int id) {
-        Client.getZhihuApi()
-                .getStoryContent(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<StoryContentBean>() {
-                    @Override
-                    public void onSubscribe(Subscription s) {
-                        s.request(Long.MAX_VALUE);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull StoryContentBean storyContentBean) {
-                        storyContent.postValue(storyContentBean);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        error.postValue(e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        complete.postValue(null);
-                    }
-                });
+        disposables.add(
+                Client.getZhihuApi()
+                        .getStoryContent(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                storyContentBean -> storyContent.postValue(storyContentBean),
+                                throwable -> error.postValue(throwable)
+                        )
+        );
     }
 
     public void getStoryExtra(int id) {
-        Client.getZhihuApi()
-                .getStoryExtra(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<StoryExtraBean>() {
-                    @Override
-                    public void onSubscribe(Subscription s) {
-                        s.request(Long.MAX_VALUE);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull StoryExtraBean storyExtraBean) {
-                        storyExtra.postValue(storyExtraBean);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        error.postValue(e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        complete.postValue(null);
-                    }
-                });
+        disposables.add(
+                Client.getZhihuApi()
+                        .getStoryExtra(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                storyExtraBean -> storyExtra.postValue(storyExtraBean),
+                                throwable -> error.postValue(throwable)
+                        )
+        );
     }
 }

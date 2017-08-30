@@ -72,9 +72,6 @@ public class DailyDetActivity extends BaseActivity {
                 NetworkUtils.openWirelessSettings();
             }
         });
-        dailyDetViewModel.complete.observe(this, aVoid -> {
-
-        });
         initView();
     }
 

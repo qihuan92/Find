@@ -97,7 +97,7 @@ public class DailyFragment extends BaseFragment implements
                 NetworkUtils.openWirelessSettings();
             }
         });
-        dailyViewModel.complete.observe(this, aVoid -> refreshLayout.setRefreshing(false));
+
     }
 
     @Override

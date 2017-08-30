@@ -93,9 +93,6 @@ dependencies {
     // banner
     implementation 'cn.bingoogolapple:bga-banner:2.1.7@aar'
 
-    // multiline-collapsingtoolbar
-    implementation 'net.opacapp:multiline-collapsingtoolbar:1.4.0'
-
     // Arouter
     implementation 'com.alibaba:arouter-api:1.2.1.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'

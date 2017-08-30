@@ -2,6 +2,7 @@ package com.qihuan.find.view;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -23,7 +24,6 @@ import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.viewmodel.DailyDetViewModel;
 
-import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
 @Route(path = "/zhihu/det")
 public class DailyDetActivity extends BaseActivity {

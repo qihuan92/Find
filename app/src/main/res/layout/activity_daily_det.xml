@@ -14,7 +14,7 @@
         android:fitsSystemWindows="true"
         android:transitionName="shareView">
 
-        <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
+        <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/clp_toolbar"
             android:layout_width="match_parent"
             android:layout_height="260dp"
@@ -63,7 +63,7 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:titleTextAppearance="@style/Toolbar.TitleText" />
-        </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView

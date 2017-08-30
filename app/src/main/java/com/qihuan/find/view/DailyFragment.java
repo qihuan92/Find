@@ -47,7 +47,6 @@ public class DailyFragment extends BaseFragment implements
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvList;
-    private List<TopStoryBean> topStories = new ArrayList<>();
     private List<DailyItemBean> stories = new ArrayList<>();
     private DailyAdapter dailyAdapter;
     private String date = DateKit.getNowDate();
@@ -63,8 +62,6 @@ public class DailyFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
         dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel.class);
         dailyViewModel.topDaily.observe(this, dailyBean -> {
-            topStories.clear();
-            topStories.addAll(dailyBean.getTop_stories());
             bannerView.setData(R.layout.item_daily_banner, dailyBean.getTop_stories(), null);
 
             stories.clear();

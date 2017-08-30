@@ -23,7 +23,7 @@ public interface ZhihuApi {
     /**
      * 获取最新文章列表
      *
-     * @return
+     * @return DailyBean
      */
     @GET("news/latest")
     Flowable<DailyBean> getLatestDaily();
@@ -31,7 +31,7 @@ public interface ZhihuApi {
     /**
      * 获取以前的文章列表
      *
-     * @return
+     * @return DailyBean
      */
     @GET("news/before/{date}")
     Flowable<DailyBean> getBeforeDaily(@Path("date") String date);
@@ -39,8 +39,8 @@ public interface ZhihuApi {
     /**
      * 获取相应文章内容
      *
-     * @param storyId
-     * @return
+     * @param storyId storyId
+     * @return StoryContentBean
      */
     @GET("news/{storyId}")
     Flowable<StoryContentBean> getStoryContent(@Path("storyId") int storyId);
@@ -48,8 +48,8 @@ public interface ZhihuApi {
     /**
      * 获取相应文章的额外信息，如评论数量，获得的赞等
      *
-     * @param storyId
-     * @return
+     * @param storyId storyId
+     * @return StoryExtraBean
      */
     @GET("story-extra/{storyId}")
     Flowable<StoryExtraBean> getStoryExtra(@Path("storyId") int storyId);
@@ -57,7 +57,8 @@ public interface ZhihuApi {
     /**
      * 获取文章长评论
      *
-     * @param storyId
+     * @param storyId storyId
+     * @return List<CommentsBean>
      */
     @GET("story/{storyId}/long-comments")
     Flowable<List<CommentsBean>> getLongComments(@Path("storyId") int storyId);
@@ -65,7 +66,8 @@ public interface ZhihuApi {
     /**
      * 获取文章短评论
      *
-     * @param storyId
+     * @param storyId storyId
+     * @return List<CommentsBean>
      */
     @GET("story/{storyId}/short-comments")
     Flowable<List<CommentsBean>> getShortComments(@Path("storyId") int storyId);

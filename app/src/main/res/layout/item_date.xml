@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="- 2016/12/9 -"
         android:textColor="@color/deepOrange"
         android:textSize="16sp"
         android:textStyle="italic|bold" />

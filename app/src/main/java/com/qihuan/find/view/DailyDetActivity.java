@@ -2,7 +2,6 @@ package com.qihuan.find.view;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -33,11 +32,11 @@ public class DailyDetActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private WebView webView;
-    private CollapsingToolbarLayout clpToolbar;
-    private TextView tvCopyright;
+    private TextView tvTitle;
     private FloatingActionButton fabFavorite;
     private ImageView ivDaily;
     private DailyDetViewModel dailyDetViewModel;
+    private TextView tvCopyRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +55,8 @@ public class DailyDetActivity extends BaseActivity {
                 String data = WebKit.buildHtmlWithCss(storyContentBean.getBody(), storyContentBean.getCss(), false);
                 webView.loadDataWithBaseURL(WebKit.BASE_URL, data, WebKit.MIME_TYPE, WebKit.ENCODING, WebKit.FAIL_URL);
             }
-            clpToolbar.setTitle(storyContentBean.getTitle());
-            tvCopyright.setText(storyContentBean.getImage_source());
+            tvTitle.setText(storyContentBean.getTitle());
+            tvCopyRight.setText(storyContentBean.getImage_source());
             GlideApp.with(this)
                     .load(storyContentBean.getImage())
                     .centerCrop()
@@ -81,10 +80,10 @@ public class DailyDetActivity extends BaseActivity {
     private void initView() {
         toolbar = findViewById(R.id.toolbar);
         webView = findViewById(R.id.web_view);
-        clpToolbar = findViewById(R.id.clp_toolbar);
-        tvCopyright = findViewById(R.id.tv_copyright);
+        tvTitle = findViewById(R.id.tv_title);
         fabFavorite = findViewById(R.id.fab_favorite);
         ivDaily = findViewById(R.id.iv_daily);
+        tvCopyRight = findViewById(R.id.tv_copyright);
 
         setToolBar(toolbar, "");
 

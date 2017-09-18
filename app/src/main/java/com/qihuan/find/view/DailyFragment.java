@@ -16,11 +16,9 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.find.R;
-import com.qihuan.find.config.GlideApp;
+import com.qihuan.find.common.GlideStrategy;
 import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
@@ -29,6 +27,7 @@ import com.qihuan.find.model.bean.zhihu.TopStoryBean;
 import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
 import com.qihuan.find.viewmodel.DailyViewModel;
+import com.qihuan.imageloader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,11 +171,14 @@ public class DailyFragment extends BaseFragment implements
     public void fillBannerItem(BGABanner banner, RelativeLayout itemView, TopStoryBean model, int position) {
         ImageView ivBanner = itemView.findViewById(R.id.iv_banner);
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
-        GlideApp.with(this)
+        ImageLoader.INSTANCE
+                .strategy(
+                        new GlideStrategy.Builder()
+                                .radius(10)
+                                .build()
+                )
+                .with(getContext())
                 .load(model.getImage())
-                .centerCrop()
-                .transform(new RoundedCorners(10))
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivBanner);
         tvBanner.setText(model.getTitle());
     }

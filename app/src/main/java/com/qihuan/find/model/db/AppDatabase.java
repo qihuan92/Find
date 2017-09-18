@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.qihuan.find.config.AppConfig;
+import com.qihuan.find.common.AppConfig;
 import com.qihuan.find.model.bean.find.CollectionBean;
 import com.qihuan.find.model.db.dao.CollectionDao;
 

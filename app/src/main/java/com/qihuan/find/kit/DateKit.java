@@ -57,26 +57,26 @@ public class DateKit {
     }
 
     public static String parseDate(String date) {
-        if (date != null) {
-            SimpleDateFormat format = new SimpleDateFormat(F0, Locale.getDefault());
-            if (!date.equals(TimeUtils.getNowString(format))) {
-                Date formatDate = null;
-                try {
-                    formatDate = format.parse(date);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("- yyyy/MM/dd EEEE -", Locale.getDefault());
-                if (formatDate != null) {
-                    return simpleDateFormat.format(formatDate);
-                } else {
-                    return "";
-                }
-            } else {
-                return "今天";
-            }
-        } else {
+        if (date == null) {
             return "";
         }
+
+        SimpleDateFormat format = new SimpleDateFormat(F0, Locale.getDefault());
+        if (date.equals(TimeUtils.getNowString(format))) {
+            return "今天";
+        }
+
+        Date formatDate = null;
+        try {
+            formatDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (formatDate == null) {
+            return "";
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("- yyyy/MM/dd EEEE -", Locale.getDefault());
+        return simpleDateFormat.format(formatDate);
     }
 }

@@ -7,7 +7,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.qihuan.find.R;
-import com.qihuan.find.config.GlideApp;
+import com.qihuan.find.common.GlideApp;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
 

@@ -1,4 +1,4 @@
-package com.qihuan.find.config;
+package com.qihuan.find.common;
 
 /**
  * AppConfig

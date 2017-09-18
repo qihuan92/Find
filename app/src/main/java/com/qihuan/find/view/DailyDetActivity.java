@@ -17,7 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.qihuan.find.R;
-import com.qihuan.find.config.GlideApp;
+import com.qihuan.find.common.GlideApp;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.view.base.BaseActivity;

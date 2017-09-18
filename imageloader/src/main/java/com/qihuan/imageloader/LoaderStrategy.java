@@ -4,10 +4,10 @@ import android.content.Context;
 import android.widget.ImageView;
 
 /**
- * LoadStrategy
+ * LoaderStrategy
  * Created by Qi on 2017/9/18.
  */
 
-public interface LoadStrategy {
-    void load(Context context, String url, ImageView imageView);
+public interface LoaderStrategy {
+    void load(Context context, String url, ImageView target, LoaderOption options);
 }

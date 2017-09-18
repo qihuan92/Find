@@ -11,13 +11,14 @@ import android.widget.ImageView;
 public enum ImageLoader {
     INSTANCE;
 
-    private LoadStrategy loadStrategy;
+    private LoaderStrategy loaderStrategy;
     private Context context;
     private String url;
     private ImageView imageView;
+    private LoaderOption option;
 
-    public ImageLoader strategy(LoadStrategy loadStrategy) {
-        this.loadStrategy = loadStrategy;
+    public ImageLoader strategy(LoaderStrategy loaderStrategy) {
+        this.loaderStrategy = loaderStrategy;
         return this;
     }
 
@@ -31,18 +32,22 @@ public enum ImageLoader {
         return this;
     }
 
-    public ImageLoader into(ImageView imageView) {
-        if (this.loadStrategy == null) {
-            throw new IllegalStateException("LoadStrategy is null!");
+    public ImageLoader options(LoaderOption option) {
+        this.option = option;
+        return this;
+    }
+
+    public void into(ImageView target) {
+        if (this.loaderStrategy == null) {
+            throw new IllegalStateException("LoaderStrategy is null!");
         }
-        if (imageView == null) {
+        if (target == null) {
             throw new IllegalStateException("ImageView is null!");
         }
-        if (context == null) {
+        if (this.context == null) {
             throw new IllegalStateException("Context is null!");
         }
-        this.imageView = imageView;
-        loadStrategy.load(this.context, this.url, this.imageView);
-        return this;
+        this.imageView = target;
+        loaderStrategy.load(this.context, this.url, this.imageView, this.option);
     }
 }

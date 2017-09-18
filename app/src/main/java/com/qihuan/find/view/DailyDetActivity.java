@@ -15,13 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.qihuan.find.App;
 import com.qihuan.find.R;
-import com.qihuan.find.common.GlideApp;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.viewmodel.DailyDetViewModel;
+import com.qihuan.imageloader.ImageLoader;
 
 
 @Route(path = "/zhihu/det")
@@ -57,10 +57,11 @@ public class DailyDetActivity extends BaseActivity {
             }
             tvTitle.setText(storyContentBean.getTitle());
             tvCopyRight.setText(storyContentBean.getImage_source());
-            GlideApp.with(this)
+            ImageLoader.INSTANCE
+                    .strategy(App.imageLoaderStrategy())
+                    .with(this)
                     .load(storyContentBean.getImage())
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .options(() -> 10)
                     .into(ivDaily);
         });
         dailyDetViewModel.storyExtra.observe(this, storyExtraBean -> {

@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.blankj.utilcode.util.NetworkUtils;
 import com.qihuan.find.App;
 import com.qihuan.find.R;
+import com.qihuan.find.kit.NetKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.view.base.BaseActivity;
@@ -68,11 +68,11 @@ public class DailyDetActivity extends BaseActivity {
 
         });
         dailyDetViewModel.error.observe(this, throwable -> {
-            if (NetworkUtils.isConnected()) {
+            if (NetKit.isConnected()) {
                 ToastKit.error(throwable);
             } else {
                 ToastKit.warning(getString(R.string.net_error_msg));
-                NetworkUtils.openWirelessSettings();
+                NetKit.openWirelessSettings();
             }
         });
         initView();

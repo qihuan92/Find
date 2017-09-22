@@ -4,9 +4,9 @@ import android.app.Application;
 import android.support.v4.content.ContextCompat;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.blankj.utilcode.util.Utils;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.qihuan.find.common.GlideStrategy;
+import com.qihuan.find.kit.AppKit;
 import com.qihuan.imageloader.LoaderStrategy;
 
 import es.dmoral.toasty.Toasty;
@@ -24,7 +24,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utils.init(getApplicationContext());
+        AppKit.init(getApplicationContext());
         initARouter();
         initToasty();
         sharedPrefsCookiePersistor = new SharedPrefsCookiePersistor(getApplicationContext());

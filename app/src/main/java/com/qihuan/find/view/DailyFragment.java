@@ -15,11 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.blankj.utilcode.util.NetworkUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.find.App;
 import com.qihuan.find.R;
 import com.qihuan.find.kit.DateKit;
+import com.qihuan.find.kit.NetKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
@@ -92,11 +92,11 @@ public class DailyFragment extends BaseFragment implements
             } else {
                 dailyAdapter.loadMoreFail();
             }
-            if (NetworkUtils.isConnected()) {
+            if (NetKit.isConnected()) {
                 ToastKit.error(throwable);
             } else {
                 ToastKit.error(getString(R.string.net_error_msg));
-                NetworkUtils.openWirelessSettings();
+                NetKit.openWirelessSettings();
             }
         });
 

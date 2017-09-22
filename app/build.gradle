@@ -77,8 +77,6 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     // AdapterHelper
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
-    // utilcode
-    implementation 'com.blankj:utilcode:1.7.1'
     // Toasty
     implementation 'com.github.GrenderG:Toasty:1.2.5'
     // banner

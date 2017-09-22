@@ -1,11 +1,12 @@
 package com.qihuan.find.model.net;
 
-import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.Utils;
+
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.qihuan.find.App;
 import com.qihuan.find.BuildConfig;
+import com.qihuan.find.kit.AppKit;
+import com.qihuan.find.kit.NetKit;
 import com.qihuan.find.model.net.api.DoubanApi;
 import com.qihuan.find.model.net.api.ZhihuApi;
 
@@ -30,21 +31,23 @@ public class Client {
     private static ZhihuApi zhihuApi = null;
     private static DoubanApi doubanApi = null;
     private static final Object monitor = new Object();
-    private static File httpCacheDirectory = new File(Utils.getContext().getCacheDir(), "FindCache");
+    private static File httpCacheDirectory = new File(AppKit.getContext().getCacheDir(), "FindCache");
     private static int cacheSize = 10 * 1024 * 1024; // 10 MiB
     private static Cache cache = new Cache(httpCacheDirectory, cacheSize);
 
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
         Response originalResponse = chain.proceed(chain.request());
-        if (NetworkUtils.isAvailableByPing()) {
-            int maxAge = 60; // 在线缓存在1分钟内可读取
+        if (NetKit.isConnected()) {
+            // 在线缓存在1分钟内可读取
+            int maxAge = 60;
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
                     .header("Cache-Control", "public, max-age=" + maxAge)
                     .build();
         } else {
-            int maxStale = 60 * 60 * 24 * 28;// 离线时缓存保存4周
+            // 离线时缓存保存4周
+            int maxStale = 60 * 60 * 24 * 28;
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")

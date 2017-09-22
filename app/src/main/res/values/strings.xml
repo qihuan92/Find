@@ -5,4 +5,5 @@
     <string name="title_discover">发现</string>
     <string name="title_me">我的</string>
     <string name="net_error_msg">请连接网络</string>
+    <string name="today">今天</string>
 </resources>

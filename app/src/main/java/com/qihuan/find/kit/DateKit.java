@@ -1,6 +1,6 @@
 package com.qihuan.find.kit;
 
-import com.blankj.utilcode.util.TimeUtils;
+import com.qihuan.find.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,14 +16,18 @@ public class DateKit {
 
     private static final String F0 = "yyyyMMdd";
 
+    private static String getNowString(SimpleDateFormat sdf) {
+        return sdf.format(new Date());
+    }
+
     public static String getNowDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(F0, Locale.getDefault());
-        return TimeUtils.getNowString(simpleDateFormat);
+        return getNowString(simpleDateFormat);
     }
 
     public static String getNowDate(String format) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.getDefault());
-        return TimeUtils.getNowString(simpleDateFormat);
+        return getNowString(simpleDateFormat);
     }
 
     public static String timeSub(String date, int dayAddNum, String format) {
@@ -62,8 +66,8 @@ public class DateKit {
         }
 
         SimpleDateFormat format = new SimpleDateFormat(F0, Locale.getDefault());
-        if (date.equals(TimeUtils.getNowString(format))) {
-            return "今天";
+        if (date.equals(getNowString(format))) {
+            return AppKit.getContext().getString(R.string.today);
         }
 
         Date formatDate = null;

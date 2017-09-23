@@ -18,19 +18,13 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.find.App;
 import com.qihuan.find.R;
-import com.qihuan.find.kit.DateKit;
-import com.qihuan.find.kit.NetKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
-import com.qihuan.find.model.bean.zhihu.StoryBean;
 import com.qihuan.find.model.bean.zhihu.TopStoryBean;
 import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
 import com.qihuan.find.viewmodel.DailyViewModel;
 import com.qihuan.imageloader.ImageLoader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -46,9 +40,7 @@ public class DailyFragment extends BaseFragment implements
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvList;
-    private List<DailyItemBean> stories = new ArrayList<>();
     private DailyAdapter dailyAdapter;
-    private String date = DateKit.getNowDate();
     private BGABanner bannerView;
     private DailyViewModel dailyViewModel;
 
@@ -59,47 +51,7 @@ public class DailyFragment extends BaseFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel.class);
-        dailyViewModel.topDaily.observe(this, dailyBean -> {
-            refreshLayout.setRefreshing(false);
-            if (dailyBean == null) {
-                return;
-            }
-            bannerView.setData(R.layout.item_daily_banner, dailyBean.getTop_stories(), null);
-
-            stories.clear();
-            stories.add(new DailyItemBean(true, "今日热闻"));
-            for (StoryBean storyBean : dailyBean.getStories()) {
-                stories.add(new DailyItemBean(storyBean));
-            }
-            dailyAdapter.notifyDataSetChanged();
-        });
-        dailyViewModel.beforeDaily.observe(this, dailyBean -> {
-            if (dailyBean == null) {
-                dailyAdapter.loadMoreEnd();
-                return;
-            }
-            stories.add(new DailyItemBean(true, DateKit.parseDate(dailyBean.getDate())));
-            for (StoryBean storyBean : dailyBean.getStories()) {
-                stories.add(new DailyItemBean(storyBean));
-            }
-            dailyAdapter.notifyDataSetChanged();
-            dailyAdapter.loadMoreComplete();
-        });
-        dailyViewModel.error.observe(this, throwable -> {
-            if (date.equals(DateKit.getNowDate())) {
-                refreshLayout.setRefreshing(false);
-            } else {
-                dailyAdapter.loadMoreFail();
-            }
-            if (NetKit.isConnected()) {
-                ToastKit.error(throwable);
-            } else {
-                ToastKit.error(getString(R.string.net_error_msg));
-                NetKit.openWirelessSettings();
-            }
-        });
-
+        observe();
     }
 
     @Override
@@ -121,12 +73,44 @@ public class DailyFragment extends BaseFragment implements
         bannerView.stopAutoPlay();
     }
 
+    private void observe() {
+        dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel.class);
+        dailyViewModel.topStories().observe(this, topStory -> bannerView.setData(R.layout.item_daily_banner, topStory, null));
+        dailyViewModel.stories().observe(this, dailyItems -> {
+            if (dailyItems == null) {
+                return;
+            }
+            dailyAdapter.addData(dailyItems);
+        });
+        dailyViewModel.error().observe(this, result -> {
+            if (result == null) {
+                return;
+            }
+            ToastKit.error(result.getMsg());
+            if (result.isRefresh()) {
+                refreshLayout.setRefreshing(false);
+            } else {
+                dailyAdapter.loadMoreFail();
+            }
+        });
+        dailyViewModel.complete().observe(this, result -> {
+            if (result == null) {
+                return;
+            }
+            if (result.isRefresh()) {
+                refreshLayout.setRefreshing(false);
+            } else {
+                dailyAdapter.loadMoreComplete();
+            }
+        });
+    }
+
     private void initView(View view) {
         rvList = view.findViewById(R.id.rv_list);
         refreshLayout = view.findViewById(R.id.refresh_layout);
 
         refreshLayout.setOnRefreshListener(this);
-        dailyAdapter = new DailyAdapter(stories);
+        dailyAdapter = new DailyAdapter();
         dailyAdapter.setOnItemClickListener(this);
         dailyAdapter.setOnLoadMoreListener(this, rvList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -142,19 +126,17 @@ public class DailyFragment extends BaseFragment implements
 
     @Override
     public void onRefresh() {
-        date = DateKit.getNowDate();
         dailyViewModel.getLatestDaily();
     }
 
     @Override
     public void onLoadMoreRequested() {
-        date = DateKit.timeSub(date);
-        dailyViewModel.getBeforeDaily(date);
+        dailyViewModel.getBeforeDaily();
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        DailyItemBean dailyItemBean = stories.get(position);
+        DailyItemBean dailyItemBean = (DailyItemBean) adapter.getData().get(position);
         if (dailyItemBean.isHeader) {
             return;
         }

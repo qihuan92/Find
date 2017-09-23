@@ -21,10 +21,9 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
      *
-     * @param data A new list is created out of this one to avoid mutable list
      */
-    public DailyAdapter(List<DailyItemBean> data) {
-        super(R.layout.item_daily, R.layout.item_date, data);
+    public DailyAdapter() {
+        super(R.layout.item_daily, R.layout.item_date, null);
     }
 
     @Override
@@ -35,17 +34,18 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, DailyItemBean item) {
         StoryBean storyBean = item.t;
-        helper.setText(R.id.tv_news, storyBean.getTitle());
-        try {
-            ImageLoader.INSTANCE
-                    .strategy(App.imageLoaderStrategy())
-                    .with(mContext)
-                    .load(storyBean.getImages().get(0))
-                    .options(() -> 10)
-                    .into(helper.getView(R.id.iv_news));
-        } catch (Exception e) {
-            e.printStackTrace();
+        List<String> images = storyBean.getImages();
+        String url = null;
+        if (images.size() != 0) {
+            url = images.get(0);
         }
+        helper.setText(R.id.tv_news, storyBean.getTitle());
+        ImageLoader.INSTANCE
+                .strategy(App.imageLoaderStrategy())
+                .with(mContext)
+                .load(url)
+                .options(() -> 10)
+                .into(helper.getView(R.id.iv_news));
     }
 
 }

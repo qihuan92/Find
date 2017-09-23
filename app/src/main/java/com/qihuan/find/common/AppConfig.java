@@ -7,4 +7,5 @@ package com.qihuan.find.common;
 
 public class AppConfig {
     public final static String DATABASE_NAME = "find";
+    public final static String CACHE_NAME = "FindCache";
 }

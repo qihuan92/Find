@@ -1,6 +1,10 @@
 package com.qihuan.find.kit;
 
+import android.app.Application;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
+
+import com.qihuan.find.R;
 
 import es.dmoral.toasty.Toasty;
 
@@ -25,5 +29,12 @@ public class ToastKit {
 
     public static void warning(String content) {
         Toasty.warning(AppKit.getContext(), content, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void init(Application application) {
+        Toasty.Config
+                .getInstance()
+                .setInfoColor(ContextCompat.getColor(application, R.color.colorPrimary))
+                .apply();
     }
 }

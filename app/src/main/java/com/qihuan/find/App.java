@@ -1,15 +1,9 @@
 package com.qihuan.find;
 
 import android.app.Application;
-import android.support.v4.content.ContextCompat;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.qihuan.find.common.GlideStrategy;
-import com.qihuan.find.kit.AppKit;
 import com.qihuan.imageloader.LoaderStrategy;
-
-import es.dmoral.toasty.Toasty;
 
 /**
  * App
@@ -19,38 +13,26 @@ import es.dmoral.toasty.Toasty;
 public class App extends Application {
 
     private static SharedPrefsCookiePersistor sharedPrefsCookiePersistor;
-    private static GlideStrategy glideStrategy;
+    private static LoaderStrategy strategy;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        AppKit.init(getApplicationContext());
-        initARouter();
-        initToasty();
-        sharedPrefsCookiePersistor = new SharedPrefsCookiePersistor(getApplicationContext());
-        glideStrategy = new GlideStrategy();
-    }
-
-    private void initARouter() {
-        if (BuildConfig.DEBUG) {
-            ARouter.openLog();
-            ARouter.openDebug();
-        }
-        ARouter.init(this);
-    }
-
-    private void initToasty() {
-        Toasty.Config
-                .getInstance()
-                .setInfoColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary))
-                .apply();
     }
 
     public static SharedPrefsCookiePersistor getSharedPrefsCookiePersistor() {
         return sharedPrefsCookiePersistor;
     }
 
+    public static void setSharedPrefsCookiePersistor(SharedPrefsCookiePersistor sharedPrefsCookiePersistor) {
+        App.sharedPrefsCookiePersistor = sharedPrefsCookiePersistor;
+    }
+
     public static LoaderStrategy imageLoaderStrategy() {
-        return glideStrategy;
+        return strategy;
+    }
+
+    public static void setLoaderStrategy(LoaderStrategy strategy) {
+        App.strategy = strategy;
     }
 }

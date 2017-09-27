@@ -5,8 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import dagger.android.support.DaggerAppCompatActivity;
 
 /**
  * BaseActivity
@@ -14,7 +15,7 @@ import android.support.v7.widget.Toolbar;
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends DaggerAppCompatActivity {
 
     protected Context context;
     private ProgressDialog progressDialog;

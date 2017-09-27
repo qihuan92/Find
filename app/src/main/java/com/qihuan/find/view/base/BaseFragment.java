@@ -4,14 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
+import dagger.android.support.DaggerFragment;
 
 /**
  * BaseFragment
  * Created by Qi on 2017/6/22.
  */
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends DaggerFragment {
 
     private ProgressDialog progressDialog;
     protected Context context;

@@ -14,6 +14,8 @@ import com.qihuan.find.model.net.Result;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -33,6 +35,7 @@ public class DailyViewModel extends AndroidViewModel {
     private String date;
     private Result result;
 
+    @Inject
     public DailyViewModel(Application application) {
         super(application);
         disposables = new CompositeDisposable();

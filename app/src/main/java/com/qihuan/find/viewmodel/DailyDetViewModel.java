@@ -6,7 +6,9 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.qihuan.find.model.bean.zhihu.StoryContentBean;
 import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
-import com.qihuan.find.model.net.Client;
+import com.qihuan.find.model.net.api.ZhihuApi;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -25,9 +27,13 @@ public class DailyDetViewModel extends AndroidViewModel {
     public MutableLiveData<StoryExtraBean> storyExtra = new MutableLiveData<>();
     public MutableLiveData<String> error = new MutableLiveData<>();
 
+    @Inject
     public DailyDetViewModel(Application application) {
         super(application);
     }
+
+    @Inject
+    ZhihuApi zhihuApi;
 
     @Override
     protected void onCleared() {
@@ -37,8 +43,7 @@ public class DailyDetViewModel extends AndroidViewModel {
 
     public void getStoryContent(int id) {
         disposables.add(
-                Client.getZhihuApi()
-                        .getStoryContent(id)
+                zhihuApi.getStoryContent(id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
@@ -50,8 +55,7 @@ public class DailyDetViewModel extends AndroidViewModel {
 
     public void getStoryExtra(int id) {
         disposables.add(
-                Client.getZhihuApi()
-                        .getStoryExtra(id)
+                zhihuApi.getStoryExtra(id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

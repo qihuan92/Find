@@ -1,6 +1,7 @@
 package com.qihuan.find.view;
 
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ import com.qihuan.find.view.base.BaseFragment;
 import com.qihuan.find.viewmodel.DailyViewModel;
 import com.qihuan.imageloader.ImageLoader;
 
+import javax.inject.Inject;
+
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
@@ -43,6 +46,9 @@ public class DailyFragment extends BaseFragment implements
     private DailyAdapter dailyAdapter;
     private BGABanner bannerView;
     private DailyViewModel dailyViewModel;
+
+    @Inject
+    ViewModelProvider.Factory factory;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
@@ -74,7 +80,7 @@ public class DailyFragment extends BaseFragment implements
     }
 
     private void observe() {
-        dailyViewModel = ViewModelProviders.of(this).get(DailyViewModel.class);
+        dailyViewModel = ViewModelProviders.of(this, factory).get(DailyViewModel.class);
         dailyViewModel.topStories().observe(this, topStory -> bannerView.setData(R.layout.item_daily_banner, topStory, null));
         dailyViewModel.stories().observe(this, dailyItems -> {
             if (dailyItems == null) {

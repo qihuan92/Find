@@ -1,5 +1,6 @@
 package com.qihuan.find.view;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,12 +24,17 @@ import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.viewmodel.DailyDetViewModel;
 import com.qihuan.imageloader.ImageLoader;
 
+import javax.inject.Inject;
+
 
 @Route(path = "/zhihu/det")
 public class DailyDetActivity extends BaseActivity {
 
     @Autowired
     public int id;
+
+    @Inject
+    ViewModelProvider.Factory factory;
 
     private Toolbar toolbar;
     private WebView webView;
@@ -43,7 +49,7 @@ public class DailyDetActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_det);
         ARouter.getInstance().inject(this);
-        dailyDetViewModel = ViewModelProviders.of(this).get(DailyDetViewModel.class);
+        dailyDetViewModel = ViewModelProviders.of(this, factory).get(DailyDetViewModel.class);
         dailyDetViewModel.storyContent.observe(this, storyContentBean -> {
             if (storyContentBean == null) {
                 return;

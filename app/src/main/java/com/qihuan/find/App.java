@@ -1,16 +1,18 @@
 package com.qihuan.find;
 
-import android.app.Application;
-
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.qihuan.find.di.component.DaggerAppComponent;
 import com.qihuan.imageloader.LoaderStrategy;
+
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
 
 /**
  * App
  * Created by Qi on 2017/6/20.
  */
 
-public class App extends Application {
+public class App extends DaggerApplication {
 
     private static SharedPrefsCookiePersistor sharedPrefsCookiePersistor;
     private static LoaderStrategy strategy;
@@ -18,6 +20,13 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder()
+                .application(this)
+                .build();
     }
 
     public static SharedPrefsCookiePersistor getSharedPrefsCookiePersistor() {

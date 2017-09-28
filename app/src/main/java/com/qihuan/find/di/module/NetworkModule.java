@@ -82,11 +82,17 @@ public abstract class NetworkModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideClient(Cache cache, Interceptor interceptor, CookieJar cookieJar) {
+    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return loggingInterceptor;
+    }
+
+    @Singleton
+    @Provides
+    OkHttpClient provideClient(Cache cache, Interceptor interceptor, HttpLoggingInterceptor loggingInterceptor, CookieJar cookieJar) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addNetworkInterceptor(loggingInterceptor);
         }
         builder.addNetworkInterceptor(interceptor)

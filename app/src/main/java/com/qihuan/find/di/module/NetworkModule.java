@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 @Module
-public abstract class NetworkModule {
+public class NetworkModule {
 
     @Singleton
     @Provides

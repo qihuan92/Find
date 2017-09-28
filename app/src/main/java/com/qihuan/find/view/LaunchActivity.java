@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.qihuan.find.App;
 import com.qihuan.find.common.GlideStrategy;
 import com.qihuan.find.kit.AppKit;
@@ -27,7 +26,6 @@ public class LaunchActivity extends AppCompatActivity {
                 .doOnNext(ARouter::init)
                 .doOnNext(ToastKit::init)
                 .doOnNext(application -> App.setLoaderStrategy(new GlideStrategy()))
-                .doOnNext(application -> App.setSharedPrefsCookiePersistor(new SharedPrefsCookiePersistor(application)))
                 .subscribe(
                         application -> startActivity(new Intent(application, MainActivity.class)),
                         e -> finish(),

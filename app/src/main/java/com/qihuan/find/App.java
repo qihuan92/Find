@@ -1,6 +1,5 @@
 package com.qihuan.find;
 
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.qihuan.find.di.component.DaggerAppComponent;
 import com.qihuan.imageloader.LoaderStrategy;
 
@@ -14,7 +13,6 @@ import dagger.android.support.DaggerApplication;
 
 public class App extends DaggerApplication {
 
-    private static SharedPrefsCookiePersistor sharedPrefsCookiePersistor;
     private static LoaderStrategy strategy;
 
     @Override
@@ -27,14 +25,6 @@ public class App extends DaggerApplication {
         return DaggerAppComponent.builder()
                 .application(this)
                 .build();
-    }
-
-    public static SharedPrefsCookiePersistor getSharedPrefsCookiePersistor() {
-        return sharedPrefsCookiePersistor;
-    }
-
-    public static void setSharedPrefsCookiePersistor(SharedPrefsCookiePersistor sharedPrefsCookiePersistor) {
-        App.sharedPrefsCookiePersistor = sharedPrefsCookiePersistor;
     }
 
     public static LoaderStrategy imageLoaderStrategy() {

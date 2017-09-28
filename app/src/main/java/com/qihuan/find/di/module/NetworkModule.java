@@ -28,12 +28,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * HttpModule
+ * NetworkModule
  * Created by Qi on 2017/9/27.
  */
 
 @Module
-public abstract class HttpModule {
+public abstract class NetworkModule {
 
     @Singleton
     @Provides

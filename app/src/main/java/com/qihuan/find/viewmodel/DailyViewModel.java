@@ -8,8 +8,8 @@ import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
 import com.qihuan.find.model.bean.zhihu.TopStoryBean;
-import com.qihuan.find.model.net.Client;
 import com.qihuan.find.model.net.Result;
+import com.qihuan.find.model.net.api.ZhihuApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,9 @@ public class DailyViewModel extends AndroidViewModel {
     private List<DailyItemBean> storyList;
     private String date;
     private Result result;
+
+    @Inject
+    ZhihuApi zhihuApi;
 
     @Inject
     public DailyViewModel(Application application) {
@@ -73,8 +76,7 @@ public class DailyViewModel extends AndroidViewModel {
     public void getLatestDaily() {
         date = DateKit.getNowDate();
         disposables.add(
-                Client.getZhihuApi()
-                        .getLatestDaily()
+                zhihuApi.getLatestDaily()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
@@ -96,8 +98,7 @@ public class DailyViewModel extends AndroidViewModel {
     public void getBeforeDaily() {
         date = DateKit.timeSub(date);
         disposables.add(
-                Client.getZhihuApi()
-                        .getBeforeDaily(date)
+                zhihuApi.getBeforeDaily(date)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(

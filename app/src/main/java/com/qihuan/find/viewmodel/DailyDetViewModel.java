@@ -28,12 +28,12 @@ public class DailyDetViewModel extends AndroidViewModel {
     public MutableLiveData<String> error = new MutableLiveData<>();
 
     @Inject
+    ZhihuApi zhihuApi;
+
+    @Inject
     public DailyDetViewModel(Application application) {
         super(application);
     }
-
-    @Inject
-    ZhihuApi zhihuApi;
 
     @Override
     protected void onCleared() {

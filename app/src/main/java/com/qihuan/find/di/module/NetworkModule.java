@@ -7,6 +7,7 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.CookiePersistor;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.qihuan.find.BuildConfig;
+import com.qihuan.find.kit.LogKit;
 import com.qihuan.find.kit.NetKit;
 import com.qihuan.find.model.net.api.DoubanApi;
 import com.qihuan.find.model.net.api.ZhihuApi;
@@ -82,8 +83,14 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+    HttpLoggingInterceptor.Logger provideLogger() {
+        return message -> LogKit.v(message);
+    }
+
+    @Singleton
+    @Provides
+    HttpLoggingInterceptor provideHttpLoggingInterceptor(HttpLoggingInterceptor.Logger logger) {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(logger);
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return loggingInterceptor;
     }

@@ -99,6 +99,8 @@ dependencies {
     compile 'com.google.dagger:dagger-android:2.11'
     compile 'com.google.dagger:dagger-android-support:2.11'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
+    // logger
+    compile 'com.orhanobut:logger:2.1.1'
 }
 
 // copy apk files to build/bakApk/buildType

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.find.kit.AppKit;
+import com.qihuan.find.kit.LogKit;
 import com.qihuan.find.kit.ToastKit;
 
 import io.reactivex.Observable;
@@ -22,6 +23,7 @@ public class LaunchActivity extends AppCompatActivity {
         Observable.just(getApplication())
                 .doOnNext(AppKit::init)
                 .doOnNext(ARouter::init)
+                .doOnNext(LogKit::init)
                 .doOnNext(ToastKit::init)
                 .subscribe(
                         application -> startActivity(new Intent(application, MainActivity.class)),

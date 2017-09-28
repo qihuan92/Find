@@ -1,11 +1,6 @@
 package com.qihuan.find.view.base;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
@@ -17,37 +12,4 @@ import dagger.android.support.DaggerAppCompatActivity;
 @SuppressLint("Registered")
 public class BaseActivity extends DaggerAppCompatActivity {
 
-    protected Context context;
-    private ProgressDialog progressDialog;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.context = this;
-    }
-
-    public void showProgressDialog() {
-        if (progressDialog == null || !progressDialog.isShowing()) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("加载中, 请稍后...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-    }
-
-    public void dismissProgressDialog() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
-
-    protected void setToolBar(Toolbar toolbar, String title) {
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(view -> onBackPressed());
-    }
 }

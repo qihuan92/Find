@@ -2,11 +2,9 @@ package com.qihuan.find.view.adapter;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.qihuan.find.App;
 import com.qihuan.find.R;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
-import com.qihuan.imageloader.ImageLoader;
 
 import java.util.List;
 
@@ -17,11 +15,9 @@ import java.util.List;
 
 public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseViewHolder> {
 
-    /**
-     * Same as QuickAdapter#QuickAdapter(Context,int) but with
-     * some initialization data.
-     *
-     */
+//    @Inject
+//    LoaderStrategy loaderStrategy;
+
     public DailyAdapter() {
         super(R.layout.item_daily, R.layout.item_date, null);
     }
@@ -40,12 +36,12 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
             url = images.get(0);
         }
         helper.setText(R.id.tv_news, storyBean.getTitle());
-        ImageLoader.INSTANCE
-                .strategy(App.imageLoaderStrategy())
-                .with(mContext)
-                .load(url)
-                .options(() -> 10)
-                .into(helper.getView(R.id.iv_news));
+//        ImageLoader.INSTANCE
+//                .strategy(loaderStrategy)
+//                .with(mContext)
+//                .load(url)
+//                .options(() -> 10)
+//                .into(helper.getView(R.id.iv_news));
     }
 
 }

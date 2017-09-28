@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.qihuan.find.App;
 import com.qihuan.find.R;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
@@ -26,6 +25,7 @@ import com.qihuan.find.view.adapter.DailyAdapter;
 import com.qihuan.find.view.base.BaseFragment;
 import com.qihuan.find.viewmodel.DailyViewModel;
 import com.qihuan.imageloader.ImageLoader;
+import com.qihuan.imageloader.LoaderStrategy;
 
 import javax.inject.Inject;
 
@@ -43,12 +43,17 @@ public class DailyFragment extends BaseFragment implements
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvList;
-    private DailyAdapter dailyAdapter;
     private BGABanner bannerView;
     private DailyViewModel dailyViewModel;
 
     @Inject
     ViewModelProvider.Factory factory;
+
+    @Inject
+    LoaderStrategy loaderStrategy;
+
+    @Inject
+    DailyAdapter dailyAdapter;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
@@ -116,7 +121,6 @@ public class DailyFragment extends BaseFragment implements
         refreshLayout = view.findViewById(R.id.refresh_layout);
 
         refreshLayout.setOnRefreshListener(this);
-        dailyAdapter = new DailyAdapter();
         dailyAdapter.setOnItemClickListener(this);
         dailyAdapter.setOnLoadMoreListener(this, rvList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -161,7 +165,7 @@ public class DailyFragment extends BaseFragment implements
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
 
         ImageLoader.INSTANCE
-                .strategy(App.imageLoaderStrategy())
+                .strategy(loaderStrategy)
                 .with(getContext())
                 .load(model.getImage())
                 .options(() -> 10)

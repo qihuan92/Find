@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.qihuan.find.App;
 import com.qihuan.find.R;
 import com.qihuan.find.kit.NetKit;
 import com.qihuan.find.kit.ToastKit;
@@ -23,6 +22,7 @@ import com.qihuan.find.kit.WebKit;
 import com.qihuan.find.view.base.BaseActivity;
 import com.qihuan.find.viewmodel.DailyDetViewModel;
 import com.qihuan.imageloader.ImageLoader;
+import com.qihuan.imageloader.LoaderStrategy;
 
 import javax.inject.Inject;
 
@@ -35,6 +35,9 @@ public class DailyDetActivity extends BaseActivity {
 
     @Inject
     ViewModelProvider.Factory factory;
+
+    @Inject
+    LoaderStrategy loaderStrategy;
 
     private Toolbar toolbar;
     private WebView webView;
@@ -64,7 +67,7 @@ public class DailyDetActivity extends BaseActivity {
             tvTitle.setText(storyContentBean.getTitle());
             tvCopyRight.setText(storyContentBean.getImage_source());
             ImageLoader.INSTANCE
-                    .strategy(App.imageLoaderStrategy())
+                    .strategy(loaderStrategy)
                     .with(this)
                     .load(storyContentBean.getImage())
                     .options(() -> 10)

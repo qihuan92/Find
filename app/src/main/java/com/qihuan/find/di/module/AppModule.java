@@ -15,6 +15,8 @@ import dagger.Module;
         ActivityModule.class,
         FragmentModule.class,
         ViewModelModule.class,
+        ImageLoaderModule.class,
+        AdapterModule.class,
         NetworkModule.class
 })
 public abstract class AppModule {

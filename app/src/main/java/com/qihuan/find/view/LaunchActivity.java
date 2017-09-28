@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.qihuan.find.App;
-import com.qihuan.find.common.GlideStrategy;
 import com.qihuan.find.kit.AppKit;
 import com.qihuan.find.kit.ToastKit;
 
@@ -25,7 +23,6 @@ public class LaunchActivity extends AppCompatActivity {
                 .doOnNext(AppKit::init)
                 .doOnNext(ARouter::init)
                 .doOnNext(ToastKit::init)
-                .doOnNext(application -> App.setLoaderStrategy(new GlideStrategy()))
                 .subscribe(
                         application -> startActivity(new Intent(application, MainActivity.class)),
                         e -> finish(),

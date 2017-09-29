@@ -1,6 +1,7 @@
 package com.qihuan.find.di.module;
 
 import com.qihuan.find.view.adapter.DailyAdapter;
+import com.qihuan.imageloader.LoaderStrategy;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,7 +15,7 @@ import dagger.Provides;
 public class AdapterModule {
 
     @Provides
-    DailyAdapter provideDailyAdapter() {
-        return new DailyAdapter();
+    DailyAdapter provideDailyAdapter(LoaderStrategy loaderStrategy) {
+        return new DailyAdapter(loaderStrategy);
     }
 }

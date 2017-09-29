@@ -31,7 +31,6 @@ public class DailyViewModel extends AndroidViewModel {
     private MutableLiveData<Result> error;
     private MutableLiveData<List<TopStoryBean>> topStories;
     private MutableLiveData<List<DailyItemBean>> stories;
-    private List<DailyItemBean> storyList;
     private String date;
     private Result result;
 
@@ -44,7 +43,6 @@ public class DailyViewModel extends AndroidViewModel {
         disposables = new CompositeDisposable();
         date = DateKit.getNowDate();
         topStories = new MutableLiveData<>();
-        storyList = new ArrayList<>();
         stories = new MutableLiveData<>();
         complete = new MutableLiveData<>();
         error = new MutableLiveData<>();
@@ -82,12 +80,7 @@ public class DailyViewModel extends AndroidViewModel {
                         .subscribe(
                                 dailyBean -> {
                                     this.topStories.postValue(dailyBean.getTop_stories());
-                                    storyList.clear();
-                                    storyList.add(new DailyItemBean(true, "今日热闻"));
-                                    for (StoryBean storyBean : dailyBean.getStories()) {
-                                        storyList.add(new DailyItemBean(storyBean));
-                                    }
-                                    stories.postValue(storyList);
+                                    stories.postValue(transList("今日热闻", dailyBean.getStories()));
                                 },
                                 e -> error.postValue(result.setRefresh(true).setMsg(e.getMessage())),
                                 () -> complete.postValue(result.setRefresh(true))
@@ -102,16 +95,19 @@ public class DailyViewModel extends AndroidViewModel {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                dailyBean -> {
-                                    storyList.add(new DailyItemBean(true, DateKit.parseDate(dailyBean.getDate())));
-                                    for (StoryBean storyBean : dailyBean.getStories()) {
-                                        storyList.add(new DailyItemBean(storyBean));
-                                    }
-                                    stories.postValue(storyList);
-                                },
+                                dailyBean -> stories.postValue(transList(DateKit.parseDate(dailyBean.getDate()), dailyBean.getStories())),
                                 e -> error.postValue(result.setRefresh(false).setMsg(e.getMessage())),
                                 () -> complete.postValue(result.setRefresh(false))
                         )
         );
+    }
+
+    private List<DailyItemBean> transList(String title, List<StoryBean> list) {
+        List<DailyItemBean> storyList = new ArrayList<>();
+        storyList.add(new DailyItemBean(true, title));
+        for (StoryBean storyBean : list) {
+            storyList.add(new DailyItemBean(storyBean));
+        }
+        return storyList;
     }
 }

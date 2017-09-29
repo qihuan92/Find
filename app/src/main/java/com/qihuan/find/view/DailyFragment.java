@@ -136,6 +136,7 @@ public class DailyFragment extends BaseFragment implements
 
     @Override
     public void onRefresh() {
+        dailyAdapter.clear();
         dailyViewModel.getLatestDaily();
     }
 

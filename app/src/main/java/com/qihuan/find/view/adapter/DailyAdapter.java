@@ -44,4 +44,7 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
 //                .into(helper.getView(R.id.iv_news));
     }
 
+    public void clear() {
+        mData.clear();
+    }
 }

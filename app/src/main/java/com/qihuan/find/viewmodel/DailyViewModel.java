@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -77,13 +78,18 @@ public class DailyViewModel extends AndroidViewModel {
                 zhihuApi.getLatestDaily()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doOnNext(dailyBean -> topStories.postValue(dailyBean.getTop_stories()))
+                        .observeOn(Schedulers.io())
+                        .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
+                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+                        .toList()
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                dailyBean -> {
-                                    this.topStories.postValue(dailyBean.getTop_stories());
-                                    stories.postValue(transList("今日热闻", dailyBean.getStories()));
+                                list -> {
+                                    stories.postValue(transList("今日热闻", list));
+                                    complete.postValue(result.setRefresh(true));
                                 },
-                                e -> error.postValue(result.setRefresh(true).setMsg(e.getMessage())),
-                                () -> complete.postValue(result.setRefresh(true))
+                                e -> error.postValue(result.setRefresh(true).setMsg(e.getMessage()))
                         )
         );
     }

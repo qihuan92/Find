@@ -1,7 +1,6 @@
 package com.qihuan.find.model.bean.zhihu;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,48 +19,60 @@ public class StoryBean implements Serializable {
     private String ga_prefix;
     private String title;
     private List<String> images;
+    private StoryExtraBean storyExtraBean;
 
     public int getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public StoryBean setType(int type) {
         this.type = type;
+        return this;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public StoryBean setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getGa_prefix() {
         return ga_prefix;
     }
 
-    public void setGa_prefix(String ga_prefix) {
+    public StoryBean setGa_prefix(String ga_prefix) {
         this.ga_prefix = ga_prefix;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public StoryBean setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public List<String> getImages() {
-        if (images == null) {
-            return new ArrayList<>();
-        }
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public StoryBean setImages(List<String> images) {
         this.images = images;
+        return this;
+    }
+
+    public StoryExtraBean getStoryExtraBean() {
+        return storyExtraBean;
+    }
+
+    public StoryBean setStoryExtraBean(StoryExtraBean storyExtraBean) {
+        this.storyExtraBean = storyExtraBean;
+        return this;
     }
 
     @Override

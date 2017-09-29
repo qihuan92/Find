@@ -7,7 +7,6 @@ import android.arch.lifecycle.MutableLiveData;
 import com.qihuan.find.kit.DateKit;
 import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
-import com.qihuan.find.model.bean.zhihu.StoryBean;
 import com.qihuan.find.model.bean.zhihu.TopStoryBean;
 import com.qihuan.find.model.net.Result;
 import com.qihuan.find.model.net.api.ZhihuApi;
@@ -82,7 +81,7 @@ public class DailyViewModel extends AndroidViewModel {
                         .doOnNext(dailyBean -> topStories.postValue(dailyBean.getTop_stories()))
                         .observeOn(Schedulers.io())
                         .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
-                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+//                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
                         .map(DailyItemBean::new)
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())
@@ -107,7 +106,7 @@ public class DailyViewModel extends AndroidViewModel {
                         .doOnNext(dailyBean -> d[0] = dailyBean)
                         .observeOn(Schedulers.io())
                         .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
-                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+//                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
                         .map(DailyItemBean::new)
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())

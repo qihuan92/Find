@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.qihuan.find.R;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
+import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 import com.qihuan.imageloader.ImageLoader;
 import com.qihuan.imageloader.LoaderStrategy;
 
@@ -37,13 +38,19 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
         if (images.size() != 0) {
             url = images.get(0);
         }
+        // set title
         helper.setText(R.id.tv_news, storyBean.getTitle());
+        // load image
         ImageLoader.INSTANCE
                 .strategy(loaderStrategy)
                 .with(mContext)
                 .load(url)
                 .options(() -> 10)
                 .into(helper.getView(R.id.iv_news));
+        // set extra
+        StoryExtraBean extra = storyBean.getStoryExtraBean();
+        helper.setText(R.id.tv_like, String.valueOf(extra.getPopularity()));
+        helper.setText(R.id.tv_comment, String.valueOf(extra.getComments()));
     }
 
     public void clear() {

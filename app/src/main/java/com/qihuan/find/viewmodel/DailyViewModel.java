@@ -5,13 +5,13 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.qihuan.find.kit.DateKit;
+import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.StoryBean;
 import com.qihuan.find.model.bean.zhihu.TopStoryBean;
 import com.qihuan.find.model.net.Result;
 import com.qihuan.find.model.net.api.ZhihuApi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,6 +27,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class DailyViewModel extends AndroidViewModel {
+
     private CompositeDisposable disposables;
     private MutableLiveData<Result> complete;
     private MutableLiveData<Result> error;
@@ -82,11 +83,13 @@ public class DailyViewModel extends AndroidViewModel {
                         .observeOn(Schedulers.io())
                         .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
                         .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+                        .map(DailyItemBean::new)
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 list -> {
-                                    stories.postValue(transList("今日热闻", list));
+                                    list.add(0, new DailyItemBean(true, "Toady"));
+                                    stories.postValue(list);
                                     complete.postValue(result.setRefresh(true));
                                 },
                                 e -> error.postValue(result.setRefresh(true).setMsg(e.getMessage()))
@@ -96,24 +99,26 @@ public class DailyViewModel extends AndroidViewModel {
 
     public void getBeforeDaily() {
         date = DateKit.timeSub(date);
+        final DailyBean[] d = new DailyBean[1];
         disposables.add(
                 zhihuApi.getBeforeDaily(date)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doOnNext(dailyBean -> d[0] = dailyBean)
+                        .observeOn(Schedulers.io())
+                        .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
+                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+                        .map(DailyItemBean::new)
+                        .toList()
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
-                                dailyBean -> stories.postValue(transList(DateKit.parseDate(dailyBean.getDate()), dailyBean.getStories())),
-                                e -> error.postValue(result.setRefresh(false).setMsg(e.getMessage())),
-                                () -> complete.postValue(result.setRefresh(false))
+                                list -> {
+                                    list.add(0, new DailyItemBean(true, DateKit.parseDate(d[0].getDate())));
+                                    stories.postValue(list);
+                                    complete.postValue(result.setRefresh(false));
+                                },
+                                e -> error.postValue(result.setRefresh(false).setMsg(e.getMessage()))
                         )
         );
-    }
-
-    private List<DailyItemBean> transList(String title, List<StoryBean> list) {
-        List<DailyItemBean> storyList = new ArrayList<>();
-        storyList.add(new DailyItemBean(true, title));
-        for (StoryBean storyBean : list) {
-            storyList.add(new DailyItemBean(storyBean));
-        }
-        return storyList;
     }
 }

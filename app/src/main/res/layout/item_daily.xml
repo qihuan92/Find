@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="5dp"
-    android:background="@drawable/selector_item_bg"
-    android:orientation="horizontal">
+    android:background="@drawable/selector_item_bg">
 
     <ImageView
         android:id="@+id/iv_news"
@@ -19,11 +18,47 @@
         android:id="@+id/tv_news"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_news"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="2"
         android:padding="10dp"
+        android:text="title"
         android:textColor="@color/charade"
         android:textSize="16sp" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/iv_news"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="2dp"
+            android:text="comments"
+            android:gravity="center"
+            android:textSize="10sp" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_like"
+            android:drawablePadding="2dp"
+            android:text="likes"
+            android:gravity="center"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

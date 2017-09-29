@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         if (AppKit.isFastClick()) {
             super.onBackPressed();
         } else {
-            ToastKit.info("再按一次退出应用");
+            ToastKit.info(getString(R.string.double_click_exit));
         }
     }
 

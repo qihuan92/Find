@@ -6,4 +6,5 @@
     <string name="title_me">我的</string>
     <string name="net_error_msg">请连接网络</string>
     <string name="today">今天</string>
+    <string name="double_click_exit">再按一次退出应用</string>
 </resources>

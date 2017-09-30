@@ -7,8 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.qihuan.find.kit.LogKit;
-
-import org.polaric.colorful.Colorful;
+import com.qihuan.themeloader.Colorful;
 
 import dagger.android.support.DaggerAppCompatActivity;
 

@@ -8,8 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.find.kit.AppKit;
 import com.qihuan.find.kit.LogKit;
 import com.qihuan.find.kit.ToastKit;
-
-import org.polaric.colorful.Colorful;
+import com.qihuan.themeloader.Colorful;
 
 import io.reactivex.Observable;
 

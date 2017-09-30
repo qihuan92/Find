@@ -11,9 +11,8 @@ import com.qihuan.find.R;
 import com.qihuan.find.kit.AppKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.view.base.BaseActivity;
-
-import org.polaric.colorful.ColorPickerDialog;
-import org.polaric.colorful.Colorful;
+import com.qihuan.themeloader.ColorPickerDialog;
+import com.qihuan.themeloader.Colorful;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 

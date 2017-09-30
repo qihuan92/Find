@@ -41,8 +41,8 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_comment"
             android:drawablePadding="2dp"
-            android:text="comments"
             android:gravity="center"
+            android:text="comments"
             android:textSize="10sp" />
 
         <android.support.v4.widget.Space
@@ -55,8 +55,8 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_like"
             android:drawablePadding="2dp"
-            android:text="likes"
             android:gravity="center"
+            android:text="likes"
             android:textSize="10sp" />
     </LinearLayout>
 

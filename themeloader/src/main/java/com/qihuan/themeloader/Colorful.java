@@ -16,11 +16,10 @@ public class Colorful {
     private static String themeString;
 
     private Colorful() {
-        // prevent initialization
+
     }
 
     public static void init(Context context) {
-        Log.d(Util.LOG_TAG, "Attatching to " + context.getPackageName());
         themeString = PreferenceManager.getDefaultSharedPreferences(context).getString(Util.PREFERENCE_KEY, null);
         if (themeString == null) {
             primaryColor = Defaults.primaryColor;
@@ -127,9 +126,9 @@ public class Colorful {
 
     public static class Defaults {
 
-        private static ThemeColor primaryColor = ThemeColor.DEEP_PURPLE;
-        private static ThemeColor accentColor = ThemeColor.RED;
-        private static boolean trans = false;
+        private static ThemeColor primaryColor = ThemeColor.TEAL;
+        private static ThemeColor accentColor = ThemeColor.TEAL;
+        private static boolean trans = true;
         private static boolean darkTheme = false;
 
         public Defaults primaryColor(ThemeColor primary) {
@@ -151,8 +150,6 @@ public class Colorful {
             darkTheme = dark;
             return this;
         }
-
-        //////////////////////////////////////////////////////
 
         public static ThemeColor getPrimaryColor() {
             return primaryColor;

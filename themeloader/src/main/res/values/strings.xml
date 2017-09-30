@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ThemeLoader</string>
+    <string name="title_select">颜色选择</string>
 </resources>

@@ -50,6 +50,8 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
         // set extra
         StoryExtraBean extra = storyBean.getStoryExtraBean();
         if (extra == null) {
+            helper.setVisible(R.id.tv_like, false);
+            helper.setVisible(R.id.tv_comment, false);
             return;
         }
         helper.setText(R.id.tv_like, String.valueOf(extra.getPopularity()));

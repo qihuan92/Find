@@ -2,7 +2,6 @@ package com.qihuan.themeloader;
 
 import android.content.Context;
 import android.support.annotation.StyleRes;
-import android.util.Log;
 
 public class ThemeDelegate {
     private Colorful.ThemeColor primaryColor;
@@ -21,11 +20,9 @@ public class ThemeDelegate {
         this.accentColor = accent;
         this.translucent = translucent;
         this.dark = dark;
-        long curTime = System.currentTimeMillis();
         styleResPrimary = context.getResources().getIdentifier("primary" + primary.ordinal(), "style", context.getPackageName());
         styleResAccent = context.getResources().getIdentifier("accent" + accent.ordinal(), "style", context.getPackageName());
         styleResBase = dark ? R.style.Colorful_Dark : R.style.Colorful_Light;
-        Log.d(Util.LOG_TAG, "ThemeDelegate fetched theme in " + (System.currentTimeMillis() - curTime) + " milliseconds");
     }
 
     @StyleRes

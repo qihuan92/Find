@@ -49,6 +49,9 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
                 .into(helper.getView(R.id.iv_news));
         // set extra
         StoryExtraBean extra = storyBean.getStoryExtraBean();
+        if (extra == null) {
+            return;
+        }
         helper.setText(R.id.tv_like, String.valueOf(extra.getPopularity()));
         helper.setText(R.id.tv_comment, String.valueOf(extra.getComments()));
     }

@@ -34,7 +34,7 @@ public class ToastKit {
     public static void init(Application application) {
         Toasty.Config
                 .getInstance()
-                .setInfoColor(ContextCompat.getColor(application, R.color.colorPrimary))
+                .setInfoColor(ContextCompat.getColor(application, R.color.grey))
                 .apply();
     }
 }

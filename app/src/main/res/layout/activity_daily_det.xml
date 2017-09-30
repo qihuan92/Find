@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentScrim="@color/colorPrimary"
+            app:contentScrim="?colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout

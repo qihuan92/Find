@@ -9,6 +9,8 @@ import com.qihuan.find.kit.AppKit;
 import com.qihuan.find.kit.LogKit;
 import com.qihuan.find.kit.ToastKit;
 
+import org.polaric.colorful.Colorful;
+
 import io.reactivex.Observable;
 
 public class LaunchActivity extends AppCompatActivity {
@@ -22,6 +24,7 @@ public class LaunchActivity extends AppCompatActivity {
     private void init() {
         Observable.just(getApplication())
                 .doOnNext(AppKit::init)
+                .doOnNext(Colorful::init)
                 .doOnNext(ARouter::init)
                 .doOnNext(LogKit::init)
                 .doOnNext(ToastKit::init)

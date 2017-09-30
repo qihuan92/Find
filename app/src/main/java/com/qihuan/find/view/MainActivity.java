@@ -12,6 +12,9 @@ import com.qihuan.find.kit.AppKit;
 import com.qihuan.find.kit.ToastKit;
 import com.qihuan.find.view.base.BaseActivity;
 
+import org.polaric.colorful.ColorPickerDialog;
+import org.polaric.colorful.Colorful;
+
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
@@ -51,6 +54,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 break;
             case R.id.bb_menu_me:
                 switchContent(meFragment);
+
+                ColorPickerDialog dialog = new ColorPickerDialog(this);
+                dialog.setOnColorSelectedListener(color -> {
+                    Colorful.config(this)
+                            .primaryColor(color)
+                            .accentColor(color)
+                            .translucent(true)
+                            .dark(false)
+                            .apply();
+                });
+                dialog.show();
                 break;
         }
         toolbar.setTitle(item.getTitle());

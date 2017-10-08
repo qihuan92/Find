@@ -1,6 +1,7 @@
 package com.qihuan.themeloader;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -19,7 +20,9 @@ public class Colorful {
 
     }
 
-    public static void init(Context context) {
+    public static void init(Application context) {
+        // 生命周期回调
+        context.registerActivityLifecycleCallbacks(new ColorfulActivityCallbacks());
         themeString = PreferenceManager.getDefaultSharedPreferences(context).getString(Util.PREFERENCE_KEY, null);
         if (themeString == null) {
             primaryColor = Defaults.primaryColor;

@@ -1,0 +1,12 @@
+package com.qihuan.find.view.base;
+
+import android.support.v4.app.Fragment;
+
+/**
+ * BaseFragment
+ * Created by Qi on 2017/6/22.
+ */
+
+public class BaseFragment extends Fragment {
+
+}

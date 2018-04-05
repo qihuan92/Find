@@ -1,1 +1,1 @@
-include ':app', ':imageloader', ':themeloader'
+include ':MainModule', ':CommonModule'

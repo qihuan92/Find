@@ -61,5 +61,5 @@ dependencies {
     // Toasty
     api 'com.github.GrenderG:Toasty:1.2.5'
     // banner
-    api 'cn.bingoogolapple:bga-banner:2.1.7@aar'
+    api 'cn.bingoogolapple:bga-banner:2.2.4@aar'
 }

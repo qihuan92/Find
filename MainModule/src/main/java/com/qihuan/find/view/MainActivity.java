@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
 import com.qihuan.commonmodule.utils.AppUtils;
+import com.qihuan.commonmodule.utils.StatusBarUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.find.R;
 import com.qihuan.find.view.base.BaseActivity;
@@ -36,10 +37,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
+        // super.onSaveInstanceState(outState);
     }
 
     private void initView() {
+        // 状态栏白色主题
+        StatusBarUtils.statusBarLightMode(this);
         bottomView = findViewById(R.id.bottom_view);
         bottomView.setOnNavigationItemSelectedListener(this);
         switchContent(dailyFragment);

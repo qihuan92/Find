@@ -1,14 +1,12 @@
-package com.qihuan.find.model.remote;
+package com.qihuan.commonmodule.net;
 
 import android.app.Application;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.qihuan.commonmodule.BuildConfig;
 import com.qihuan.commonmodule.utils.NetUtils;
-import com.qihuan.find.BuildConfig;
-import com.qihuan.find.model.remote.api.DoubanApi;
-import com.qihuan.find.model.remote.api.ZhihuApi;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,21 +16,18 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * RetrofitClient
+ * ApiClient
  *
  * @author Qi
  */
-public class RetrofitClient {
+public class ApiClient {
 
     private static Application application;
 
     public static void init(Application application) {
-        RetrofitClient.application = application;
+        ApiClient.application = application;
     }
 
     /**
@@ -47,18 +42,18 @@ public class RetrofitClient {
                 // 在线缓存在1分钟内可读取
                 int maxAge = 60;
                 return originalResponse.newBuilder()
-                        .removeHeader("Pragma")
-                        .removeHeader("Cache-Control")
-                        .header("Cache-Control", "public, max-age=" + maxAge)
-                        .build();
+                    .removeHeader("Pragma")
+                    .removeHeader("Cache-Control")
+                    .header("Cache-Control", "public, max-age=" + maxAge)
+                    .build();
             } else {
                 // 离线时缓存保存4周
                 int maxStale = 60 * 60 * 24 * 28;
                 return originalResponse.newBuilder()
-                        .removeHeader("Pragma")
-                        .removeHeader("Cache-Control")
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                        .build();
+                    .removeHeader("Pragma")
+                    .removeHeader("Cache-Control")
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                    .build();
             }
         };
     }
@@ -99,36 +94,16 @@ public class RetrofitClient {
      *
      * @return OkHttpClient
      */
-    private static OkHttpClient client() {
+    public static OkHttpClient client() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(loggingInterceptor());
         }
         builder.addNetworkInterceptor(cacheInterceptor())
-                .readTimeout(30, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .cache(cache())
-                .cookieJar(cookieJar());
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .cache(cache())
+            .cookieJar(cookieJar());
         return builder.build();
-    }
-
-    public static ZhihuApi zhihuApi() {
-        return new Retrofit.Builder()
-                .baseUrl(ZhihuApi.ZHIHU_URL)
-                .client(client())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(ZhihuApi.class);
-    }
-
-    public static DoubanApi provideDoubanApi() {
-        return new Retrofit.Builder()
-                .baseUrl(DoubanApi.DOUBAN_URL)
-                .client(client())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(DoubanApi.class);
     }
 }

@@ -11,6 +11,8 @@ public interface DailyDetContract {
         void storyExtra(StoryExtraBean storyExtra);
 
         void onFavoriteChange(boolean isFavorite);
+
+        void showUpdateFavoriteInfo(boolean isFavorite);
     }
 
     interface Presenter {

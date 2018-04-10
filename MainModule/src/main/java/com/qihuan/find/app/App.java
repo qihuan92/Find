@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.utils.AppUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.find.model.bean.find.MyObjectBox;
-import com.qihuan.find.model.remote.RetrofitClient;
+import com.qihuan.commonmodule.net.ApiClient;
 
 import io.objectbox.BoxStore;
 
@@ -32,7 +32,7 @@ public class App extends Application {
     }
 
     private void init() {
-        RetrofitClient.init(this);
+        ApiClient.init(this);
         AppUtils.init(this);
         ARouter.init(this);
         ToastUtils.init(this);

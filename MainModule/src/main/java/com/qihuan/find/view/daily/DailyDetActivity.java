@@ -15,7 +15,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.imageloader.ImageLoader;
 import com.qihuan.commonmodule.imageloader.strategy.GlideStrategy;
-import com.qihuan.commonmodule.utils.NetUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.commonmodule.utils.WebUtils;
 import com.qihuan.find.R;
@@ -106,11 +105,11 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
         tvTitle.setText(storyContent.getTitle());
         tvCopyRight.setText(storyContent.getImage_source());
         ImageLoader.INSTANCE
-                .strategy(new GlideStrategy())
-                .with(this)
-                .load(storyContent.getImage())
-                .options(() -> 10)
-                .into(ivDaily);
+            .strategy(new GlideStrategy())
+            .with(this)
+            .load(storyContent.getImage())
+            .options(() -> 10)
+            .into(ivDaily);
     }
 
     @Override
@@ -119,12 +118,17 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
     }
 
     @Override
-    public void onFavoriteChange(boolean success) {
-        if (success) {
+    public void onFavoriteChange(boolean isFavorite) {
+        if (isFavorite) {
             fabFavorite.setImageResource(R.drawable.ic_favorite);
         } else {
             fabFavorite.setImageResource(R.drawable.ic_favorite_border);
         }
+    }
+
+    @Override
+    public void showUpdateFavoriteInfo(boolean isFavorite) {
+        ToastUtils.success(isFavorite ? "收藏成功" : "取消收藏成功");
     }
 
     @Override
@@ -139,10 +143,6 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
 
     @Override
     public void showError(String errorMsg) {
-        if (NetUtils.isConnected()) {
-            ToastUtils.error(errorMsg);
-        } else {
-            ToastUtils.warning(getString(R.string.net_error_msg));
-        }
+        ToastUtils.error(errorMsg);
     }
 }

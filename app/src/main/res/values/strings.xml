@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Find</string>
-    <string name="title_news">日报</string>
-    <string name="title_movie">电影</string>
-    <string name="title_discover">发现</string>
-    <string name="title_me">我的</string>
-</resources>

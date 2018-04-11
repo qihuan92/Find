@@ -24,7 +24,7 @@ import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.bean.zhihu.TopStoryBean;
 import com.qihuan.find.presenter.DailyPresenter;
 import com.qihuan.find.view.adapter.DailyAdapter;
-import com.qihuan.find.view.base.BaseFragment;
+import com.qihuan.commonmodule.base.BaseFragment;
 
 import java.util.List;
 

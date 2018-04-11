@@ -1,6 +1,4 @@
-package com.qihuan.find.presenter.base;
-
-import com.qihuan.find.view.base.BaseView;
+package com.qihuan.commonmodule.base;
 
 import io.reactivex.disposables.CompositeDisposable;
 

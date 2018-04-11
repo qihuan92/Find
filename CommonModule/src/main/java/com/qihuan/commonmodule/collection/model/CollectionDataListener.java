@@ -1,6 +1,6 @@
-package com.qihuan.find.model.local;
+package com.qihuan.commonmodule.collection.model;
 
-import com.qihuan.find.model.bean.find.CollectionBean;
+import com.qihuan.commonmodule.collection.bean.CollectionBean;
 
 import java.util.List;
 

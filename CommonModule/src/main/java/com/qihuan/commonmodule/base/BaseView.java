@@ -1,4 +1,4 @@
-package com.qihuan.find.view.base;
+package com.qihuan.commonmodule.base;
 
 public interface BaseView {
     void showLoading();

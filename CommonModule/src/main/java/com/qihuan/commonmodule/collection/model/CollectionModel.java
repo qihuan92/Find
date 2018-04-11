@@ -1,9 +1,9 @@
-package com.qihuan.find.model.local;
+package com.qihuan.commonmodule.collection.model;
 
-import com.qihuan.find.app.App;
-import com.qihuan.find.model.base.BaseModel;
-import com.qihuan.find.model.bean.find.CollectionBean;
-import com.qihuan.find.model.bean.find.CollectionBean_;
+import com.qihuan.commonmodule.base.BaseApp;
+import com.qihuan.commonmodule.base.BaseModel;
+import com.qihuan.commonmodule.collection.bean.CollectionBean;
+import com.qihuan.commonmodule.collection.bean.CollectionBean_;
 
 import io.objectbox.Box;
 import io.objectbox.android.AndroidScheduler;
@@ -13,7 +13,7 @@ public class CollectionModel implements BaseModel {
     private final Box<CollectionBean> collectionBox;
 
     public CollectionModel() {
-        collectionBox = App.getInstance().getBoxStore().boxFor(CollectionBean.class);
+        collectionBox = BaseApp.getInstance().getBoxStore().boxFor(CollectionBean.class);
     }
 
     public void getFavoriteList(String id, CollectionDataListener listener) {

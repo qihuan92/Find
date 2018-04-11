@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.qihuan.find.R;
-import com.qihuan.find.view.base.BaseFragment;
+import com.qihuan.commonmodule.base.BaseFragment;
 
 /**
  * MovieFragment

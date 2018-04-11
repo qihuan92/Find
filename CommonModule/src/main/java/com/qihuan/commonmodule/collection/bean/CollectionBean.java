@@ -1,4 +1,4 @@
-package com.qihuan.find.model.bean.find;
+package com.qihuan.commonmodule.collection.bean;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;

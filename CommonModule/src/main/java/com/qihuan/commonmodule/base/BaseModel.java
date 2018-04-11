@@ -1,4 +1,4 @@
-package com.qihuan.find.model.base;
+package com.qihuan.commonmodule.base;
 
 public interface BaseModel {
     void onDestroy();

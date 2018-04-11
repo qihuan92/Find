@@ -2,7 +2,7 @@ package com.qihuan.find.contact;
 
 import com.qihuan.find.model.bean.zhihu.StoryContentBean;
 import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
-import com.qihuan.find.view.base.BaseView;
+import com.qihuan.commonmodule.base.BaseView;
 
 public interface DailyDetContract {
     interface View extends BaseView {

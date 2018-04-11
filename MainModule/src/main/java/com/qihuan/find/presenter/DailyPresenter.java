@@ -5,7 +5,7 @@ import com.qihuan.find.contact.DailyContract;
 import com.qihuan.find.model.bean.zhihu.DailyBean;
 import com.qihuan.find.model.bean.zhihu.DailyItemBean;
 import com.qihuan.find.model.remote.ZhihuModel;
-import com.qihuan.find.presenter.base.BasePresenterImpl;
+import com.qihuan.commonmodule.base.BasePresenterImpl;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

@@ -1,4 +1,4 @@
-package com.qihuan.find.model.local;
+package com.qihuan.commonmodule.collection.model;
 
 public interface CollectionFavoriteListener {
     void onCollectionFavoriteChange(boolean isFavorite);

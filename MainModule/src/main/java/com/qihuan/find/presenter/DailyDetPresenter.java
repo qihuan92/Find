@@ -1,11 +1,11 @@
 package com.qihuan.find.presenter;
 
 import com.qihuan.find.contact.DailyDetContract;
-import com.qihuan.find.model.bean.find.CollectionBean;
+import com.qihuan.commonmodule.collection.bean.CollectionBean;
 import com.qihuan.find.model.bean.zhihu.StoryContentBean;
-import com.qihuan.find.model.local.CollectionModel;
+import com.qihuan.commonmodule.collection.model.CollectionModel;
 import com.qihuan.find.model.remote.ZhihuModel;
-import com.qihuan.find.presenter.base.BasePresenterImpl;
+import com.qihuan.commonmodule.base.BasePresenterImpl;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

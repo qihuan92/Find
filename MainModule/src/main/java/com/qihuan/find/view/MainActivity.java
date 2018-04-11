@@ -11,7 +11,7 @@ import com.qihuan.commonmodule.utils.AppUtils;
 import com.qihuan.commonmodule.utils.StatusBarUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.find.R;
-import com.qihuan.find.view.base.BaseActivity;
+import com.qihuan.commonmodule.base.BaseActivity;
 import com.qihuan.find.view.daily.DailyFragment;
 import com.qihuan.find.view.discover.DiscoverFragment;
 import com.qihuan.find.view.me.MeFragment;

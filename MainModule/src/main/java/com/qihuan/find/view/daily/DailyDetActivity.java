@@ -22,7 +22,7 @@ import com.qihuan.find.contact.DailyDetContract;
 import com.qihuan.find.model.bean.zhihu.StoryContentBean;
 import com.qihuan.find.model.bean.zhihu.StoryExtraBean;
 import com.qihuan.find.presenter.DailyDetPresenter;
-import com.qihuan.find.view.base.BaseActivity;
+import com.qihuan.commonmodule.base.BaseActivity;
 
 @Route(path = "/zhihu/det")
 public class DailyDetActivity extends BaseActivity implements DailyDetContract.View {

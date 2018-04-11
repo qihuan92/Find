@@ -1,4 +1,4 @@
-package com.qihuan.find.view.base;
+package com.qihuan.commonmodule.base;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.qihuan.find.R;
+import com.qihuan.commonmodule.R;
 
 /**
  * BaseActivity
- * Created by Qi on 2017/6/20.
+ *
+ * @author Qi
+ * @date 2017/6/20
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

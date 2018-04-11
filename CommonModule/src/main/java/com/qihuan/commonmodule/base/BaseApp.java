@@ -1,23 +1,22 @@
-package com.qihuan.find.app;
+package com.qihuan.commonmodule.base;
 
 import android.app.Application;
 
-import com.alibaba.android.arouter.launcher.ARouter;
+import com.qihuan.commonmodule.collection.bean.MyObjectBox;
+import com.qihuan.commonmodule.net.ApiClient;
 import com.qihuan.commonmodule.utils.AppUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
-import com.qihuan.find.model.bean.find.MyObjectBox;
-import com.qihuan.commonmodule.net.ApiClient;
 
 import io.objectbox.BoxStore;
 
 /**
- * App
- * Created by Qi on 2017/6/20.
+ * BaseApp
+ *
+ * @author Qi
  */
+public class BaseApp extends Application {
 
-public class App extends Application {
-
-    private static App app;
+    private static BaseApp app;
     private BoxStore boxStore;
 
     @Override
@@ -27,23 +26,21 @@ public class App extends Application {
         init();
     }
 
-    public static App getInstance() {
+    public static BaseApp getInstance() {
         return app;
     }
 
     private void init() {
         ApiClient.init(this);
         AppUtils.init(this);
-        ARouter.init(this);
         ToastUtils.init(this);
 
         boxStore = MyObjectBox.builder()
-                .androidContext(this)
-                .build();
+            .androidContext(this)
+            .build();
     }
 
     public BoxStore getBoxStore() {
         return boxStore;
     }
-
 }

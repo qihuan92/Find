@@ -12,7 +12,9 @@ import com.qihuan.commonmodule.imageloader.LoaderStrategy;
 
 /**
  * GlideStrategy
- * Created by Qi on 2017/9/18.
+ *
+ * @author Qi
+ * @date 2017/9/18
  */
 
 public class GlideStrategy implements LoaderStrategy {
@@ -21,12 +23,14 @@ public class GlideStrategy implements LoaderStrategy {
     public void load(Context context, String url, ImageView target, LoaderOption option) {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.centerCrop();
-        requestOptions.transform(new RoundedCorners(option.radius()));
+        if (option != null) {
+            requestOptions.transform(new RoundedCorners(option.radius()));
+        }
         Glide.with(context)
-                .load(url)
-                .apply(requestOptions)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(target);
+            .load(url)
+            .apply(requestOptions)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(target);
     }
 
 }

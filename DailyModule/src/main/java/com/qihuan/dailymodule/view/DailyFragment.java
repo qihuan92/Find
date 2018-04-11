@@ -144,7 +144,6 @@ public class DailyFragment extends BaseFragment implements
             .strategy(new GlideStrategy())
             .with(getContext())
             .load(model.getImage())
-            .options(() -> 10)
             .into(ivBanner);
         tvBanner.setText(model.getTitle());
     }

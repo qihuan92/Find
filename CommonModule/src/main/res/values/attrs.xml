@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="colorpicker">
-        <attr name="primary_color" format="boolean"/>
-        <attr name="accent_color" format="boolean"/>
+        <attr name="primary_color" format="boolean" />
+        <attr name="accent_color" format="boolean" />
+    </declare-styleable>
+
+    <!-- circular cover view -->
+    <declare-styleable name="CircularCoverView">
+        <attr name="left_top_radius" format="dimension" />
+        <attr name="left_bottom_radius" format="dimension" />
+        <attr name="right_top_radius" format="dimension" />
+        <attr name="right_bottom_radius" format="dimension" />
+        <attr name="cover_color" format="color" />
     </declare-styleable>
 </resources>

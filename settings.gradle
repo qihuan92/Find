@@ -1,1 +1,1 @@
-include ':MainModule', ':CommonModule'
+include ':MainModule', ':CommonModule', ':DailyModule', ':MovieModule', ':DiscoverModule', ':UserModule'

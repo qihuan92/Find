@@ -7,24 +7,27 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.qihuan.commonmodule.base.BaseActivity;
+import com.qihuan.commonmodule.router.Router;
 import com.qihuan.commonmodule.utils.AppUtils;
 import com.qihuan.commonmodule.utils.StatusBarUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.find.R;
-import com.qihuan.commonmodule.base.BaseActivity;
-import com.qihuan.find.view.daily.DailyFragment;
-import com.qihuan.find.view.discover.DiscoverFragment;
-import com.qihuan.find.view.me.MeFragment;
-import com.qihuan.find.view.movie.MovieFragment;
 
+/**
+ * MainActivity
+ *
+ * @author Qi
+ */
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView bottomView;
-    private Fragment content = DailyFragment.newInstance();
-    private DailyFragment dailyFragment = DailyFragment.newInstance();
-    private MovieFragment movieFragment = MovieFragment.newInstance();
-    private DiscoverFragment discoverFragment = DiscoverFragment.newInstance();
-    private MeFragment meFragment = MeFragment.newInstance();
+    private Fragment content = (Fragment) ARouter.getInstance().build(Router.DAILY_FRAGMENT).navigation();
+    private Fragment dailyFragment = (Fragment) ARouter.getInstance().build(Router.DAILY_FRAGMENT).navigation();
+    private Fragment movieFragment = (Fragment) ARouter.getInstance().build(Router.MOVIE_FRAGMENT).navigation();
+    private Fragment discoverFragment = (Fragment) ARouter.getInstance().build(Router.DISCOVER_FRAGMENT).navigation();
+    private Fragment meFragment = (Fragment) ARouter.getInstance().build(Router.ME_FRAGMENT).navigation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             default:
                 break;
         }
-//        toolbar.setTitle(item.getTitle());
         return true;
     }
 

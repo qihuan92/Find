@@ -29,12 +29,9 @@ class ColorPickerAdapter extends RecyclerView.Adapter<ColorPickerAdapter.ItemVie
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         final ItemViewHolder holder = new ItemViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_coloritem, viewGroup, false));
-        holder.circle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    listener.onItemClick(Colorful.ThemeColor.values()[holder.getAdapterPosition()]);
-                }
+        holder.circle.setOnClickListener(view -> {
+            if (listener != null) {
+                listener.onItemClick(Colorful.ThemeColor.values()[holder.getAdapterPosition()]);
             }
         });
         return holder;

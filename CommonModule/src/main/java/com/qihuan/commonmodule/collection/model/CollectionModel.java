@@ -8,6 +8,11 @@ import com.qihuan.commonmodule.collection.bean.CollectionBean_;
 import io.objectbox.Box;
 import io.objectbox.android.AndroidScheduler;
 
+/**
+ * CollectionModel
+ *
+ * @author Qi
+ */
 public class CollectionModel implements BaseModel {
 
     private final Box<CollectionBean> collectionBox;

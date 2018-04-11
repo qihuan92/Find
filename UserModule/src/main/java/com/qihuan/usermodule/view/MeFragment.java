@@ -17,7 +17,7 @@ import com.qihuan.usermodule.R;
  *
  * @author Qi
  */
-@Route(path = Router.ME_FRAGMENT)
+@Route(path = Router.USER_FRAGMENT)
 public class MeFragment extends BaseFragment {
 
     public static MeFragment newInstance() {

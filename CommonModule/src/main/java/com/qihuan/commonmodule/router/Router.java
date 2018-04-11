@@ -14,5 +14,5 @@ public class Router {
 
     public static final String DISCOVER_FRAGMENT = "/discover/fragment";
 
-    public static final String ME_FRAGMENT = "/me/fragment";
+    public static final String USER_FRAGMENT = "/user/fragment";
 }

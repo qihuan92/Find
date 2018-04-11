@@ -152,7 +152,7 @@ public class DailyFragment extends BaseFragment implements
     @Override
     public void onBannerItemClick(BGABanner banner, RelativeLayout itemView, TopStoryBean model, int position) {
         ARouter.getInstance()
-            .build("/zhihu/det")
+            .build(Router.DAILY_DET_ACTIVITY)
             .withInt("id", model.getId())
             .navigation();
     }

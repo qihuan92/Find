@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private Fragment dailyFragment = (Fragment) ARouter.getInstance().build(Router.DAILY_FRAGMENT).navigation();
     private Fragment movieFragment = (Fragment) ARouter.getInstance().build(Router.MOVIE_FRAGMENT).navigation();
     private Fragment discoverFragment = (Fragment) ARouter.getInstance().build(Router.DISCOVER_FRAGMENT).navigation();
-    private Fragment meFragment = (Fragment) ARouter.getInstance().build(Router.ME_FRAGMENT).navigation();
+    private Fragment meFragment = (Fragment) ARouter.getInstance().build(Router.USER_FRAGMENT).navigation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

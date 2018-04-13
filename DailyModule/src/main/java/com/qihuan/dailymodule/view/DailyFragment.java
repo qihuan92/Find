@@ -20,7 +20,6 @@ import com.qihuan.commonmodule.base.BaseFragment;
 import com.qihuan.commonmodule.imageloader.ImageLoader;
 import com.qihuan.commonmodule.imageloader.strategy.GlideStrategy;
 import com.qihuan.commonmodule.router.Router;
-import com.qihuan.commonmodule.utils.DateUtils;
 import com.qihuan.dailymodule.R;
 import com.qihuan.dailymodule.contract.DailyContract;
 import com.qihuan.dailymodule.model.bean.DailyItemBean;
@@ -48,7 +47,6 @@ public class DailyFragment extends BaseFragment implements
 
     private SwipeRefreshLayout refreshLayout;
     private BGABanner bannerView;
-    private String date;
     private DailyPresenter presenter;
     private DailyAdapter dailyAdapter;
 
@@ -59,7 +57,6 @@ public class DailyFragment extends BaseFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        date = DateUtils.getNowDate();
         presenter = new DailyPresenter();
         presenter.attachView(this);
     }
@@ -95,6 +92,7 @@ public class DailyFragment extends BaseFragment implements
 
         refreshLayout.setOnRefreshListener(this);
         dailyAdapter = new DailyAdapter();
+        dailyAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         dailyAdapter.setOnItemClickListener(this);
         dailyAdapter.setOnLoadMoreListener(this, rvList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -110,14 +108,12 @@ public class DailyFragment extends BaseFragment implements
 
     @Override
     public void onRefresh() {
-        dailyAdapter.clear();
         presenter.getLatestDaily();
     }
 
     @Override
     public void onLoadMoreRequested() {
-        date = DateUtils.timeSub(date);
-        presenter.getBeforeDaily(date);
+        presenter.getBeforeDaily();
     }
 
     @Override
@@ -162,8 +158,12 @@ public class DailyFragment extends BaseFragment implements
     }
 
     @Override
-    public void beforeDaily(List<DailyItemBean> dailyList) {
-        dailyAdapter.addData(dailyList);
+    public void beforeDaily(boolean isRefresh, List<DailyItemBean> dailyList) {
+        if (isRefresh) {
+            dailyAdapter.setNewData(dailyList);
+        } else {
+            dailyAdapter.addData(dailyList);
+        }
     }
 
     @Override

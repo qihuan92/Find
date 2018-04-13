@@ -60,8 +60,4 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
         helper.setText(R.id.tv_like, String.valueOf(extra.getPopularity()));
         helper.setText(R.id.tv_comment, String.valueOf(extra.getComments()));
     }
-
-    public void clear() {
-        mData.clear();
-    }
 }

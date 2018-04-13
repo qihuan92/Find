@@ -10,7 +10,7 @@ public interface DailyContract {
     interface View extends BaseView {
         void latestDaily(List<TopStoryBean> topList);
 
-        void beforeDaily(List<DailyItemBean> dailyList);
+        void beforeDaily(boolean isRefresh, List<DailyItemBean> dailyList);
 
         void onRefreshEnd();
 
@@ -20,6 +20,6 @@ public interface DailyContract {
     interface Presenter {
         void getLatestDaily();
 
-        void getBeforeDaily(String date);
+        void getBeforeDaily();
     }
 }

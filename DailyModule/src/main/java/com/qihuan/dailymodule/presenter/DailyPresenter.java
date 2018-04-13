@@ -4,18 +4,24 @@ import com.qihuan.commonmodule.base.BasePresenterImpl;
 import com.qihuan.commonmodule.utils.DateUtils;
 import com.qihuan.dailymodule.contract.DailyContract;
 import com.qihuan.dailymodule.model.ZhihuModel;
-import com.qihuan.dailymodule.model.bean.DailyBean;
 import com.qihuan.dailymodule.model.bean.DailyItemBean;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * DailyPresenter
+ *
+ * @author Qi
+ */
 public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implements DailyContract.Presenter {
 
     private final ZhihuModel zhihuModel;
+    private String date;
 
     public DailyPresenter() {
+        date = DateUtils.getNowDate();
         zhihuModel = new ZhihuModel();
     }
 
@@ -23,6 +29,7 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
     public void getLatestDaily() {
         checkViewAttached();
         getView().showLoading();
+        date = DateUtils.getNowDate();
         disposables.add(
             zhihuModel.getApi().getLatestDaily()
                 .subscribeOn(Schedulers.io())
@@ -37,7 +44,7 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
                 .subscribe(
                     list -> {
                         list.add(0, new DailyItemBean(true, "Toady"));
-                        getView().beforeDaily(list);
+                        getView().beforeDaily(true, list);
                         getView().onRefreshEnd();
                     },
                     e -> getView().showError(e.getMessage())
@@ -46,14 +53,13 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
     }
 
     @Override
-    public void getBeforeDaily(String date) {
+    public void getBeforeDaily() {
         checkViewAttached();
-        final DailyBean[] d = new DailyBean[1];
+        date = DateUtils.timeSub(date);
         disposables.add(
             zhihuModel.getApi().getBeforeDaily(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(dailyBean -> d[0] = dailyBean)
                 .observeOn(Schedulers.io())
                 .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
 //                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
@@ -62,8 +68,8 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     list -> {
-                        list.add(0, new DailyItemBean(true, DateUtils.parseDate(d[0].getDate())));
-                        getView().beforeDaily(list);
+                        list.add(0, new DailyItemBean(true, DateUtils.parseDate(date)));
+                        getView().beforeDaily(false, list);
                         getView().onLoadMoreEnd(true);
                     },
                     e -> {

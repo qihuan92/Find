@@ -136,7 +136,7 @@ public class DailyFragment extends BaseFragment implements
         ImageView ivBanner = itemView.findViewById(R.id.iv_banner);
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
 
-        ImageLoader.INSTANCE
+        ImageLoader.getInstance()
             .strategy(new GlideStrategy())
             .with(getContext())
             .load(model.getImage())

@@ -3,19 +3,32 @@ package com.qihuan.commonmodule.imageloader;
 import android.content.Context;
 import android.widget.ImageView;
 
+import java.lang.ref.WeakReference;
+
 /**
  * ImageLoader
- * Created by Qi on 2017/9/18.
+ *
+ * @author Qi
+ * @date 2017/9/18
  */
 
-public enum ImageLoader {
-    INSTANCE;
-
+public class ImageLoader {
+    private static volatile ImageLoader instance;
     private LoaderStrategy loaderStrategy;
-    private Context context;
+    private WeakReference<Context> contextWeakReference;
     private String url;
-    private ImageView imageView;
     private LoaderOption option;
+
+    public static ImageLoader getInstance() {
+        if (instance == null) {
+            synchronized (ImageLoader.class) {
+                if (instance == null) {
+                    instance = new ImageLoader();
+                }
+            }
+        }
+        return instance;
+    }
 
     public ImageLoader strategy(LoaderStrategy loaderStrategy) {
         this.loaderStrategy = loaderStrategy;
@@ -23,7 +36,7 @@ public enum ImageLoader {
     }
 
     public ImageLoader with(Context context) {
-        this.context = context;
+        contextWeakReference = new WeakReference<>(context);
         return this;
     }
 
@@ -44,10 +57,10 @@ public enum ImageLoader {
         if (target == null) {
             throw new IllegalStateException("ImageView is null!");
         }
-        if (this.context == null) {
+        Context context = contextWeakReference.get();
+        if (context == null) {
             throw new IllegalStateException("Context is null!");
         }
-        this.imageView = target;
-        loaderStrategy.load(this.context, this.url, this.imageView, this.option);
+        loaderStrategy.load(context, this.url, target, this.option);
     }
 }

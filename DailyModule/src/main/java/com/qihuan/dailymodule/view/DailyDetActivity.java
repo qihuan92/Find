@@ -110,7 +110,7 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
         }
         tvTitle.setText(storyContent.getTitle());
         tvCopyRight.setText(storyContent.getImage_source());
-        ImageLoader.INSTANCE
+        ImageLoader.getInstance()
             .strategy(new GlideStrategy())
             .with(this)
             .load(storyContent.getImage())

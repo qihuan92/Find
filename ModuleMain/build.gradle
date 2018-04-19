@@ -43,12 +43,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     annotationProcessor rootProject.ext.dependencies["aroutercompiler"]
-    implementation project(':CommonModule')
+    implementation project(':ModuleCommon')
     if (!isModule.toBoolean()) {
-        implementation project(':DiscoverModule')
-        implementation project(':MovieModule')
-        implementation project(':UserModule')
-        implementation project(':DailyModule')
+        implementation project(':ModuleDiscover')
+        implementation project(':ModuleMovie')
+        implementation project(':ModuleUser')
+        implementation project(':ModuleDaily')
     }
 
 }

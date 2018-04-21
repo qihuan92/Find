@@ -29,7 +29,6 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
 
     @Override
     public void getStoryContent(int id) {
-        checkViewAttached();
         disposables.add(
             zhihuModel.getApi().getStoryContent(id)
                 .subscribeOn(Schedulers.io())
@@ -47,7 +46,6 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
 
     @Override
     public void getStoryExtra(int id) {
-        checkViewAttached();
         disposables.add(
             zhihuModel.getApi().getStoryExtra(id)
                 .subscribeOn(Schedulers.io())
@@ -59,7 +57,6 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
 
     @Override
     public void getFavoriteStory(int id) {
-        checkViewAttached();
         getView().showLoading();
         collectionModel.getFavoriteList(String.valueOf(id), collectionList -> {
             getView().onFavoriteChange(collectionList.size() != 0);
@@ -69,7 +66,6 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
 
     @Override
     public void updateFavoriteStory(int id) {
-        checkViewAttached();
         if (storyContentBean == null) {
             return;
         }

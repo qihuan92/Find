@@ -1,5 +1,6 @@
 package com.qihuan.commonmodule.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -107,6 +108,7 @@ public class CircularCoverView extends View {
         return bm;
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

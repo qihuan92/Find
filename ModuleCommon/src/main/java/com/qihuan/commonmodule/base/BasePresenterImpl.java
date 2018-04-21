@@ -1,40 +1,41 @@
 package com.qihuan.commonmodule.base;
 
+import java.lang.ref.WeakReference;
+
 import io.reactivex.disposables.CompositeDisposable;
 
+/**
+ * BasePresenterImpl
+ *
+ * @author Qi
+ */
 public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
 
-    private V view;
+    private WeakReference<V> viewWeakReference;
     protected CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     public void attachView(V view) {
-        this.view = view;
+        this.viewWeakReference = new WeakReference<>(view);
     }
 
     @Override
     public void detachView() {
-        disposables.clear();
-        this.view = null;
+        if (disposables != null) {
+            disposables.clear();
+            this.disposables = null;
+        }
+        if (isViewAttached()) {
+            viewWeakReference.clear();
+            viewWeakReference = null;
+        }
     }
 
     public V getView() {
-        return this.view;
+        return this.viewWeakReference.get();
     }
 
     private boolean isViewAttached() {
-        return view != null;
-    }
-
-    public void checkViewAttached() {
-        if (!isViewAttached()) {
-            throw new ViewNotAttachedException();
-        }
-    }
-
-    public static class ViewNotAttachedException extends RuntimeException {
-        ViewNotAttachedException() {
-            super("请求数据前请先调用 attachView(MvpView) 方法与View建立连接");
-        }
+        return viewWeakReference != null && viewWeakReference.get() != null;
     }
 }

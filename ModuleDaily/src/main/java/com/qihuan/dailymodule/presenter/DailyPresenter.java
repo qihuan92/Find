@@ -27,7 +27,6 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
 
     @Override
     public void getLatestDaily() {
-        checkViewAttached();
         getView().showLoading();
         date = DateUtils.getNowDate();
         disposables.add(
@@ -54,7 +53,6 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
 
     @Override
     public void getBeforeDaily() {
-        checkViewAttached();
         date = DateUtils.timeSub(date);
         disposables.add(
             zhihuModel.getApi().getBeforeDaily(date)

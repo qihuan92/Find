@@ -19,6 +19,10 @@ public class ImageLoader {
     private String url;
     private LoaderOption option;
 
+    private ImageLoader() {
+
+    }
+
     public static ImageLoader getInstance() {
         if (instance == null) {
             synchronized (ImageLoader.class) {

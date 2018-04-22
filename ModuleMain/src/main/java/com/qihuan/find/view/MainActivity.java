@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.base.BaseActivity;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.commonmodule.utils.AppUtils;
+import com.qihuan.commonmodule.utils.NavigationBarUtils;
 import com.qihuan.commonmodule.utils.StatusBarUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.find.R;
@@ -48,6 +49,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         StatusBarUtils.statusBarLightMode(this);
         bottomView = findViewById(R.id.bottom_view);
         bottomView.setOnNavigationItemSelectedListener(this);
+        NavigationBarUtils.disableShiftMode(bottomView);
         switchContent(dailyFragment);
     }
 

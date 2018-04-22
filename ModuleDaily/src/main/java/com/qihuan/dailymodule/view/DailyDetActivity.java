@@ -15,7 +15,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.base.BaseActivity;
 import com.qihuan.commonmodule.imageloader.ImageLoader;
-import com.qihuan.commonmodule.imageloader.strategy.GlideStrategy;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.commonmodule.utils.WebUtils;
@@ -111,10 +110,8 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
         tvTitle.setText(storyContent.getTitle());
         tvCopyRight.setText(storyContent.getImage_source());
         ImageLoader.getInstance()
-            .strategy(new GlideStrategy())
             .with(this)
             .load(storyContent.getImage())
-            .options(() -> 10)
             .into(ivDaily);
     }
 

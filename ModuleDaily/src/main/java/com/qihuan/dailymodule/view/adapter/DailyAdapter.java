@@ -45,10 +45,8 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
         helper.setText(R.id.tv_news, storyBean.getTitle());
         // load image
         ImageLoader.getInstance()
-            .strategy(loaderStrategy)
             .with(mContext)
             .load(url)
-            .options(() -> 10)
             .into(helper.getView(R.id.iv_news));
         // set extra
         StoryExtraBean extra = storyBean.getStoryExtraBean();

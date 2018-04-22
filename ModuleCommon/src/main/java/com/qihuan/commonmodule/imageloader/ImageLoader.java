@@ -1,6 +1,8 @@
 package com.qihuan.commonmodule.imageloader;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IntDef;
 import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
@@ -13,11 +15,17 @@ import java.lang.ref.WeakReference;
  */
 
 public class ImageLoader {
+    public static final int CENTER_CROP = 0;
+    public static final int FIT_CENTER = 1;
+
     private static volatile ImageLoader instance;
-    private LoaderStrategy loaderStrategy;
+    private static LoaderStrategy loaderStrategy;
     private WeakReference<Context> contextWeakReference;
     private String url;
-    private LoaderOption option;
+    private int option;
+    private OnImageLoadListener loadListener;
+    @DrawableRes
+    private int placeHolder;
 
     private ImageLoader() {
 
@@ -34,9 +42,8 @@ public class ImageLoader {
         return instance;
     }
 
-    public ImageLoader strategy(LoaderStrategy loaderStrategy) {
-        this.loaderStrategy = loaderStrategy;
-        return this;
+    public static void init(LoaderStrategy loaderStrategy) {
+        ImageLoader.loaderStrategy = loaderStrategy;
     }
 
     public ImageLoader with(Context context) {
@@ -49,13 +56,23 @@ public class ImageLoader {
         return this;
     }
 
-    public ImageLoader options(LoaderOption option) {
+    public ImageLoader listener(OnImageLoadListener loadListener) {
+        this.loadListener = loadListener;
+        return this;
+    }
+
+    public ImageLoader placeHolder(@DrawableRes int placeHolder) {
+        this.placeHolder = placeHolder;
+        return this;
+    }
+
+    public ImageLoader option(@LoaderOption int option) {
         this.option = option;
         return this;
     }
 
     public void into(ImageView target) {
-        if (this.loaderStrategy == null) {
+        if (ImageLoader.loaderStrategy == null) {
             throw new IllegalStateException("LoaderStrategy is null!");
         }
         if (target == null) {
@@ -65,6 +82,16 @@ public class ImageLoader {
         if (context == null) {
             throw new IllegalStateException("Context is null!");
         }
-        loaderStrategy.load(context, this.url, target, this.option);
+        loaderStrategy.load(context, this.url, target, placeHolder, option, loadListener);
+    }
+
+    public interface OnImageLoadListener {
+        void onStart();
+
+        void onFinish(boolean isSuccess);
+    }
+
+    @IntDef({CENTER_CROP, FIT_CENTER})
+    @interface LoaderOption {
     }
 }

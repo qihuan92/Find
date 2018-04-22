@@ -18,7 +18,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.commonmodule.base.BaseFragment;
 import com.qihuan.commonmodule.imageloader.ImageLoader;
-import com.qihuan.commonmodule.imageloader.strategy.GlideStrategy;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.dailymodule.R;
 import com.qihuan.dailymodule.contract.DailyContract;
@@ -137,7 +136,6 @@ public class DailyFragment extends BaseFragment implements
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
 
         ImageLoader.getInstance()
-            .strategy(new GlideStrategy())
             .with(getContext())
             .load(model.getImage())
             .into(ivBanner);

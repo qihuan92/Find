@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -41,8 +41,8 @@ public class DailyFragment extends BaseFragment implements
     SwipeRefreshLayout.OnRefreshListener,
     BaseQuickAdapter.OnItemClickListener,
     BaseQuickAdapter.RequestLoadMoreListener,
-    BGABanner.Adapter<RelativeLayout, TopStoryBean>,
-    BGABanner.Delegate<RelativeLayout, TopStoryBean> {
+    BGABanner.Adapter<View, TopStoryBean>,
+    BGABanner.Delegate<View, TopStoryBean> {
 
     private SwipeRefreshLayout refreshLayout;
     private BGABanner bannerView;
@@ -131,19 +131,31 @@ public class DailyFragment extends BaseFragment implements
     }
 
     @Override
-    public void fillBannerItem(BGABanner banner, RelativeLayout itemView, TopStoryBean model, int position) {
+    public void fillBannerItem(BGABanner banner, View itemView, TopStoryBean model, int position) {
         ImageView ivBanner = itemView.findViewById(R.id.iv_banner);
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
+        ProgressBar pbLoading = itemView.findViewById(R.id.pb_loading);
 
         ImageLoader.getInstance()
             .with(getContext())
             .load(model.getImage())
+            .listener(new ImageLoader.OnImageLoadListener() {
+                @Override
+                public void onStart() {
+                    pbLoading.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onFinish(boolean isSuccess) {
+                    pbLoading.setVisibility(View.GONE);
+                }
+            })
             .into(ivBanner);
         tvBanner.setText(model.getTitle());
     }
 
     @Override
-    public void onBannerItemClick(BGABanner banner, RelativeLayout itemView, TopStoryBean model, int position) {
+    public void onBannerItemClick(BGABanner banner, View itemView, TopStoryBean model, int position) {
         ARouter.getInstance()
             .build(Router.DAILY_DET_ACTIVITY)
             .withInt("id", model.getId())

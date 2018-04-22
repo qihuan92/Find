@@ -47,6 +47,17 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
         ImageLoader.getInstance()
             .with(mContext)
             .load(url)
+            .listener(new ImageLoader.OnImageLoadListener() {
+                @Override
+                public void onStart() {
+                    helper.setVisible(R.id.pb_loading, true);
+                }
+
+                @Override
+                public void onFinish(boolean isSuccess) {
+                    helper.setVisible(R.id.pb_loading, false);
+                }
+            })
             .into(helper.getView(R.id.iv_news));
         // set extra
         StoryExtraBean extra = storyBean.getStoryExtraBean();

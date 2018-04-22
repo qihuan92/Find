@@ -5,12 +5,7 @@
         <attr name="accent_color" format="boolean" />
     </declare-styleable>
 
-    <!-- circular cover view -->
-    <declare-styleable name="CircularCoverView">
-        <attr name="left_top_radius" format="dimension" />
-        <attr name="left_bottom_radius" format="dimension" />
-        <attr name="right_top_radius" format="dimension" />
-        <attr name="right_bottom_radius" format="dimension" />
-        <attr name="cover_color" format="color" />
+    <declare-styleable name="RoundRelativeLayout">
+        <attr name="radius" format="dimension" />
     </declare-styleable>
 </resources>

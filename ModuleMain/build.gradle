@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'find'
+            keyPassword '123456'
+            storeFile file('../find.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    defaultConfig {
+        applicationId "com.qihuan.find"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    annotationProcessor rootProject.ext.dependencies["aroutercompiler"]
+    implementation project(':ModuleCommon')
+    if (!isModule.toBoolean()) {
+        implementation project(':ModuleDiscover')
+        implementation project(':ModuleMovie')
+        implementation project(':ModuleUser')
+        implementation project(':ModuleDaily')
+    }
+
+}
+
+// copy apk files to build/bakApk/buildType
+build {
+    doLast {
+        def buildTime = new Date().format("MMdd-HH-mm-ss", TimeZone.getDefault())
+        def appName = 'find'
+        android.applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def intoFile = "${buildDir}/bakApk/${appName}-${variant.versionName}-${buildTime}/${variant.buildType.name}/"
+                if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+                    def apkName = "${appName}-${variant.buildType.name}.apk"
+                    copy {
+                        from output.outputFile
+                        into intoFile
+                        rename {
+                            apkName
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

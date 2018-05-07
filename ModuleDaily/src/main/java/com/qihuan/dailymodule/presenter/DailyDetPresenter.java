@@ -29,29 +29,29 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
 
     @Override
     public void getStoryContent(int id) {
-        disposables.add(
-            zhihuModel.getApi().getStoryContent(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(storyContentBean -> {
-                    if (storyContentBean == null) {
-                        getView().showError("该日报已不存在~");
-                        return;
-                    }
-                    this.storyContentBean = storyContentBean;
-                    getView().storyContent(storyContentBean);
-                }, throwable -> getView().showError(throwable.getMessage()))
+        addDisposable(
+                zhihuModel.getApi().getStoryContent(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(storyContentBean -> {
+                            if (storyContentBean == null) {
+                                getView().showError("该日报已不存在~");
+                                return;
+                            }
+                            this.storyContentBean = storyContentBean;
+                            getView().storyContent(storyContentBean);
+                        }, throwable -> getView().showError(throwable.getMessage()))
         );
     }
 
     @Override
     public void getStoryExtra(int id) {
-        disposables.add(
-            zhihuModel.getApi().getStoryExtra(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(storyExtraBean -> getView().storyExtra(storyExtraBean),
-                    throwable -> getView().showError(throwable.getMessage()))
+        addDisposable(
+                zhihuModel.getApi().getStoryExtra(id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(storyExtraBean -> getView().storyExtra(storyExtraBean),
+                                throwable -> getView().showError(throwable.getMessage()))
         );
     }
 
@@ -70,10 +70,10 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
             return;
         }
         CollectionBean collectionBean = new CollectionBean()
-            .setCollectionId(String.valueOf(id))
-            .setType(0)
-            .setTitle(storyContentBean.getTitle())
-            .setImg(storyContentBean.getImage());
+                .setCollectionId(String.valueOf(id))
+                .setType(0)
+                .setTitle(storyContentBean.getTitle())
+                .setImg(storyContentBean.getImage());
         collectionModel.updateFavorite(collectionBean, isFavorite -> {
             getView().hideLoading();
             getView().onFavoriteChange(isFavorite);

@@ -4,17 +4,18 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Proxy;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * BasePresenterImpl
  *
  * @author Qi
  */
-public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
+public abstract class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
 
     private WeakReference<V> viewWeakReference;
     private V proxyView;
-    protected CompositeDisposable disposables = new CompositeDisposable();
+    private CompositeDisposable disposables;
 
     @Override
     public void attachView(V view) {
@@ -43,6 +44,13 @@ public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
 
     public V getView() {
         return this.proxyView;
+    }
+
+    protected void addDisposable(Disposable disposable) {
+        if (disposables == null) {
+            disposables = new CompositeDisposable();
+        }
+        disposables.add(disposable);
     }
 
 }

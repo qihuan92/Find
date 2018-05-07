@@ -4,9 +4,11 @@ import android.support.v4.app.Fragment;
 
 /**
  * BaseFragment
- * Created by Qi on 2017/6/22.
+ *
+ * @author Qi
+ * @date 2017/6/22
  */
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
 }

@@ -29,52 +29,52 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
     public void getLatestDaily() {
         getView().showLoading();
         date = DateUtils.getNowDate();
-        disposables.add(
-            zhihuModel.getApi().getLatestDaily()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(dailyBean -> getView().latestDaily(dailyBean.getTop_stories()))
-                .observeOn(Schedulers.io())
-                .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
+        addDisposable(
+                zhihuModel.getApi().getLatestDaily()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnNext(dailyBean -> getView().latestDaily(dailyBean.getTop_stories()))
+                        .observeOn(Schedulers.io())
+                        .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
 //                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
-                .map(DailyItemBean::new)
-                .toList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    list -> {
-                        list.add(0, new DailyItemBean(true, "Toady"));
-                        getView().beforeDaily(true, list);
-                        getView().onRefreshEnd();
-                    },
-                    e -> getView().showError(e.getMessage())
-                )
+                        .map(DailyItemBean::new)
+                        .toList()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                list -> {
+                                    list.add(0, new DailyItemBean(true, "Toady"));
+                                    getView().beforeDaily(true, list);
+                                    getView().onRefreshEnd();
+                                },
+                                e -> getView().showError(e.getMessage())
+                        )
         );
     }
 
     @Override
     public void getBeforeDaily() {
         date = DateUtils.timeSub(date);
-        disposables.add(
-            zhihuModel.getApi().getBeforeDaily(date)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
-                .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
+        addDisposable(
+                zhihuModel.getApi().getBeforeDaily(date)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .observeOn(Schedulers.io())
+                        .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
 //                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
-                .map(DailyItemBean::new)
-                .toList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    list -> {
-                        list.add(0, new DailyItemBean(true, DateUtils.parseDate(date)));
-                        getView().beforeDaily(false, list);
-                        getView().onLoadMoreEnd(true);
-                    },
-                    e -> {
-                        getView().onLoadMoreEnd(false);
-                        getView().showError(e.getMessage());
-                    }
-                )
+                        .map(DailyItemBean::new)
+                        .toList()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                list -> {
+                                    list.add(0, new DailyItemBean(true, DateUtils.parseDate(date)));
+                                    getView().beforeDaily(false, list);
+                                    getView().onLoadMoreEnd(true);
+                                },
+                                e -> {
+                                    getView().onLoadMoreEnd(false);
+                                    getView().showError(e.getMessage());
+                                }
+                        )
         );
     }
 }

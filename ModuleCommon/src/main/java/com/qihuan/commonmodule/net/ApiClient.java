@@ -31,30 +31,36 @@ public class ApiClient {
     }
 
     /**
-     * 缓存拦截器
+     * 在线缓存拦截器
      *
      * @return Interceptor
      */
-    private static Interceptor cacheInterceptor() {
+    private static Interceptor onlineCacheInterceptor() {
         return chain -> {
-            Response originalResponse = chain.proceed(chain.request());
-            if (NetUtils.isConnected()) {
-                // 在线缓存在1分钟内可读取
-                int maxAge = 60;
-                return originalResponse.newBuilder()
+            // 在线缓存在1分钟内可读取
+            int maxAge = 60;
+            return chain.proceed(chain.request()).newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
                     .header("Cache-Control", "public, max-age=" + maxAge)
                     .build();
-            } else {
-                // 离线时缓存保存4周
-                int maxStale = 60 * 60 * 24 * 28;
-                return originalResponse.newBuilder()
+        };
+    }
+
+    /**
+     * 离线缓存拦截器
+     *
+     * @return Interceptor
+     */
+    private static Interceptor offlineCacheInterceptor() {
+        return chain -> {
+            // 离线时缓存保存1天
+            int maxStale = 60 * 60 * 24;
+            return chain.proceed(chain.request()).newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
                     .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
                     .build();
-            }
         };
     }
 
@@ -99,11 +105,12 @@ public class ApiClient {
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(loggingInterceptor());
         }
-        builder.addNetworkInterceptor(cacheInterceptor())
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .cache(cache())
-            .cookieJar(cookieJar());
+        builder.addNetworkInterceptor(onlineCacheInterceptor())
+                .addInterceptor(offlineCacheInterceptor())
+                .readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .cache(cache())
+                .cookieJar(cookieJar());
         return builder.build();
     }
 }

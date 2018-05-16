@@ -13,4 +13,12 @@ import android.widget.ImageView;
 
 public interface LoaderStrategy {
     void load(Context context, String url, ImageView target, @DrawableRes int placeHolder, @ImageLoader.LoaderOption int option, ImageLoader.OnImageLoadListener loadListener);
+
+    void clearDiskCache();
+
+    void clearMemory();
+
+    void trimMemory(int level);
+
+    void clearAllMemoryCaches();
 }

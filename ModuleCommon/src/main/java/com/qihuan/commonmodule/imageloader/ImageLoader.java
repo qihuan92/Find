@@ -78,11 +78,27 @@ public class ImageLoader {
         if (target == null) {
             throw new IllegalStateException("ImageView is null!");
         }
-        Context context = contextWeakReference.get();
+        Context context = contextWeakReference.get().getApplicationContext();
         if (context == null) {
             throw new IllegalStateException("Context is null!");
         }
         loaderStrategy.load(context, this.url, target, placeHolder, option, loadListener);
+    }
+
+    public static void trimMemory(int level) {
+        ImageLoader.loaderStrategy.trimMemory(level);
+    }
+
+    public static void clearAllMemoryCaches() {
+        ImageLoader.loaderStrategy.clearAllMemoryCaches();
+    }
+
+    public static void clearDiskCache() {
+        ImageLoader.loaderStrategy.clearDiskCache();
+    }
+
+    public static void clearMomory() {
+        ImageLoader.loaderStrategy.clearMemory();
     }
 
     public interface OnImageLoadListener {

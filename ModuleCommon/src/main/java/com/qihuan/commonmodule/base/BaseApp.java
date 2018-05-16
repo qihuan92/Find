@@ -54,4 +54,16 @@ public class BaseApp extends Application {
     public BoxStore getBoxStore() {
         return boxStore;
     }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        ImageLoader.clearAllMemoryCaches();
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        ImageLoader.trimMemory(level);
+    }
 }

@@ -52,6 +52,7 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
+    api 'me.jessyan:retrofit-url-manager:1.2.5'
     // rx
     api 'io.reactivex.rxjava2:rxandroid:2.0.2'
     api 'io.reactivex.rxjava2:rxjava:2.1.12'

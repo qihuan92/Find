@@ -85,11 +85,17 @@ public class GlideStrategy implements LoaderStrategy {
 
     @Override
     public void trimMemory(int level) {
+        if (context == null) {
+            return;
+        }
         GlideApp.get(context).trimMemory(level);
     }
 
     @Override
     public void clearAllMemoryCaches() {
+        if (context == null) {
+            return;
+        }
         GlideApp.get(context).onLowMemory();
     }
 }

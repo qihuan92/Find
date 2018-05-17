@@ -1,33 +1,65 @@
 package com.qihuan.commonmodule.net;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.qihuan.commonmodule.BuildConfig;
-import com.qihuan.commonmodule.utils.NetUtils;
 
 import java.util.concurrent.TimeUnit;
 
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import okhttp3.Cache;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * ApiClient
+ * ApiManager
  *
  * @author Qi
  */
-public class ApiClient {
+public class ApiManager {
 
+    private static final String APP_DEFAULT_DOMAIN = "https://qihuan92.github.io";
+    private final Retrofit retrofit;
     private static Application application;
 
     public static void init(Application application) {
-        ApiClient.application = application;
+        ApiManager.application = application;
+    }
+
+    private static class ApiManagerHolder {
+        private static final ApiManager INSTANCE = new ApiManager();
+    }
+
+    public static ApiManager getInstance() {
+        return ApiManagerHolder.INSTANCE;
+    }
+
+    private ApiManager() {
+        // RetrofitUrlManager 初始化
+        OkHttpClient okHttpClient = RetrofitUrlManager.getInstance().with(client())
+                .readTimeout(5, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(APP_DEFAULT_DOMAIN)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+    }
+
+    public Retrofit getRetrofit() {
+        return retrofit;
     }
 
     /**
@@ -35,7 +67,7 @@ public class ApiClient {
      *
      * @return Interceptor
      */
-    private static Interceptor onlineCacheInterceptor() {
+    private Interceptor onlineCacheInterceptor() {
         return chain -> {
             // 在线缓存在1分钟内可读取
             int maxAge = 60;
@@ -52,7 +84,7 @@ public class ApiClient {
      *
      * @return Interceptor
      */
-    private static Interceptor offlineCacheInterceptor() {
+    private Interceptor offlineCacheInterceptor() {
         return chain -> {
             // 离线时缓存保存1天
             int maxStale = 60 * 60 * 24;
@@ -69,7 +101,7 @@ public class ApiClient {
      *
      * @return loggingInterceptor
      */
-    private static HttpLoggingInterceptor loggingInterceptor() {
+    private HttpLoggingInterceptor loggingInterceptor() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return loggingInterceptor;
@@ -80,7 +112,7 @@ public class ApiClient {
      *
      * @return Cache
      */
-    private static Cache cache() {
+    private Cache cache() {
         // 10 MiB
         int cacheSize = 10 * 1024 * 1024;
         return new Cache(application.getCacheDir(), cacheSize);
@@ -91,7 +123,7 @@ public class ApiClient {
      *
      * @return CookieJar
      */
-    private static CookieJar cookieJar() {
+    private CookieJar cookieJar() {
         return new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(application));
     }
 
@@ -100,7 +132,7 @@ public class ApiClient {
      *
      * @return OkHttpClient
      */
-    public static OkHttpClient client() {
+    private OkHttpClient.Builder client() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(loggingInterceptor());
@@ -111,6 +143,8 @@ public class ApiClient {
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .cache(cache())
                 .cookieJar(cookieJar());
-        return builder.build();
+        return builder;
     }
+
+
 }

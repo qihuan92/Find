@@ -7,6 +7,7 @@ import com.qihuan.dailymodule.model.ZhihuModel;
 import com.qihuan.dailymodule.model.bean.DailyItemBean;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -35,8 +36,8 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext(dailyBean -> getView().latestDaily(dailyBean.getTop_stories()))
                         .observeOn(Schedulers.io())
-                        .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
-//                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+                        .concatMap(dailyBean -> Observable.fromIterable(dailyBean.getStories()))
+//                        .flatMap(storyBean -> Observable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
                         .map(DailyItemBean::new)
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())
@@ -59,8 +60,8 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .observeOn(Schedulers.io())
-                        .concatMap(dailyBean -> Flowable.fromIterable(dailyBean.getStories()))
-//                        .flatMap(storyBean -> Flowable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+                        .concatMap(dailyBean -> Observable.fromIterable(dailyBean.getStories()))
+//                        .flatMap(storyBean -> Observable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
                         .map(DailyItemBean::new)
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())

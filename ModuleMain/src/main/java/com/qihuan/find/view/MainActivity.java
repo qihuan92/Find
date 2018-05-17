@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.base.BaseActivity;
+import com.qihuan.commonmodule.bus.event.RefreshEvent;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.commonmodule.utils.AppUtils;
 import com.qihuan.commonmodule.utils.NavigationBarUtils;
@@ -16,12 +17,14 @@ import com.qihuan.commonmodule.utils.StatusBarUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.find.R;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * MainActivity
  *
  * @author Qi
  */
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
 
     private BottomNavigationView bottomView;
     private Fragment content = (Fragment) ARouter.getInstance().build(Router.DAILY_FRAGMENT).navigation();
@@ -49,6 +52,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         StatusBarUtils.statusBarLightMode(this);
         bottomView = findViewById(R.id.bottom_view);
         bottomView.setOnNavigationItemSelectedListener(this);
+        bottomView.setOnNavigationItemReselectedListener(this);
         NavigationBarUtils.disableShiftMode(bottomView);
         switchContent(dailyFragment);
     }
@@ -72,6 +76,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onNavigationItemReselected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.bb_menu_daily:
+                EventBus.getDefault().postSticky(new RefreshEvent());
+                break;
+            case R.id.bb_menu_movie:
+
+                break;
+            case R.id.bb_menu_discover:
+
+                break;
+            case R.id.bb_menu_me:
+
+                break;
+            default:
+                break;
+        }
     }
 
     private void switchContent(Fragment fragment) {

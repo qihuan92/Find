@@ -77,4 +77,6 @@ dependencies {
     // leakcanary
     debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    // bus
+    api 'org.greenrobot:eventbus:3.1.1'
 }

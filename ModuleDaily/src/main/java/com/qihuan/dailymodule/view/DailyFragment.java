@@ -17,6 +17,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.commonmodule.base.BaseFragment;
+import com.qihuan.commonmodule.bus.BindEventBus;
+import com.qihuan.commonmodule.bus.event.RefreshEvent;
 import com.qihuan.commonmodule.imageloader.ImageLoader;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.dailymodule.R;
@@ -25,6 +27,8 @@ import com.qihuan.dailymodule.model.bean.DailyItemBean;
 import com.qihuan.dailymodule.model.bean.TopStoryBean;
 import com.qihuan.dailymodule.presenter.DailyPresenter;
 import com.qihuan.dailymodule.view.adapter.DailyAdapter;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -35,19 +39,22 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  *
  * @author Qi
  */
+@BindEventBus
 @Route(path = Router.DAILY_FRAGMENT)
 public class DailyFragment extends BaseFragment implements
-    DailyContract.View,
-    SwipeRefreshLayout.OnRefreshListener,
-    BaseQuickAdapter.OnItemClickListener,
-    BaseQuickAdapter.RequestLoadMoreListener,
-    BGABanner.Adapter<View, TopStoryBean>,
-    BGABanner.Delegate<View, TopStoryBean> {
+        DailyContract.View,
+        SwipeRefreshLayout.OnRefreshListener,
+        BaseQuickAdapter.OnItemClickListener,
+        BaseQuickAdapter.RequestLoadMoreListener,
+        BGABanner.Adapter<View, TopStoryBean>,
+        BGABanner.Delegate<View, TopStoryBean> {
 
     private SwipeRefreshLayout refreshLayout;
     private BGABanner bannerView;
     private DailyPresenter presenter;
     private DailyAdapter dailyAdapter;
+    private RecyclerView rvList;
+    private LinearLayoutManager linearLayoutManager;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
@@ -86,7 +93,7 @@ public class DailyFragment extends BaseFragment implements
     }
 
     private void initView(View view) {
-        RecyclerView rvList = view.findViewById(R.id.rv_list);
+        rvList = view.findViewById(R.id.rv_list);
         refreshLayout = view.findViewById(R.id.refresh_layout);
 
         refreshLayout.setOnRefreshListener(this);
@@ -94,7 +101,8 @@ public class DailyFragment extends BaseFragment implements
         dailyAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         dailyAdapter.setOnItemClickListener(this);
         dailyAdapter.setOnLoadMoreListener(this, rvList);
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        rvList.setLayoutManager(linearLayoutManager);
         rvList.setAdapter(dailyAdapter);
 
         bannerView = (BGABanner) LayoutInflater.from(getContext()).inflate(R.layout.layout_banner, rvList, false);
@@ -125,9 +133,9 @@ public class DailyFragment extends BaseFragment implements
             return;
         }
         ARouter.getInstance()
-            .build(Router.DAILY_DET_ACTIVITY)
-            .withInt("id", dailyItemBean.t.getId())
-            .navigation();
+                .build(Router.DAILY_DET_ACTIVITY)
+                .withInt("id", dailyItemBean.t.getId())
+                .navigation();
     }
 
     @Override
@@ -137,29 +145,29 @@ public class DailyFragment extends BaseFragment implements
         ProgressBar pbLoading = itemView.findViewById(R.id.pb_loading);
 
         ImageLoader.getInstance()
-            .with(getContext())
-            .load(model.getImage())
-            .listener(new ImageLoader.OnImageLoadListener() {
-                @Override
-                public void onStart() {
-                    pbLoading.setVisibility(View.VISIBLE);
-                }
+                .with(getContext())
+                .load(model.getImage())
+                .listener(new ImageLoader.OnImageLoadListener() {
+                    @Override
+                    public void onStart() {
+                        pbLoading.setVisibility(View.VISIBLE);
+                    }
 
-                @Override
-                public void onFinish(boolean isSuccess) {
-                    pbLoading.setVisibility(View.GONE);
-                }
-            })
-            .into(ivBanner);
+                    @Override
+                    public void onFinish(boolean isSuccess) {
+                        pbLoading.setVisibility(View.GONE);
+                    }
+                })
+                .into(ivBanner);
         tvBanner.setText(model.getTitle());
     }
 
     @Override
     public void onBannerItemClick(BGABanner banner, View itemView, TopStoryBean model, int position) {
         ARouter.getInstance()
-            .build(Router.DAILY_DET_ACTIVITY)
-            .withInt("id", model.getId())
-            .navigation();
+                .build(Router.DAILY_DET_ACTIVITY)
+                .withInt("id", model.getId())
+                .navigation();
     }
 
     @Override
@@ -188,6 +196,19 @@ public class DailyFragment extends BaseFragment implements
         } else {
             dailyAdapter.loadMoreFail();
         }
+    }
+
+    @Subscribe(sticky = true)
+    public void onRefreshEvent(RefreshEvent refreshEvent) {
+        int visibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+        if (visibleItemPosition == 0) {
+            return;
+        }
+        // 超过 20 条, 先滚动到20条, 再平滑滚动
+        if (visibleItemPosition > 20) {
+            rvList.scrollToPosition(20);
+        }
+        rvList.smoothScrollToPosition(0);
     }
 
     @Override

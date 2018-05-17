@@ -3,8 +3,9 @@ package com.qihuan.dailymodule.presenter;
 import com.qihuan.commonmodule.base.BasePresenterImpl;
 import com.qihuan.commonmodule.collection.bean.CollectionBean;
 import com.qihuan.commonmodule.collection.model.CollectionModel;
+import com.qihuan.commonmodule.net.ApiManager;
 import com.qihuan.dailymodule.contract.DailyDetContract;
-import com.qihuan.dailymodule.model.ZhihuModel;
+import com.qihuan.dailymodule.model.ZhihuApi;
 import com.qihuan.dailymodule.model.bean.StoryContentBean;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -13,12 +14,10 @@ import io.reactivex.schedulers.Schedulers;
 public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> implements DailyDetContract.Presenter {
 
     private final CollectionModel collectionModel;
-    private final ZhihuModel zhihuModel;
     private StoryContentBean storyContentBean;
 
     public DailyDetPresenter() {
         collectionModel = new CollectionModel();
-        zhihuModel = new ZhihuModel();
     }
 
     @Override
@@ -30,7 +29,9 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
     @Override
     public void getStoryContent(int id) {
         addDisposable(
-                zhihuModel.getApi().getStoryContent(id)
+                ApiManager.getInstance()
+                        .getApi(ZhihuApi.class)
+                        .getStoryContent(id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(storyContentBean -> {
@@ -47,7 +48,9 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
     @Override
     public void getStoryExtra(int id) {
         addDisposable(
-                zhihuModel.getApi().getStoryExtra(id)
+                ApiManager.getInstance()
+                        .getApi(ZhihuApi.class)
+                        .getStoryExtra(id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(storyExtraBean -> getView().storyExtra(storyExtraBean),

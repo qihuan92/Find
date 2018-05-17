@@ -1,12 +1,12 @@
 package com.qihuan.dailymodule.presenter;
 
 import com.qihuan.commonmodule.base.BasePresenterImpl;
+import com.qihuan.commonmodule.net.ApiManager;
 import com.qihuan.commonmodule.utils.DateUtils;
 import com.qihuan.dailymodule.contract.DailyContract;
-import com.qihuan.dailymodule.model.ZhihuModel;
+import com.qihuan.dailymodule.model.ZhihuApi;
 import com.qihuan.dailymodule.model.bean.DailyItemBean;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -18,12 +18,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implements DailyContract.Presenter {
 
-    private final ZhihuModel zhihuModel;
     private String date;
 
     public DailyPresenter() {
         date = DateUtils.getNowDate();
-        zhihuModel = new ZhihuModel();
     }
 
     @Override
@@ -31,7 +29,9 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
         getView().showLoading();
         date = DateUtils.getNowDate();
         addDisposable(
-                zhihuModel.getApi().getLatestDaily()
+                ApiManager.getInstance()
+                        .getApi(ZhihuApi.class)
+                        .getLatestDaily()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext(dailyBean -> getView().latestDaily(dailyBean.getTop_stories()))
@@ -56,7 +56,9 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
     public void getBeforeDaily() {
         date = DateUtils.timeSub(date);
         addDisposable(
-                zhihuModel.getApi().getBeforeDaily(date)
+                ApiManager.getInstance()
+                        .getApi(ZhihuApi.class)
+                        .getBeforeDaily(date)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .observeOn(Schedulers.io())

@@ -58,8 +58,8 @@ public class ApiManager {
                 .build();
     }
 
-    public Retrofit getRetrofit() {
-        return retrofit;
+    public <T> T getApi(Class<T> t) {
+        return retrofit.create(t);
     }
 
     /**

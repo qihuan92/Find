@@ -40,6 +40,7 @@ dependencies {
     api 'com.android.support:design:27.1.1'
     api 'com.android.support:preference-v14:27.1.1'
     api 'com.android.support:cardview-v7:27.1.1'
+    api 'com.android.support:palette-v7:27.1.1'
     // glide
     api 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
@@ -51,6 +52,7 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
+    api 'me.jessyan:retrofit-url-manager:1.2.5'
     // rx
     api 'io.reactivex.rxjava2:rxandroid:2.0.2'
     api 'io.reactivex.rxjava2:rxjava:2.1.12'
@@ -64,7 +66,7 @@ dependencies {
     // rxpermissions
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     // AdapterHelper
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     // Toasty
     api 'com.github.GrenderG:Toasty:1.2.5'
     // banner
@@ -75,4 +77,6 @@ dependencies {
     // leakcanary
     debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    // bus
+    api 'org.greenrobot:eventbus:3.1.1'
 }

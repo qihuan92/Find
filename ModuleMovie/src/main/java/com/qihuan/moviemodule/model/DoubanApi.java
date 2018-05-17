@@ -1,12 +1,14 @@
 package com.qihuan.moviemodule.model;
 
+import com.qihuan.commonmodule.net.Api;
 import com.qihuan.moviemodule.model.bean.CastsBean;
 import com.qihuan.moviemodule.model.bean.MoviesBean;
 import com.qihuan.moviemodule.model.bean.SubjectBean;
 import com.qihuan.moviemodule.model.bean.USboxBean;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -16,23 +18,27 @@ import retrofit2.http.Query;
  */
 
 public interface DoubanApi {
-    String DOUBAN_URL = "https://api.douban.com/v2";
 
-    @GET("movie/top250")
-    Flowable<MoviesBean> getTopMovie(@Query("start") int start,
-                                     @Query("count") int count);
+    @Headers({Api.DOUBAN_DOMAIN})
+    @GET("/v2/movie/top250")
+    Observable<MoviesBean> getTopMovie(@Query("start") int start,
+                                       @Query("count") int count);
 
-    @GET("movie/us_box")
-    Flowable<USboxBean> getUSBox();
+    @Headers({Api.DOUBAN_DOMAIN})
+    @GET("/v2/movie/us_box")
+    Observable<USboxBean> getUSBox();
 
-    @GET("movie/subject/{id}")
-    Flowable<SubjectBean> getSubject(@Path("id") String id);
+    @Headers({Api.DOUBAN_DOMAIN})
+    @GET("/v2/movie/subject/{id}")
+    Observable<SubjectBean> getSubject(@Path("id") String id);
 
-    @GET("movie/celebrity/{id}")
-    Flowable<CastsBean> getCastDetail(@Path("id") String id);
+    @Headers({Api.DOUBAN_DOMAIN})
+    @GET("/v2/movie/celebrity/{id}")
+    Observable<CastsBean> getCastDetail(@Path("id") String id);
 
-    @GET("movie/search")
-    Flowable<MoviesBean> search(@Query("q") String q,
+    @Headers({Api.DOUBAN_DOMAIN})
+    @GET("/v2/movie/search")
+    Observable<MoviesBean> search(@Query("q") String q,
                                   @Query("start") int start,
                                   @Query("count") int count);
 }

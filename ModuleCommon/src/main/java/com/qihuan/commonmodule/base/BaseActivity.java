@@ -7,6 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.qihuan.commonmodule.R;
+import com.qihuan.commonmodule.bus.BindEventBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * BaseActivity
@@ -18,6 +21,22 @@ import com.qihuan.commonmodule.R;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private AlertDialog progressDialog;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (this.getClass().isAnnotationPresent(BindEventBus.class)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 
     protected void setToolBar(Toolbar toolbar, String title) {
         toolbar.setTitle(title);

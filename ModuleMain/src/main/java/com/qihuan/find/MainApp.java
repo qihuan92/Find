@@ -1,7 +1,10 @@
 package com.qihuan.find;
 
 import com.qihuan.commonmodule.base.BaseApp;
+import com.qihuan.commonmodule.net.Api;
 import com.squareup.leakcanary.LeakCanary;
+
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 /**
  * MainApp
@@ -22,6 +25,8 @@ public class MainApp extends BaseApp {
             }
             LeakCanary.install(this);
         }
+        RetrofitUrlManager.getInstance().putDomain(Api.ZHIHU_DOMAIN_VALUE, Api.ZHIHU_BASE_URL);
+        RetrofitUrlManager.getInstance().putDomain(Api.DOUBAN_DOMAIN_VALUE, Api.DOUBAN_BASE_URL);
     }
 
 }

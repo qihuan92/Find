@@ -21,11 +21,8 @@ import java.util.List;
 
 public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseViewHolder> {
 
-    private LoaderStrategy loaderStrategy;
-
     public DailyAdapter() {
         super(R.layout.item_daily, R.layout.item_date, null);
-        this.loaderStrategy = new GlideStrategy();
     }
 
     @Override

@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.base.BaseActivity;
+import com.qihuan.commonmodule.bus.BindEventBus;
+import com.qihuan.commonmodule.bus.event.BrowserEvent;
 import com.qihuan.commonmodule.bus.event.RefreshEvent;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.commonmodule.utils.AppUtils;
@@ -16,14 +19,17 @@ import com.qihuan.commonmodule.utils.NavigationBarUtils;
 import com.qihuan.commonmodule.utils.StatusBarUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.find.R;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * MainActivity
  *
  * @author Qi
  */
+@BindEventBus
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
 
     private BottomNavigationView bottomView;
@@ -107,6 +113,21 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             }
         }
         content = fragment;
+    }
+
+    @Subscribe
+    public void onBrowserEvent(BrowserEvent browserEvent) {
+        if (browserEvent == null) {
+            return;
+        }
+        FinestWebView.Builder webBuilder = new FinestWebView.Builder(getApplicationContext());
+        if (!TextUtils.isEmpty(browserEvent.getTitle())) {
+            webBuilder.titleDefault(browserEvent.getTitle());
+        }
+        if (TextUtils.isEmpty(browserEvent.getUrl())) {
+            return;
+        }
+        webBuilder.show(browserEvent.getUrl());
     }
 
     @Override

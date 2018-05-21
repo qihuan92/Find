@@ -40,8 +40,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     annotationProcessor rootProject.ext.dependencies["aroutercompiler"]
     implementation project(':ModuleCommon')
     if (!isModule.toBoolean()) {
@@ -50,7 +50,7 @@ dependencies {
         implementation project(':ModuleUser')
         implementation project(':ModuleDaily')
     }
-
+    implementation 'com.thefinestartist:finestwebview:1.2.7'
 }
 
 // copy apk files to build/bakApk/buildType

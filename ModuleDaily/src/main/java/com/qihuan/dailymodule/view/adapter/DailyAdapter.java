@@ -1,10 +1,16 @@
 package com.qihuan.dailymodule.view.adapter;
 
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
+import android.widget.ImageView;
+
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.qihuan.commonmodule.imageloader.ImageLoader;
-import com.qihuan.commonmodule.imageloader.LoaderStrategy;
-import com.qihuan.commonmodule.imageloader.strategy.GlideStrategy;
+import com.qihuan.commonmodule.imageloader.GlideApp;
 import com.qihuan.dailymodule.R;
 import com.qihuan.dailymodule.model.bean.DailyItemBean;
 import com.qihuan.dailymodule.model.bean.StoryBean;
@@ -41,21 +47,24 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
         // set title
         helper.setText(R.id.tv_news, storyBean.getTitle());
         // load image
-        ImageLoader.getInstance()
-            .with(mContext)
-            .load(url)
-            .listener(new ImageLoader.OnImageLoadListener() {
-                @Override
-                public void onStart() {
-                    helper.setVisible(R.id.pb_loading, true);
-                }
+        helper.setVisible(R.id.pb_loading, true);
+        GlideApp.with(mContext)
+                .load(url)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        helper.setVisible(R.id.pb_loading, false);
+                        return false;
+                    }
 
-                @Override
-                public void onFinish(boolean isSuccess) {
-                    helper.setVisible(R.id.pb_loading, false);
-                }
-            })
-            .into(helper.getView(R.id.iv_news));
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        helper.setVisible(R.id.pb_loading, false);
+                        return false;
+                    }
+                })
+                .centerCrop()
+                .into((ImageView) helper.getView(R.id.iv_news));
         // set extra
         StoryExtraBean extra = storyBean.getStoryExtraBean();
         if (extra == null) {

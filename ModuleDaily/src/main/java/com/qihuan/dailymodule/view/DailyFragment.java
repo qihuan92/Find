@@ -1,5 +1,6 @@
 package com.qihuan.dailymodule.view;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,11 +16,15 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qihuan.commonmodule.base.BaseFragment;
 import com.qihuan.commonmodule.bus.BindEventBus;
 import com.qihuan.commonmodule.bus.event.RefreshEvent;
-import com.qihuan.commonmodule.imageloader.ImageLoader;
+import com.qihuan.commonmodule.imageloader.GlideApp;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.dailymodule.R;
 import com.qihuan.dailymodule.contract.DailyContract;
@@ -143,21 +148,23 @@ public class DailyFragment extends BaseFragment implements
         ImageView ivBanner = itemView.findViewById(R.id.iv_banner);
         TextView tvBanner = itemView.findViewById(R.id.tv_banner);
         ProgressBar pbLoading = itemView.findViewById(R.id.pb_loading);
-
-        ImageLoader.getInstance()
-                .with(getContext())
+        pbLoading.setVisibility(View.VISIBLE);
+        GlideApp.with(this)
                 .load(model.getImage())
-                .listener(new ImageLoader.OnImageLoadListener() {
+                .listener(new RequestListener<Drawable>() {
                     @Override
-                    public void onStart() {
-                        pbLoading.setVisibility(View.VISIBLE);
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        pbLoading.setVisibility(View.GONE);
+                        return false;
                     }
 
                     @Override
-                    public void onFinish(boolean isSuccess) {
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         pbLoading.setVisibility(View.GONE);
+                        return false;
                     }
                 })
+                .centerCrop()
                 .into(ivBanner);
         tvBanner.setText(model.getTitle());
     }

@@ -205,7 +205,7 @@ public class DailyFragment extends BaseFragment implements
         }
     }
 
-    @Subscribe(sticky = true)
+    @Subscribe
     public void onRefreshEvent(RefreshEvent refreshEvent) {
         int visibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
         if (visibleItemPosition == 0) {

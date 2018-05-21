@@ -1,85 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="5dp"
-    android:background="@drawable/selector_item_bg">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:stateListAnimator="@drawable/lift_on_touch">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_news"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="0dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_news"
-                android:layout_width="80dp"
-                android:layout_height="60dp" />
-
-            <ProgressBar
-                android:id="@+id/pb_loading"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerInParent="true"
-                android:visibility="gone" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <TextView
-        android:id="@+id/tv_news"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/cv_news"
-        android:ellipsize="end"
-        android:lineSpacingMultiplier="1.2"
-        android:maxLines="2"
-        android:padding="10dp"
-        android:text="title"
-        android:textColor="@color/charade"
-        android:textSize="16sp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/iv_news"
-        android:orientation="horizontal"
         android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_news"
+            android:layout_width="80dp"
+            android:layout_height="60dp" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_news"
+            app:layout_constraintEnd_toEndOf="@+id/iv_news"
+            app:layout_constraintStart_toStartOf="@+id/iv_news"
+            app:layout_constraintTop_toTopOf="@+id/iv_news" />
+
+        <TextView
+            android:id="@+id/tv_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="85dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="2"
+            android:textColor="@color/charade"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_news"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="title" />
 
         <TextView
             android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_comment"
+            android:layout_marginEnd="10dp"
             android:drawablePadding="2dp"
+            android:drawableStart="@drawable/ic_comment"
             android:gravity="center"
-            android:text="comments"
-            android:textSize="10sp" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="5dp"
-            android:layout_height="match_parent" />
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_like"
+            tools:text="comments" />
 
         <TextView
             android:id="@+id/tv_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_like"
             android:drawablePadding="2dp"
+            android:drawableStart="@drawable/ic_like"
             android:gravity="center"
-            android:text="likes"
-            android:textSize="10sp" />
-    </LinearLayout>
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="likes" />
+    </android.support.constraint.ConstraintLayout>
 
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -6,11 +6,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.qihuan.commonmodule.imageloader.GlideApp;
+import com.qihuan.commonmodule.utils.SizeUtils;
 import com.qihuan.dailymodule.R;
 import com.qihuan.dailymodule.model.bean.DailyItemBean;
 import com.qihuan.dailymodule.model.bean.StoryBean;
@@ -63,7 +66,7 @@ public class DailyAdapter extends BaseSectionQuickAdapter<DailyItemBean, BaseVie
                         return false;
                     }
                 })
-                .centerCrop()
+                .apply(new RequestOptions().transform(new RoundedCorners(SizeUtils.dp2px(4))).centerCrop())
                 .into((ImageView) helper.getView(R.id.iv_news));
         // set extra
         StoryExtraBean extra = storyBean.getStoryExtraBean();

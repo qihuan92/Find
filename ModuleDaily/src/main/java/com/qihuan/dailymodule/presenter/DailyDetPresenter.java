@@ -3,9 +3,8 @@ package com.qihuan.dailymodule.presenter;
 import com.qihuan.commonmodule.base.BasePresenterImpl;
 import com.qihuan.commonmodule.collection.bean.CollectionBean;
 import com.qihuan.commonmodule.collection.model.CollectionModel;
-import com.qihuan.commonmodule.net.ApiManager;
 import com.qihuan.dailymodule.contract.DailyDetContract;
-import com.qihuan.dailymodule.model.ZhihuApi;
+import com.qihuan.dailymodule.model.ApiFactory;
 import com.qihuan.dailymodule.model.bean.StoryContentBean;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -29,8 +28,7 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
     @Override
     public void getStoryContent(int id) {
         addDisposable(
-                ApiManager.getInstance()
-                        .getApi(ZhihuApi.class)
+                ApiFactory.getApi()
                         .getStoryContent(id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -48,8 +46,7 @@ public class DailyDetPresenter extends BasePresenterImpl<DailyDetContract.View> 
     @Override
     public void getStoryExtra(int id) {
         addDisposable(
-                ApiManager.getInstance()
-                        .getApi(ZhihuApi.class)
+                ApiFactory.getApi()
                         .getStoryExtra(id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

@@ -1,10 +1,9 @@
 package com.qihuan.dailymodule.presenter;
 
 import com.qihuan.commonmodule.base.BasePresenterImpl;
-import com.qihuan.commonmodule.net.ApiManager;
 import com.qihuan.commonmodule.utils.DateUtils;
 import com.qihuan.dailymodule.contract.DailyContract;
-import com.qihuan.dailymodule.model.ZhihuApi;
+import com.qihuan.dailymodule.model.ApiFactory;
 import com.qihuan.dailymodule.model.bean.DailyItemBean;
 
 import io.reactivex.Observable;
@@ -29,8 +28,7 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
         getView().showLoading();
         date = DateUtils.getNowDate();
         addDisposable(
-                ApiManager.getInstance()
-                        .getApi(ZhihuApi.class)
+                ApiFactory.getApi()
                         .getLatestDaily()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -56,8 +54,7 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
     public void getBeforeDaily() {
         date = DateUtils.timeSub(date);
         addDisposable(
-                ApiManager.getInstance()
-                        .getApi(ZhihuApi.class)
+                ApiFactory.getApi()
                         .getBeforeDaily(date)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

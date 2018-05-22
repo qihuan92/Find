@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +31,10 @@ import com.qihuan.dailymodule.model.bean.DailyItemBean;
 import com.qihuan.dailymodule.model.bean.TopStoryBean;
 import com.qihuan.dailymodule.presenter.DailyPresenter;
 import com.qihuan.dailymodule.view.adapter.DailyAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -48,13 +51,13 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 @Route(path = Router.DAILY_FRAGMENT)
 public class DailyFragment extends BaseFragment implements
         DailyContract.View,
-        SwipeRefreshLayout.OnRefreshListener,
+        OnRefreshListener,
+        OnLoadMoreListener,
         BaseQuickAdapter.OnItemClickListener,
-        BaseQuickAdapter.RequestLoadMoreListener,
         BGABanner.Adapter<View, TopStoryBean>,
         BGABanner.Delegate<View, TopStoryBean> {
 
-    private SwipeRefreshLayout refreshLayout;
+    private SmartRefreshLayout refreshLayout;
     private BGABanner bannerView;
     private DailyPresenter presenter;
     private DailyAdapter dailyAdapter;
@@ -102,10 +105,10 @@ public class DailyFragment extends BaseFragment implements
         refreshLayout = view.findViewById(R.id.refresh_layout);
 
         refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadMoreListener(this);
         dailyAdapter = new DailyAdapter();
         dailyAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         dailyAdapter.setOnItemClickListener(this);
-        dailyAdapter.setOnLoadMoreListener(this, rvList);
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvList.setLayoutManager(linearLayoutManager);
         rvList.setAdapter(dailyAdapter);
@@ -119,12 +122,12 @@ public class DailyFragment extends BaseFragment implements
     }
 
     @Override
-    public void onRefresh() {
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         presenter.getLatestDaily();
     }
 
     @Override
-    public void onLoadMoreRequested() {
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         presenter.getBeforeDaily();
     }
 
@@ -193,16 +196,12 @@ public class DailyFragment extends BaseFragment implements
 
     @Override
     public void onRefreshEnd() {
-        refreshLayout.setRefreshing(false);
+        refreshLayout.finishRefresh();
     }
 
     @Override
     public void onLoadMoreEnd(boolean success) {
-        if (success) {
-            dailyAdapter.loadMoreComplete();
-        } else {
-            dailyAdapter.loadMoreFail();
-        }
+        refreshLayout.finishLoadMore(success);
     }
 
     @Subscribe
@@ -210,8 +209,7 @@ public class DailyFragment extends BaseFragment implements
         int visibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
         if (visibleItemPosition == 0) {
             // 刷新
-            refreshLayout.setRefreshing(true);
-            presenter.getLatestDaily();
+            refreshLayout.autoRefresh();
             return;
         }
         // 超过 20 条, 先滚动到20条, 再平滑滚动

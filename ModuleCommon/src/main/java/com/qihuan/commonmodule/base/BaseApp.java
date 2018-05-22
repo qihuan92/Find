@@ -8,6 +8,9 @@ import com.qihuan.commonmodule.collection.bean.MyObjectBox;
 import com.qihuan.commonmodule.net.ApiManager;
 import com.qihuan.commonmodule.utils.AppUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
+import com.scwang.smartrefresh.header.DeliveryHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 
 import io.objectbox.BoxStore;
 
@@ -20,6 +23,19 @@ public class BaseApp extends Application {
 
     private static BaseApp app;
     private BoxStore boxStore;
+
+    static {
+        // 设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
+            // 指定为经典Header，默认是 贝塞尔雷达Header
+            return new DeliveryHeader(context);
+        });
+        // 设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
+            // 指定为经典Footer，默认是 BallPulseFooter
+            return new ClassicsFooter(context).setDrawableSize(20);
+        });
+    }
 
     @Override
     public void onCreate() {
@@ -44,8 +60,8 @@ public class BaseApp extends Application {
         ARouter.init(this);
 
         boxStore = MyObjectBox.builder()
-            .androidContext(this)
-            .build();
+                .androidContext(this)
+                .build();
     }
 
     public BoxStore getBoxStore() {

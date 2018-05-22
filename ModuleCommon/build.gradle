@@ -80,4 +80,7 @@ dependencies {
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     // bus
     api 'org.greenrobot:eventbus:3.1.1'
+    // refresh layout
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'
 }

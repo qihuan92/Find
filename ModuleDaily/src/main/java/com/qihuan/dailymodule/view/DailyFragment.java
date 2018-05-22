@@ -209,6 +209,9 @@ public class DailyFragment extends BaseFragment implements
     public void onRefreshEvent(RefreshEvent refreshEvent) {
         int visibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
         if (visibleItemPosition == 0) {
+            // 刷新
+            refreshLayout.setRefreshing(true);
+            presenter.getLatestDaily();
             return;
         }
         // 超过 20 条, 先滚动到20条, 再平滑滚动

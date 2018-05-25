@@ -35,13 +35,12 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
                         .doOnNext(dailyBean -> getView().latestDaily(dailyBean.getTop_stories()))
                         .observeOn(Schedulers.io())
                         .concatMap(dailyBean -> Observable.fromIterable(dailyBean.getStories()))
-//                        .flatMap(storyBean -> Observable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+                        //.flatMap(storyBean -> Observable.zip(Observable.just(storyBean), ApiFactory.getApi().getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
                         .map(DailyItemBean::new)
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 list -> {
-                                    list.add(0, new DailyItemBean(true, "Toady"));
                                     getView().beforeDaily(true, list);
                                     getView().onRefreshEnd(true);
                                 },
@@ -63,7 +62,7 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
                         .observeOn(AndroidSchedulers.mainThread())
                         .observeOn(Schedulers.io())
                         .concatMap(dailyBean -> Observable.fromIterable(dailyBean.getStories()))
-//                        .flatMap(storyBean -> Observable.zip(Flowable.just(storyBean), zhihuApi.getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
+                        //.flatMap(storyBean -> Observable.zip(Observable.just(storyBean), ApiFactory.getApi().getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
                         .map(DailyItemBean::new)
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())

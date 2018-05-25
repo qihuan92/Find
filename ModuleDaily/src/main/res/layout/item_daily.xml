@@ -9,7 +9,8 @@
     android:layout_marginRight="10dp"
     android:layout_marginTop="5dp"
     android:foreground="?android:attr/selectableItemBackground"
-    android:stateListAnimator="@drawable/lift_on_touch">
+    android:stateListAnimator="@drawable/lift_on_touch"
+    app:cardCornerRadius="5dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
             android:lineSpacingMultiplier="1.2"
             android:maxLines="2"
             android:textColor="@color/charade"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/iv_news"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="title" />

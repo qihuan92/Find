@@ -48,15 +48,15 @@ dependencies {
     // gson
     api 'com.google.code.gson:gson:2.8.2'
     // retrofit
-    api 'com.squareup.retrofit2:retrofit:2.3.0'
-    api 'com.squareup.retrofit2:converter-gson:2.3.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    api 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
     api 'me.jessyan:retrofit-url-manager:1.2.5'
     // rx
     api 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    api 'io.reactivex.rxjava2:rxjava:2.1.12'
+    api 'io.reactivex.rxjava2:rxjava:2.1.14'
     // rxbinding
     api 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     api 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
@@ -83,4 +83,7 @@ dependencies {
     // refresh layout
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'
+    // ue tool
+    debugApi 'me.ele:uetool:1.0.13'
+    releaseApi 'me.ele:uetool-no-op:1.0.13'
 }

@@ -1,7 +1,6 @@
 package com.qihuan.commonmodule.net;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -46,10 +45,7 @@ public class ApiManager {
     private ApiManager() {
         // RetrofitUrlManager 初始化
         OkHttpClient okHttpClient = RetrofitUrlManager.getInstance().with(client())
-                .readTimeout(5, TimeUnit.SECONDS)
-                .connectTimeout(5, TimeUnit.SECONDS)
                 .build();
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(APP_DEFAULT_DOMAIN)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

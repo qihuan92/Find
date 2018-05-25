@@ -44,8 +44,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+//        UETool.showUETMenu();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        UETool.dismissUETMenu();
+    }
 
     @SuppressLint("MissingSuperCall")
     @Override

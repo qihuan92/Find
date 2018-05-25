@@ -43,9 +43,12 @@ public class DailyPresenter extends BasePresenterImpl<DailyContract.View> implem
                                 list -> {
                                     list.add(0, new DailyItemBean(true, "Toady"));
                                     getView().beforeDaily(true, list);
-                                    getView().onRefreshEnd();
+                                    getView().onRefreshEnd(true);
                                 },
-                                e -> getView().showError(e.getMessage())
+                                e -> {
+                                    getView().onRefreshEnd(false);
+                                    getView().showError(e.getMessage());
+                                }
                         )
         );
     }

@@ -118,7 +118,7 @@ public class DailyFragment extends BaseFragment implements
         bannerView.setDelegate(this);
         dailyAdapter.addHeaderView(bannerView);
 
-        presenter.getLatestDaily();
+        refreshLayout.autoRefresh();
     }
 
     @Override
@@ -195,8 +195,8 @@ public class DailyFragment extends BaseFragment implements
     }
 
     @Override
-    public void onRefreshEnd() {
-        refreshLayout.finishRefresh();
+    public void onRefreshEnd(boolean success) {
+        refreshLayout.finishRefresh(success);
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface DailyContract {
 
         void beforeDaily(boolean isRefresh, List<DailyItemBean> dailyList);
 
-        void onRefreshEnd();
+        void onRefreshEnd(boolean success);
 
         void onLoadMoreEnd(boolean success);
     }

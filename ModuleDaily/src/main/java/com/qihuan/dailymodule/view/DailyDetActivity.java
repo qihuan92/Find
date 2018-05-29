@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.qihuan.commonmodule.base.BaseActivity;
+import com.qihuan.commonmodule.base.BaseMvpActivity;
 import com.qihuan.commonmodule.imageloader.GlideApp;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.commonmodule.utils.ToastUtils;
@@ -30,7 +30,7 @@ import com.qihuan.dailymodule.presenter.DailyDetPresenter;
  * @author Qi
  */
 @Route(path = Router.DAILY_DET_ACTIVITY)
-public class DailyDetActivity extends BaseActivity implements DailyDetContract.View {
+public class DailyDetActivity extends BaseMvpActivity<DailyDetContract.Presenter> implements DailyDetContract.View {
 
     private Toolbar toolbar;
     private WebView webView;
@@ -38,7 +38,6 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
     private FloatingActionButton fabFavorite;
     private ImageView ivDaily;
     private TextView tvCopyRight;
-    private DailyDetPresenter presenter;
 
     @Autowired
     public int id;
@@ -48,15 +47,7 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_det);
         ARouter.getInstance().inject(this);
-        presenter = new DailyDetPresenter();
-        presenter.attachView(this);
         initView();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.detachView();
     }
 
     private void initView() {
@@ -78,15 +69,15 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
         settings.setDatabaseEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());
 
-        presenter.getStoryContent(id);
-        presenter.getFavoriteStory(id);
+        mPresenter.getStoryContent(id);
+        mPresenter.getFavoriteStory(id);
     }
 
     /**
      * 收藏
      */
     private void onFavoriteClick() {
-        presenter.updateFavoriteStory(id);
+        mPresenter.updateFavoriteStory(id);
     }
 
     @Override
@@ -147,5 +138,10 @@ public class DailyDetActivity extends BaseActivity implements DailyDetContract.V
     @Override
     public void showError(String errorMsg) {
         ToastUtils.error(errorMsg);
+    }
+
+    @Override
+    protected DailyDetContract.Presenter initPresenter() {
+        return new DailyDetPresenter();
     }
 }

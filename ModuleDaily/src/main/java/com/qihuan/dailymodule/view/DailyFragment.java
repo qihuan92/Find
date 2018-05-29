@@ -20,7 +20,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.qihuan.commonmodule.base.BaseFragment;
+import com.qihuan.commonmodule.base.BaseMvpFragment;
 import com.qihuan.commonmodule.bus.BindEventBus;
 import com.qihuan.commonmodule.bus.event.RefreshEvent;
 import com.qihuan.commonmodule.imageloader.GlideApp;
@@ -49,7 +49,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 @BindEventBus
 @Route(path = Router.DAILY_FRAGMENT)
-public class DailyFragment extends BaseFragment implements
+public class DailyFragment extends BaseMvpFragment<DailyContract.Presenter> implements
         DailyContract.View,
         OnRefreshListener,
         OnLoadMoreListener,
@@ -59,26 +59,12 @@ public class DailyFragment extends BaseFragment implements
 
     private SmartRefreshLayout refreshLayout;
     private BGABanner bannerView;
-    private DailyPresenter presenter;
     private DailyAdapter dailyAdapter;
     private RecyclerView rvList;
     private LinearLayoutManager linearLayoutManager;
 
     public static DailyFragment newInstance() {
         return new DailyFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new DailyPresenter();
-        presenter.attachView(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.detachView();
     }
 
     @Override
@@ -123,12 +109,12 @@ public class DailyFragment extends BaseFragment implements
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        presenter.getLatestDaily();
+        mPresenter.getLatestDaily();
     }
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        presenter.getBeforeDaily();
+        mPresenter.getBeforeDaily();
     }
 
     @Override
@@ -232,5 +218,10 @@ public class DailyFragment extends BaseFragment implements
     @Override
     public void showError(String errorMsg) {
 
+    }
+
+    @Override
+    protected DailyContract.Presenter initPresenter() {
+        return new DailyPresenter();
     }
 }

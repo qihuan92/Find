@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
  */
 public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActivity implements BaseView {
 
-    private P mPresenter;
+    protected P mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

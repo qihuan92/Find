@@ -29,7 +29,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/iv_news"
             app:layout_constraintEnd_toEndOf="@+id/iv_news"
             app:layout_constraintStart_toStartOf="@+id/iv_news"
-            app:layout_constraintTop_toTopOf="@+id/iv_news" />
+            app:layout_constraintTop_toTopOf="@+id/iv_news"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_news"

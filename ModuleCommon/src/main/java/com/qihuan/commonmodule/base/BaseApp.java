@@ -5,6 +5,8 @@ import android.app.Application;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.BuildConfig;
 import com.qihuan.commonmodule.collection.bean.MyObjectBox;
+import com.qihuan.commonmodule.imageloader.ImageLoader;
+import com.qihuan.commonmodule.imageloader.glide.GlideStrategy;
 import com.qihuan.commonmodule.net.ApiManager;
 import com.qihuan.commonmodule.utils.AppUtils;
 import com.qihuan.commonmodule.utils.ToastUtils;
@@ -51,6 +53,7 @@ public class BaseApp extends Application {
     private void init() {
         ApiManager.init(this);
         AppUtils.init(this);
+        ImageLoader.getInstance().setStrategy(new GlideStrategy());
         ToastUtils.init(this);
         if (BuildConfig.DEBUG) {
             ARouter.openLog();

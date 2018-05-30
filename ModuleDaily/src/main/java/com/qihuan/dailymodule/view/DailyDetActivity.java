@@ -14,7 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.qihuan.commonmodule.base.BaseMvpActivity;
-import com.qihuan.commonmodule.imageloader.GlideApp;
+import com.qihuan.commonmodule.imageloader.ImageLoader;
 import com.qihuan.commonmodule.router.Router;
 import com.qihuan.commonmodule.utils.ToastUtils;
 import com.qihuan.commonmodule.utils.WebUtils;
@@ -100,9 +100,9 @@ public class DailyDetActivity extends BaseMvpActivity<DailyDetContract.Presenter
         }
         tvTitle.setText(storyContent.getTitle());
         tvCopyRight.setText(storyContent.getImage_source());
-        GlideApp.with(this)
-                .load(storyContent.getImage())
-                .centerCrop()
+        ImageLoader.getInstance()
+                .with(this)
+                .url(storyContent.getImage())
                 .into(ivDaily);
     }
 

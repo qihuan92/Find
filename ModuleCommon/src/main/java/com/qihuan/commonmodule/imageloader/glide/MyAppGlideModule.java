@@ -1,4 +1,4 @@
-package com.qihuan.commonmodule.imageloader;
+package com.qihuan.commonmodule.imageloader.glide;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

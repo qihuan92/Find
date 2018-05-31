@@ -35,10 +35,9 @@ abstract class BaseActivity : AppCompatActivity() {
     protected fun setToolBar(toolbar: Toolbar, title: String) {
         toolbar.title = title
         setSupportActionBar(toolbar)
-        val bar = supportActionBar
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true)
-            bar.setDisplayShowHomeEnabled(true)
+        supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setDisplayShowHomeEnabled(true)
         }
         toolbar.setNavigationOnClickListener { onBackPressed() }
     }

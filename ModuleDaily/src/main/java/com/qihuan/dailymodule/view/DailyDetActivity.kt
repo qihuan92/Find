@@ -1,7 +1,6 @@
 package com.qihuan.dailymodule.view
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -41,36 +40,34 @@ class DailyDetActivity : BaseMvpActivity<DailyDetContract.View, DailyDetContract
     private fun initView() {
         setToolBar(toolbar, "")
 
-        fab_favorite.setOnClickListener { onFavoriteClick() }
+        fab_favorite.setOnClickListener { mPresenter.updateFavoriteStory(id) }
 
-        val settings = web_view.settings
-        settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        settings.loadWithOverviewMode = true
-        settings.domStorageEnabled = true
-        settings.databaseEnabled = true
-        web_view.webChromeClient = WebChromeClient()
+        web_view.apply {
+            webChromeClient = WebChromeClient()
+        }.settings.run {
+            cacheMode = WebSettings.LOAD_NO_CACHE
+            loadWithOverviewMode = true
+            domStorageEnabled = true
+            databaseEnabled = true
+        }
 
-        mPresenter.getStoryContent(id)
-        mPresenter.getFavoriteStory(id)
-    }
-
-    /**
-     * 收藏
-     */
-    private fun onFavoriteClick() {
-        mPresenter.updateFavoriteStory(id)
+        mPresenter.run {
+            getStoryContent(id)
+            getFavoriteStory(id)
+        }
     }
 
     override fun storyContent(storyContent: StoryContentBean) {
-        val url = storyContent.share_url
-        if (TextUtils.isEmpty(storyContent.body)) {
-            web_view.loadUrl(url)
-        } else {
-            web_view.loadHtmlWithCss(storyContent.body, storyContent.css, false)
+        storyContent.run {
+            if (body.isEmpty()) {
+                web_view.loadUrl(share_url)
+            } else {
+                web_view.loadHtmlWithCss(body, css, false)
+            }
+            tv_title.text = title
+            tv_copyright.text = image_source
+            iv_daily.load(image)
         }
-        tv_title.text = storyContent.title
-        tv_copyright.text = storyContent.image_source
-        iv_daily.load(storyContent.image)
     }
 
     override fun storyExtra(storyExtra: StoryExtraBean) {
@@ -78,11 +75,7 @@ class DailyDetActivity : BaseMvpActivity<DailyDetContract.View, DailyDetContract
     }
 
     override fun onFavoriteChange(isFavorite: Boolean) {
-        if (isFavorite) {
-            fab_favorite.setImageResource(R.drawable.ic_favorite)
-        } else {
-            fab_favorite.setImageResource(R.drawable.ic_favorite_border)
-        }
+        fab_favorite.setImageResource(if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border)
     }
 
     override fun showUpdateFavoriteInfo(isFavorite: Boolean) {

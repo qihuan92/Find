@@ -17,6 +17,11 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
 
     override val loadingDialog: LoadingDialog by lazy { LoadingDialog(this) }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        loadingDialog.dismiss()
+    }
+
     override fun onStart() {
         super.onStart()
         if (this.javaClass.isAnnotationPresent(BindEventBus::class.java)) {
@@ -34,9 +39,9 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
     protected fun setToolBar(toolbar: Toolbar, title: String) {
         toolbar.title = title
         setSupportActionBar(toolbar)
-        supportActionBar?.let {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setDisplayShowHomeEnabled(true)
+        supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
         }
         toolbar.setNavigationOnClickListener { onBackPressed() }
     }

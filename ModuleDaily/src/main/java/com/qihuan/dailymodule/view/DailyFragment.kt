@@ -92,17 +92,17 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
     override fun fillBannerItem(banner: BGABanner, itemView: View, model: TopStoryBean?, position: Int) {
         val ivBanner = itemView.findViewById<ImageView>(R.id.iv_banner)
         val tvBanner = itemView.findViewById<TextView>(R.id.tv_banner)
-        model?.let {
-            ivBanner.load(it.image)
-            tvBanner.text = it.title
+        model?.run {
+            ivBanner.load(image)
+            tvBanner.text = title
         }
     }
 
     override fun onBannerItemClick(banner: BGABanner, itemView: View, model: TopStoryBean?, position: Int) {
-        model?.let {
+        model?.run {
             ARouter.getInstance()
                     .build(Router.DAILY_DET_ACTIVITY)
-                    .withInt("id", it.id)
+                    .withInt("id", id)
                     .navigation()
         }
     }
@@ -129,8 +129,8 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
 
     @Subscribe
     fun onRefreshEvent(refreshEvent: RefreshEvent) {
-        linearLayoutManager?.let {
-            val visibleItemPosition = it.findFirstCompletelyVisibleItemPosition()
+        linearLayoutManager?.run {
+            val visibleItemPosition = findFirstCompletelyVisibleItemPosition()
             if (visibleItemPosition == 0) {
                 // 刷新
                 refresh_layout.autoRefresh()

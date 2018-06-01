@@ -1,8 +1,6 @@
 package com.qihuan.commonmodule.utils
 
 import android.os.Build
-import android.text.TextUtils
-
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -56,15 +54,15 @@ object DeviceUtils {
             return sName == rom
         }
 
-        if (!TextUtils.isEmpty(getProp(KEY_VERSION_MIUI))) {
+        if (!getProp(KEY_VERSION_MIUI).isNullOrEmpty()) {
             sName = ROM_MIUI
-        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_EMUI))) {
+        } else if (!getProp(KEY_VERSION_EMUI).isNullOrEmpty()) {
             sName = ROM_EMUI
-        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_OPPO))) {
+        } else if (!getProp(KEY_VERSION_OPPO).isNullOrEmpty()) {
             sName = ROM_OPPO
-        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_VIVO))) {
+        } else if (!getProp(KEY_VERSION_VIVO).isNullOrEmpty()) {
             sName = ROM_VIVO
-        } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_SMARTISAN))) {
+        } else if (!getProp(KEY_VERSION_SMARTISAN).isNullOrEmpty()) {
             sName = ROM_SMARTISAN
         } else {
             sName = if (Build.DISPLAY.toUpperCase().contains(ROM_FLYME)) {

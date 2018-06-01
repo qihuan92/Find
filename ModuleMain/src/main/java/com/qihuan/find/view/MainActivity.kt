@@ -3,7 +3,6 @@ package com.qihuan.find.view
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.text.TextUtils
 import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.base.BaseActivity
 import com.qihuan.commonmodule.bus.BindEventBus
@@ -93,13 +92,13 @@ class MainActivity : BaseActivity() {
 
     @Subscribe
     fun onBrowserEvent(browserEvent: BrowserEvent?) {
-        browserEvent?.let {
+        browserEvent?.run {
             val webBuilder = FinestWebView.Builder(applicationContext)
-            if (!TextUtils.isEmpty(it.title)) {
-                webBuilder.titleDefault(it.title)
+            if (title.isNotBlank()) {
+                webBuilder.titleDefault(title)
             }
-            if (!TextUtils.isEmpty(it.url)) {
-                webBuilder.show(it.url)
+            if (url.isNotBlank()) {
+                webBuilder.show(url)
             }
         }
     }

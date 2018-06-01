@@ -36,6 +36,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     // kotlin
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api 'androidx.core:core-ktx:0.3'
     // android support
     api 'com.android.support:appcompat-v7:27.1.1'
     api 'com.android.support:support-v4:27.1.1'

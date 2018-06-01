@@ -15,6 +15,7 @@ import com.qihuan.commonmodule.base.BaseMvpFragment
 import com.qihuan.commonmodule.bus.BindEventBus
 import com.qihuan.commonmodule.bus.event.RefreshEvent
 import com.qihuan.commonmodule.router.Router
+import com.qihuan.commonmodule.utils.inflate
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.dailymodule.R
 import com.qihuan.dailymodule.contract.DailyContract
@@ -57,6 +58,7 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
         refresh_layout.setOnLoadMoreListener { mPresenter.getBeforeDaily() }
         refresh_layout.autoRefresh()
 
+        bannerView = context?.inflate(R.layout.layout_banner, rv_list)
         bannerView = LayoutInflater.from(context).inflate(R.layout.layout_banner, rv_list, false) as BGABanner
         bannerView?.setAdapter(this)
         bannerView?.setDelegate(this)

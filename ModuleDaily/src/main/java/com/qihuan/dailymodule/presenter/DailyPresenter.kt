@@ -10,6 +10,7 @@ import com.qihuan.dailymodule.model.bean.DailyItemBean
 import com.qihuan.dailymodule.model.bean.StoryBean
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -22,28 +23,29 @@ class DailyPresenter : BasePresenterImpl<DailyContract.View>(), DailyContract.Pr
     private var date: String = getNowDate()
 
     override fun getLatestDaily() {
-        view!!.showLoading()
+        view?.showLoading()
         date = getNowDate()
+
         addDisposable(
                 ApiFactory.api
                         .getLatestDaily()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnNext({ dailyBean -> view!!.latestDaily(dailyBean.top_stories) })
+                        .doOnNext({ dailyBean -> view?.latestDaily(dailyBean.top_stories) })
                         .observeOn(Schedulers.io())
                         .concatMap({ dailyBean -> Observable.fromIterable<StoryBean>(dailyBean.stories) })
                         //.flatMap(storyBean -> Observable.zip(Observable.just(storyBean), ApiFactory.getApi().getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
                         .map({ DailyItemBean(it) })
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { list ->
-                                    view!!.beforeDaily(true, list)
-                                    view!!.onRefreshEnd(true)
+                        .subscribeBy(
+                                onSuccess = {
+                                    view?.beforeDaily(true, it)
+                                    view?.onRefreshEnd(true)
                                 },
-                                { e ->
-                                    view!!.onRefreshEnd(false)
-                                    view!!.showError(e.message ?: "")
+                                onError = {
+                                    view?.onRefreshEnd(false)
+                                    view?.showError(it.message ?: "")
                                 }
                         )
         )
@@ -62,17 +64,18 @@ class DailyPresenter : BasePresenterImpl<DailyContract.View>(), DailyContract.Pr
                         .map({ DailyItemBean(it) })
                         .toList()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { list ->
-                                    list.add(0, DailyItemBean(true, parseDate(date)))
-                                    view!!.beforeDaily(false, list)
-                                    view!!.onLoadMoreEnd(true)
+                        .subscribeBy(
+                                onSuccess = {
+                                    it.add(0, DailyItemBean(true, parseDate(date)))
+                                    view?.beforeDaily(false, it)
+                                    view?.onLoadMoreEnd(true)
                                 },
-                                { e ->
-                                    view!!.onLoadMoreEnd(false)
-                                    view!!.showError(e.message ?: "")
+                                onError = {
+                                    view?.onLoadMoreEnd(false)
+                                    view?.showError(it.message ?: "")
                                 }
                         )
+
         )
     }
 }

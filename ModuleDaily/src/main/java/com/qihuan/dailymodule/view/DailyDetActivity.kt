@@ -90,11 +90,11 @@ class DailyDetActivity : BaseMvpActivity<DailyDetContract.View, DailyDetContract
     }
 
     override fun showLoading() {
-        showProgressLoading()
+        showLoadingDialog()
     }
 
     override fun hideLoading() {
-        hideProgressLoading()
+        hideLoadingDialog()
     }
 
     override fun showError(errorMsg: String) {

@@ -1,10 +1,9 @@
 package com.qihuan.commonmodule.base
 
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import com.qihuan.commonmodule.R
 import com.qihuan.commonmodule.bus.BindEventBus
+import com.qihuan.commonmodule.views.LoadingDialog
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -14,9 +13,9 @@ import org.greenrobot.eventbus.EventBus
  * @date 2017/6/20
  */
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
 
-    private var progressDialog: AlertDialog? = null
+    override val loadingDialog: LoadingDialog by lazy { LoadingDialog(this) }
 
     override fun onStart() {
         super.onStart()
@@ -40,25 +39,5 @@ abstract class BaseActivity : AppCompatActivity() {
             it.setDisplayShowHomeEnabled(true)
         }
         toolbar.setNavigationOnClickListener { onBackPressed() }
-    }
-
-
-    fun showProgressLoading() {
-        if (progressDialog == null) {
-            progressDialog = AlertDialog.Builder(this, R.style.ProgressDialog).create()
-        }
-        val loadView = layoutInflater.inflate(R.layout.alert_progress, null)
-        progressDialog!!.setView(loadView, 0, 0, 0, 0)
-        progressDialog!!.setCanceledOnTouchOutside(false)
-        if (progressDialog!!.isShowing) {
-            return
-        }
-        progressDialog!!.show()
-    }
-
-    fun hideProgressLoading() {
-        if (progressDialog != null && progressDialog!!.isShowing) {
-            progressDialog!!.dismiss()
-        }
     }
 }

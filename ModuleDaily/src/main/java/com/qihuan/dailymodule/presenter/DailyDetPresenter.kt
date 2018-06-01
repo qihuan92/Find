@@ -30,10 +30,10 @@ class DailyDetPresenter : BasePresenterImpl<DailyDetContract.View>(), DailyDetCo
                         .subscribeBy(
                                 onNext = {
                                     this.storyContentBean = it
-                                    view!!.storyContent(it)
+                                    view?.storyContent(it)
                                 },
                                 onError = {
-                                    view!!.showError(it.message ?: "")
+                                    view?.showError(it.message ?: "")
                                 }
                         )
         )
@@ -47,38 +47,37 @@ class DailyDetPresenter : BasePresenterImpl<DailyDetContract.View>(), DailyDetCo
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy(
                                 onNext = {
-                                    view!!.storyExtra(it)
+                                    view?.storyExtra(it)
                                 },
                                 onError = {
-                                    view!!.showError(it.message ?: "")
+                                    view?.showError(it.message ?: "")
                                 }
                         )
         )
     }
 
     override fun getFavoriteStory(id: Int) {
-        view!!.showLoading()
+        view?.showLoading()
 
         collectionModel.getFavoriteList(id.toString()) {
-            view!!.onFavoriteChange(it.isNotEmpty())
-            view!!.hideLoading()
+            view?.onFavoriteChange(it.isNotEmpty())
+            view?.hideLoading()
         }
     }
 
     override fun updateFavoriteStory(id: Int) {
-        if (storyContentBean == null) {
-            return
-        }
-        val collectionBean = CollectionBean()
-        collectionBean.collectionId = id.toString()
-        collectionBean.type = 0
-        collectionBean.title = storyContentBean!!.title
-        collectionBean.img = storyContentBean!!.image
+        storyContentBean?.let {
+            val collectionBean = CollectionBean()
+            collectionBean.collectionId = id.toString()
+            collectionBean.type = 0
+            collectionBean.title = it.title
+            collectionBean.img = it.image
 
-        collectionModel.updateFavorite(collectionBean) {
-            view!!.hideLoading()
-            view!!.onFavoriteChange(it)
-            view!!.showUpdateFavoriteInfo(it)
+            collectionModel.updateFavorite(collectionBean) {
+                view?.hideLoading()
+                view?.onFavoriteChange(it)
+                view?.showUpdateFavoriteInfo(it)
+            }
         }
     }
 

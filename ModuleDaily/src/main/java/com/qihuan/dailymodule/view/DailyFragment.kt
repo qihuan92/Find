@@ -5,8 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -16,12 +14,12 @@ import com.qihuan.commonmodule.bus.BindEventBus
 import com.qihuan.commonmodule.bus.event.RefreshEvent
 import com.qihuan.commonmodule.router.Router
 import com.qihuan.commonmodule.utils.inflate
-import com.qihuan.commonmodule.utils.load
 import com.qihuan.dailymodule.R
 import com.qihuan.dailymodule.contract.DailyContract
 import com.qihuan.dailymodule.model.bean.DailyItemBean
 import com.qihuan.dailymodule.model.bean.TopStoryBean
 import com.qihuan.dailymodule.presenter.DailyPresenter
+import com.qihuan.dailymodule.view.adapter.BannerAdapter
 import com.qihuan.dailymodule.view.adapter.DailyAdapter
 import kotlinx.android.synthetic.main.fragment_news.*
 import org.greenrobot.eventbus.Subscribe
@@ -33,7 +31,7 @@ import org.greenrobot.eventbus.Subscribe
  */
 @BindEventBus
 @Route(path = Router.DAILY_FRAGMENT)
-class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View, BaseQuickAdapter.OnItemClickListener, BGABanner.Adapter<View, TopStoryBean>, BGABanner.Delegate<View, TopStoryBean> {
+class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View, BaseQuickAdapter.OnItemClickListener, BGABanner.Delegate<View, TopStoryBean> {
 
     private var bannerView: BGABanner? = null
     private var dailyAdapter: DailyAdapter? = null
@@ -45,24 +43,30 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // list
         linearLayoutManager = LinearLayoutManager(context)
         rv_list.layoutManager = linearLayoutManager
 
+        // banner
+        bannerView = context?.inflate(R.layout.layout_banner, rv_list)
+        bannerView?.setAdapter(BannerAdapter())
+        bannerView?.setDelegate(this)
+
+        // adapter
         dailyAdapter = DailyAdapter()
+        dailyAdapter?.apply {
+            openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM)
+            addHeaderView(bannerView)
+        }?.onItemClickListener = this
         rv_list.adapter = dailyAdapter
 
-        dailyAdapter?.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM)
-        dailyAdapter?.onItemClickListener = this
-
-        refresh_layout.setOnRefreshListener { mPresenter.getLatestDaily() }
-        refresh_layout.setOnLoadMoreListener { mPresenter.getBeforeDaily() }
-        refresh_layout.autoRefresh()
-
-        bannerView = context?.inflate(R.layout.layout_banner, rv_list)
-        bannerView = LayoutInflater.from(context).inflate(R.layout.layout_banner, rv_list, false) as BGABanner
-        bannerView?.setAdapter(this)
-        bannerView?.setDelegate(this)
-        dailyAdapter?.addHeaderView(bannerView)
+        // refresh layout
+        refresh_layout.apply {
+            setOnRefreshListener { mPresenter.getLatestDaily() }
+            setOnLoadMoreListener { mPresenter.getBeforeDaily() }
+            autoRefresh()
+        }
     }
 
     override fun onResume() {
@@ -87,15 +91,6 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
                 .build(Router.DAILY_DET_ACTIVITY)
                 .withInt("id", dailyItemBean.t.id)
                 .navigation()
-    }
-
-    override fun fillBannerItem(banner: BGABanner, itemView: View, model: TopStoryBean?, position: Int) {
-        val ivBanner = itemView.findViewById<ImageView>(R.id.iv_banner)
-        val tvBanner = itemView.findViewById<TextView>(R.id.tv_banner)
-        model?.run {
-            ivBanner.load(image)
-            tvBanner.text = title
-        }
     }
 
     override fun onBannerItemClick(banner: BGABanner, itemView: View, model: TopStoryBean?, position: Int) {

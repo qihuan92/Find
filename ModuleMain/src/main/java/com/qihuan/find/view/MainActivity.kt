@@ -93,17 +93,15 @@ class MainActivity : BaseActivity() {
 
     @Subscribe
     fun onBrowserEvent(browserEvent: BrowserEvent?) {
-        if (browserEvent == null) {
-            return
+        browserEvent?.let {
+            val webBuilder = FinestWebView.Builder(applicationContext)
+            if (!TextUtils.isEmpty(it.title)) {
+                webBuilder.titleDefault(it.title)
+            }
+            if (!TextUtils.isEmpty(it.url)) {
+                webBuilder.show(it.url)
+            }
         }
-        val webBuilder = FinestWebView.Builder(applicationContext)
-        if (!TextUtils.isEmpty(browserEvent.title)) {
-            webBuilder.titleDefault(browserEvent.title!!)
-        }
-        if (TextUtils.isEmpty(browserEvent.url)) {
-            return
-        }
-        webBuilder.show(browserEvent.url!!)
     }
 
     override fun onBackPressed() {

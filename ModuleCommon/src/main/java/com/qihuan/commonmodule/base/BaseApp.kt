@@ -5,11 +5,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.BuildConfig
 import com.qihuan.commonmodule.collection.bean.MyObjectBox
 import com.qihuan.commonmodule.net.ApiManager
-import com.qihuan.commonmodule.utils.initToast
 import com.scwang.smartrefresh.header.DeliveryHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import io.objectbox.BoxStore
+import kotlin.properties.Delegates
 
 /**
  * BaseApp
@@ -17,8 +17,7 @@ import io.objectbox.BoxStore
  * @author Qi
  */
 open class BaseApp : Application() {
-    var boxStore: BoxStore? = null
-        private set
+    lateinit var boxStore: BoxStore
 
     override fun onCreate() {
         super.onCreate()
@@ -28,7 +27,6 @@ open class BaseApp : Application() {
 
     private fun init() {
         ApiManager.init(this)
-        initToast()
         if (BuildConfig.DEBUG) {
             ARouter.openLog()
             ARouter.openDebug()
@@ -42,9 +40,7 @@ open class BaseApp : Application() {
     }
 
     companion object {
-
-        var instance: BaseApp? = null
-            private set
+        var instance: BaseApp by Delegates.notNull()
 
         init {
             // 设置全局的Header构建器

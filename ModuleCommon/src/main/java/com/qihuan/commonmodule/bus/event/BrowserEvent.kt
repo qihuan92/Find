@@ -7,8 +7,6 @@ package com.qihuan.commonmodule.bus.event
  * @date 2018/5/21
  */
 class BrowserEvent {
-    var title: String? = null
-        private set
-    var url: String? = null
-        private set
+    var title: String = ""
+    var url: String = ""
 }

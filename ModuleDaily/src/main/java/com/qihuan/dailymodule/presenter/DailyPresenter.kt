@@ -1,6 +1,6 @@
 package com.qihuan.dailymodule.presenter
 
-import com.qihuan.commonmodule.base.BasePresenterImpl
+import com.qihuan.commonmodule.base.AbsRxPresenter
 import com.qihuan.commonmodule.utils.getNowDate
 import com.qihuan.commonmodule.utils.parseDate
 import com.qihuan.commonmodule.utils.timeSub
@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
  *
  * @author Qi
  */
-class DailyPresenter : BasePresenterImpl<DailyContract.View>(), DailyContract.Presenter {
+class DailyPresenter : AbsRxPresenter<DailyContract.View>(), DailyContract.Presenter {
 
     private var date: String = getNowDate()
 

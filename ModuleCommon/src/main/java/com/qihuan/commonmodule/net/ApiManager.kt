@@ -90,10 +90,10 @@ class ApiManager private constructor() {
      *
      * @return Cache
      */
-    private fun cache(): Cache {
+    private fun cache(application: Application): Cache {
         // 10 MiB
         val cacheSize = 10 * 1024 * 1024
-        return Cache(application!!.cacheDir, cacheSize.toLong())
+        return Cache(application.cacheDir, cacheSize.toLong())
     }
 
     /**
@@ -101,8 +101,8 @@ class ApiManager private constructor() {
      *
      * @return CookieJar
      */
-    private fun cookieJar(): CookieJar {
-        return PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(application!!))
+    private fun cookieJar(application: Application): CookieJar {
+        return PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(application))
     }
 
     /**
@@ -111,28 +111,29 @@ class ApiManager private constructor() {
      * @return OkHttpClient
      */
     private fun client(): OkHttpClient.Builder {
-        val builder = OkHttpClient.Builder()
-        if (BuildConfig.DEBUG) {
-            builder.addInterceptor(loggingInterceptor())
+        with(OkHttpClient.Builder()) {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(loggingInterceptor())
+            }
+            addNetworkInterceptor(onlineCacheInterceptor())
+            addInterceptor(offlineCacheInterceptor())
+            readTimeout(30, TimeUnit.SECONDS)
+            connectTimeout(30, TimeUnit.SECONDS)
+            application?.let {
+                cache(cache(it))
+                cookieJar(cookieJar(it))
+            }
+            return this
         }
-        builder.addNetworkInterceptor(onlineCacheInterceptor())
-                .addInterceptor(offlineCacheInterceptor())
-                .readTimeout(30, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .cache(cache())
-                .cookieJar(cookieJar())
-        return builder
     }
 
     companion object {
-
         private const val APP_DEFAULT_DOMAIN = "https://qihuan92.github.io"
         private var application: Application? = null
+        val instance: ApiManager by lazy { ApiManager() }
 
         fun init(application: Application) {
             ApiManager.application = application
         }
-
-        val instance: ApiManager by lazy { ApiManager() }
     }
 }

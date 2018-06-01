@@ -50,8 +50,8 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
         dailyAdapter = DailyAdapter()
         rv_list.adapter = dailyAdapter
 
-        dailyAdapter!!.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM)
-        dailyAdapter!!.onItemClickListener = this
+        dailyAdapter?.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM)
+        dailyAdapter?.onItemClickListener = this
 
         refresh_layout.setOnRefreshListener { mPresenter.getLatestDaily() }
         refresh_layout.setOnLoadMoreListener { mPresenter.getBeforeDaily() }
@@ -59,19 +59,19 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
 
         linearLayoutManager = LinearLayoutManager(context)
         bannerView = LayoutInflater.from(context).inflate(R.layout.layout_banner, rv_list, false) as BGABanner
-        bannerView!!.setAdapter(this)
-        bannerView!!.setDelegate(this)
-        dailyAdapter!!.addHeaderView(bannerView)
+        bannerView?.setAdapter(this)
+        bannerView?.setDelegate(this)
+        dailyAdapter?.addHeaderView(bannerView)
     }
 
     override fun onResume() {
         super.onResume()
-        bannerView!!.startAutoPlay()
+        bannerView?.startAutoPlay()
     }
 
     override fun onPause() {
         super.onPause()
-        bannerView!!.stopAutoPlay()
+        bannerView?.stopAutoPlay()
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
@@ -98,21 +98,23 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
     }
 
     override fun onBannerItemClick(banner: BGABanner, itemView: View, model: TopStoryBean?, position: Int) {
-        ARouter.getInstance()
-                .build(Router.DAILY_DET_ACTIVITY)
-                .withInt("id", model!!.id)
-                .navigation()
+        model?.let {
+            ARouter.getInstance()
+                    .build(Router.DAILY_DET_ACTIVITY)
+                    .withInt("id", it.id)
+                    .navigation()
+        }
     }
 
     override fun latestDaily(topList: List<TopStoryBean>) {
-        bannerView!!.setData(R.layout.item_daily_banner, topList, null)
+        bannerView?.setData(R.layout.item_daily_banner, topList, null)
     }
 
     override fun beforeDaily(isRefresh: Boolean, dailyList: List<DailyItemBean>) {
         if (isRefresh) {
-            dailyAdapter!!.setNewData(dailyList)
+            dailyAdapter?.setNewData(dailyList)
         } else {
-            dailyAdapter!!.addData(dailyList)
+            dailyAdapter?.addData(dailyList)
         }
     }
 

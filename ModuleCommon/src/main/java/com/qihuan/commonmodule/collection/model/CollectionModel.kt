@@ -14,7 +14,7 @@ import io.objectbox.android.AndroidScheduler
  */
 class CollectionModel : BaseModel {
 
-    private val collectionBox: Box<CollectionBean> = BaseApp.instance!!.boxStore!!.boxFor(CollectionBean::class.java)
+    private val collectionBox: Box<CollectionBean> = BaseApp.instance.boxStore.boxFor(CollectionBean::class.java)
 
     fun getFavoriteList(id: String, callback: (List<CollectionBean>) -> Unit) {
         collectionBox.query()

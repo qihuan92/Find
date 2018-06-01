@@ -29,7 +29,6 @@ object DeviceUtils {
     private const val KEY_VERSION_VIVO = "ro.vivo.os.version"
 
     private var sName: String? = null
-    private var sVersion: String? = null
 
     val isEmui: Boolean
         get() = check(ROM_EMUI)
@@ -52,22 +51,6 @@ object DeviceUtils {
     val isSmartisan: Boolean
         get() = check(ROM_SMARTISAN)
 
-    val name: String?
-        get() {
-            if (sName == null) {
-                check("")
-            }
-            return sName
-        }
-
-    val version: String?
-        get() {
-            if (sVersion == null) {
-                check("")
-            }
-            return sVersion
-        }
-
     private fun check(rom: String): Boolean {
         if (sName != null) {
             return sName == rom
@@ -75,26 +58,19 @@ object DeviceUtils {
 
         if (!TextUtils.isEmpty(getProp(KEY_VERSION_MIUI))) {
             sName = ROM_MIUI
-            sVersion = getProp(KEY_VERSION_MIUI)
         } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_EMUI))) {
             sName = ROM_EMUI
-            sVersion = getProp(KEY_VERSION_MIUI)
         } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_OPPO))) {
             sName = ROM_OPPO
-            sVersion = getProp(KEY_VERSION_MIUI)
         } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_VIVO))) {
             sName = ROM_VIVO
-            sVersion = getProp(KEY_VERSION_MIUI)
         } else if (!TextUtils.isEmpty(getProp(KEY_VERSION_SMARTISAN))) {
             sName = ROM_SMARTISAN
-            sVersion = getProp(KEY_VERSION_MIUI)
         } else {
-            sVersion = Build.DISPLAY
-            if (sVersion!!.toUpperCase().contains(ROM_FLYME)) {
-                sName = ROM_FLYME
+            sName = if (Build.DISPLAY.toUpperCase().contains(ROM_FLYME)) {
+                ROM_FLYME
             } else {
-                sVersion = Build.UNKNOWN
-                sName = Build.MANUFACTURER.toUpperCase()
+                Build.MANUFACTURER.toUpperCase()
             }
         }
         return sName == rom

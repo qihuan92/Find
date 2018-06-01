@@ -1,6 +1,6 @@
 package com.qihuan.dailymodule.presenter
 
-import com.qihuan.commonmodule.base.BasePresenterImpl
+import com.qihuan.commonmodule.base.AbsRxPresenter
 import com.qihuan.commonmodule.collection.bean.CollectionBean
 import com.qihuan.commonmodule.collection.model.CollectionModel
 import com.qihuan.dailymodule.contract.DailyDetContract
@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
-class DailyDetPresenter : BasePresenterImpl<DailyDetContract.View>(), DailyDetContract.Presenter {
+class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContract.Presenter {
 
     private val collectionModel: CollectionModel = CollectionModel()
     private var storyContentBean: StoryContentBean? = null

@@ -1,12 +1,7 @@
 package com.qihuan.commonmodule.utils
 
-import android.app.Application
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.widget.Toast
-
-import com.qihuan.commonmodule.R
-
 import es.dmoral.toasty.Toasty
 
 /**
@@ -28,11 +23,4 @@ fun Context.toastSuccess(content: String) {
 
 fun Context.toastWarning(content: String) {
     Toasty.warning(this, content, Toast.LENGTH_SHORT).show()
-}
-
-fun Application.initToast() {
-    Toasty.Config
-            .getInstance()
-            .setInfoColor(ContextCompat.getColor(this, R.color.grey))
-            .apply()
 }

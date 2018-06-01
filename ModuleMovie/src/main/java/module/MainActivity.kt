@@ -1,7 +1,6 @@
 package module
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 
 import com.qihuan.commonmodule.base.BaseActivity
 import com.qihuan.moviemodule.R

@@ -10,10 +10,7 @@ import com.qihuan.commonmodule.R
  * @author qi
  * @date 2018/6/1
  */
-class LoadingDialog : AlertDialog {
-    constructor(context: Context) : super(context, R.style.ProgressDialog) {
-        setCanceledOnTouchOutside(false)
-    }
+class LoadingDialog(context: Context) : AlertDialog(context, R.style.ProgressDialog) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,5 +22,9 @@ class LoadingDialog : AlertDialog {
             return
         }
         super.show()
+    }
+
+    init {
+        setCanceledOnTouchOutside(false)
     }
 }

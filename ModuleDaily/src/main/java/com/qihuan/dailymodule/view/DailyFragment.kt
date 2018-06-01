@@ -57,7 +57,6 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
         refresh_layout.setOnLoadMoreListener { mPresenter.getBeforeDaily() }
         refresh_layout.autoRefresh()
 
-        linearLayoutManager = LinearLayoutManager(context)
         bannerView = LayoutInflater.from(context).inflate(R.layout.layout_banner, rv_list, false) as BGABanner
         bannerView?.setAdapter(this)
         bannerView?.setDelegate(this)

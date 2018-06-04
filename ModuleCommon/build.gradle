@@ -87,6 +87,6 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'
     // ue tool
-    debugApi 'me.ele:uetool:1.0.13'
-    releaseApi 'me.ele:uetool-no-op:1.0.13'
+    debugApi 'me.ele:uetool:1.0.15'
+    releaseApi 'me.ele:uetool-no-op:1.0.15'
 }

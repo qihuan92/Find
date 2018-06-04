@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     signingConfigs {
@@ -19,11 +22,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
-            }
-        }
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -31,9 +30,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+}
+
+kapt {
+    arguments {
+        arg("moduleName", project.getName())
     }
 }
 
@@ -42,7 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    annotationProcessor rootProject.ext.dependencies["aroutercompiler"]
+    kapt rootProject.ext.dependencies["aroutercompiler"]
     implementation project(':ModuleCommon')
     if (!isModule.toBoolean()) {
         implementation project(':ModuleDiscover')

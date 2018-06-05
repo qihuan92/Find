@@ -13,7 +13,7 @@ import com.qihuan.moviemodule.view.MovieFragment
  */
 class MainActivity : BaseActivity() {
 
-    private val content = MovieFragment.newInstance()
+    private val content = MovieFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

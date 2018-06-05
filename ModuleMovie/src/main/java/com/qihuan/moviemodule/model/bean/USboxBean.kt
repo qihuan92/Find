@@ -3,7 +3,7 @@ package com.qihuan.moviemodule.model.bean
 import java.io.Serializable
 
 class USboxBean : Serializable {
-    var date: String? = null
-    var title: String? = null
+    var date: String = ""
+    var title: String = ""
     var subjects: List<SubjectsBean>? = null
 }

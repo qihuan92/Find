@@ -4,7 +4,7 @@ import com.qihuan.commonmodule.base.AbsRxPresenter
 import com.qihuan.commonmodule.collection.bean.CollectionBean
 import com.qihuan.commonmodule.collection.model.CollectionModel
 import com.qihuan.dailymodule.contract.DailyDetContract
-import com.qihuan.dailymodule.model.ApiFactory
+import com.qihuan.dailymodule.model.ZhihuApi
 import com.qihuan.dailymodule.model.bean.StoryContentBean
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -21,7 +21,7 @@ class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContr
     }
 
     override fun getStoryContent(id: Int) {
-        ApiFactory.api
+        ZhihuApi.get()
                 .getStoryContent(id)
                 .doOnSubscribe { addDisposable(it) }
                 .subscribeOn(Schedulers.io())
@@ -38,7 +38,7 @@ class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContr
     }
 
     override fun getStoryExtra(id: Int) {
-        ApiFactory.api
+        ZhihuApi.get()
                 .getStoryExtra(id)
                 .doOnSubscribe { addDisposable(it) }
                 .subscribeOn(Schedulers.io())

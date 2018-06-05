@@ -5,7 +5,7 @@ import com.qihuan.commonmodule.utils.getNowDate
 import com.qihuan.commonmodule.utils.parseDate
 import com.qihuan.commonmodule.utils.timeSub
 import com.qihuan.dailymodule.contract.DailyContract
-import com.qihuan.dailymodule.model.ApiFactory
+import com.qihuan.dailymodule.model.ZhihuApi
 import com.qihuan.dailymodule.model.bean.DailyItemBean
 import com.qihuan.dailymodule.model.bean.StoryBean
 import io.reactivex.Observable
@@ -27,7 +27,7 @@ class DailyPresenter : AbsRxPresenter<DailyContract.View>(), DailyContract.Prese
         date = getNowDate()
 
         addDisposable(
-                ApiFactory.api
+                ZhihuApi.get()
                         .getLatestDaily()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -54,7 +54,7 @@ class DailyPresenter : AbsRxPresenter<DailyContract.View>(), DailyContract.Prese
     override fun getBeforeDaily() {
         date = timeSub(date)
         addDisposable(
-                ApiFactory.api
+                ZhihuApi.get()
                         .getBeforeDaily(date)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

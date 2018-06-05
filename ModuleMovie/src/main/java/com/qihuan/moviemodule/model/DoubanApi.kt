@@ -1,6 +1,7 @@
 package com.qihuan.moviemodule.model
 
 import com.qihuan.commonmodule.net.Api
+import com.qihuan.commonmodule.net.ApiManager
 import com.qihuan.moviemodule.model.bean.CastsBean
 import com.qihuan.moviemodule.model.bean.MoviesBean
 import com.qihuan.moviemodule.model.bean.SubjectBean
@@ -18,6 +19,12 @@ import retrofit2.http.Query
  */
 
 interface DoubanApi {
+
+    companion object {
+        fun get(): DoubanApi {
+            return ApiManager.instance.getApi(DoubanApi::class.java)
+        }
+    }
 
     @Headers(Api.DOUBAN_DOMAIN)
     @GET("/v2/movie/us_box")

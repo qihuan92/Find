@@ -1,11 +1,11 @@
 package com.qihuan.dailymodule.model
 
 import com.qihuan.commonmodule.net.Api
+import com.qihuan.commonmodule.net.ApiManager
 import com.qihuan.dailymodule.model.bean.CommentsBean
 import com.qihuan.dailymodule.model.bean.DailyBean
 import com.qihuan.dailymodule.model.bean.StoryContentBean
 import com.qihuan.dailymodule.model.bean.StoryExtraBean
-
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -18,6 +18,12 @@ import retrofit2.http.Path
  * @date 2017/6/20
  */
 interface ZhihuApi {
+
+    companion object {
+        fun get(): ZhihuApi {
+            return ApiManager.instance.getApi(ZhihuApi::class.java)
+        }
+    }
 
     /**
      * 获取最新文章列表

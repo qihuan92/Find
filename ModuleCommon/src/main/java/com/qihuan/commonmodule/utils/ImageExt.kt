@@ -2,13 +2,11 @@ package com.qihuan.commonmodule.utils
 
 import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
 import android.widget.ImageView
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.chad.library.adapter.base.BaseViewHolder
 import com.qihuan.commonmodule.imageloader.glide.GlideApp
 import com.qihuan.commonmodule.imageloader.glide.GlideRequest
 
@@ -39,11 +37,6 @@ fun ImageView.load(drawable: Drawable, radius: Float = 0f, @DrawableRes placehol
     get(drawable).placeholder(placeholder)
             .centerCrop()
             .into(this)
-}
-
-fun BaseViewHolder.loadImage(@IdRes res: Int, url: String, radius: Float = 0f, @DrawableRes placeholder: Int = android.R.color.transparent): BaseViewHolder {
-    (getView(res) as ImageView).load(url, radius, placeholder)
-    return this
 }
 
 fun ImageView.get(url: String): GlideRequest<Drawable> = GlideApp.with(context).load(url).transition(DrawableTransitionOptions.withCrossFade())

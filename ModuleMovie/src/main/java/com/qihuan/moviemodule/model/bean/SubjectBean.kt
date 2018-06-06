@@ -7,7 +7,7 @@ class SubjectBean : Serializable {
     var reviews_count: Int = 0
     var wish_count: Int = 0
     var douban_site: String = ""
-    var year: String? = null
+    var year: String = ""
     var images: ImagesBean = ImagesBean()
     var alt: String = ""
     var id: String = ""
@@ -26,8 +26,10 @@ class SubjectBean : Serializable {
     var comments_count: Int = 0
     var ratings_count: Int = 0
     var countries: List<String>? = null
-    var genres: List<String>? = null
+    var genres: List<String> = ArrayList()
     var casts: List<CastsBean>? = null
     var directors: List<DirectorsBean>? = null
     var aka: List<String>? = null
+
+    var rank = 0
 }

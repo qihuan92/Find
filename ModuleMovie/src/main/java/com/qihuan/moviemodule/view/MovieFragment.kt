@@ -3,19 +3,24 @@ package com.qihuan.moviemodule.view
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.qihuan.commonmodule.base.BaseMvpFragment
 import com.qihuan.commonmodule.router.Router
+import com.qihuan.commonmodule.utils.dp2px
+import com.qihuan.commonmodule.utils.inflate
+import com.qihuan.commonmodule.utils.toastInfo
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.contract.MovieContract
-import com.qihuan.moviemodule.model.bean.MovieHomeBean
+import com.qihuan.moviemodule.model.bean.MovieSectionItemBean
+import com.qihuan.moviemodule.model.bean.MoviesBean
 import com.qihuan.moviemodule.presenter.MoviePresenter
 import com.qihuan.moviemodule.view.adapter.MovieCardAdapter
-import com.qihuan.moviemodule.view.adapter.MovieRankingAdapter
-import com.qihuan.moviemodule.view.adapter.UsBoxMovieRankingAdapter
+import com.qihuan.moviemodule.view.adapter.MovieSelectionAdapter
 import kotlinx.android.synthetic.main.fragment_movie.*
 
 /**
@@ -26,9 +31,10 @@ import kotlinx.android.synthetic.main.fragment_movie.*
 @Route(path = Router.MOVIE_FRAGMENT)
 class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presenter>(), MovieContract.View {
 
+    private lateinit var movieAdapter: MovieSelectionAdapter
     private lateinit var movieCardAdapter: MovieCardAdapter
-    private lateinit var topMovieAdapter: MovieRankingAdapter
-    private lateinit var usBoxAdapter: UsBoxMovieRankingAdapter
+    private var tvInTheatersTitle: TextView? = null
+    private var tvInTheatersMore: TextView? = null
 
     override fun initPresenter(): MovieContract.Presenter {
         return MoviePresenter()
@@ -40,37 +46,57 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 热映
         movieCardAdapter = MovieCardAdapter()
-        rv_in_theaters.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        rv_in_theaters.adapter = movieCardAdapter
-        // top 250
-        topMovieAdapter = MovieRankingAdapter()
-        rv_top_movie.layoutManager = LinearLayoutManager(context)
-        rv_top_movie.adapter = topMovieAdapter
-        rv_top_movie.setHasFixedSize(true)
-        rv_top_movie.isNestedScrollingEnabled = false
-        // us box
-        usBoxAdapter = UsBoxMovieRankingAdapter()
-        rv_us_box.layoutManager = LinearLayoutManager(context)
-        rv_us_box.adapter = usBoxAdapter
-        rv_us_box.setHasFixedSize(true)
-        rv_us_box.isNestedScrollingEnabled = false
+        movieAdapter = MovieSelectionAdapter()
+        rv_list.layoutManager = LinearLayoutManager(context)
 
-        mPresenter.getMovieData()
-    }
+        // 上映
+        context?.apply {
+            // title
+            val inTheatersTitleView: View = inflate(R.layout.item_section_movie, rv_list)
+            tvInTheatersTitle = inTheatersTitleView.findViewById(R.id.tv_title)
+            tvInTheatersMore = inTheatersTitleView.findViewById(R.id.tv_more)
+            tvInTheatersMore?.setOnClickListener {
 
-    override fun onData(movieHomeBean: MovieHomeBean) {
-        movieHomeBean.apply {
-            tv_in_theaters.text = inTheaters.title
-            movieCardAdapter.setNewData(inTheaters.subjects)
+            }
+            movieAdapter.addHeaderView(inTheatersTitleView)
+            // content
+            val rvInTheaters = RecyclerView(this)
+            rvInTheaters.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            rvInTheaters.setPadding(dp2px(6f), 0, dp2px(6f), 0)
+            rvInTheaters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            rvInTheaters.adapter = movieCardAdapter
+            movieAdapter.addHeaderView(rvInTheaters)
+        }
 
-            tv_top_movie.text = topMovie.title
-            topMovieAdapter.setNewData(topMovie.subjects)
+        rv_list.adapter = movieAdapter
+        refresh_layout.setOnRefreshListener { mPresenter.getMovieData() }
+        refresh_layout.autoRefresh()
 
-            tv_us_box.text = usBox.title
-            usBoxAdapter.setNewData(usBox.subjects)
+        movieAdapter.setOnItemClickListener { adapter, view, position ->
+            val itemBean = adapter.data[position] as MovieSectionItemBean
+            if (itemBean.isHeader) {
+                return@setOnItemClickListener
+            }
+            context?.toastInfo("条目 $position ${itemBean.t.title}")
+        }
+
+        movieAdapter.setOnItemChildClickListener { adapter, view, position ->
+            if (view.id == R.id.tv_more) {
+                context?.toastInfo("标题 $position")
+            }
         }
     }
 
+    override fun onData(inTheaters: MoviesBean, sectionItemList: List<MovieSectionItemBean>) {
+        refresh_layout.finishRefresh(true)
+        tvInTheatersTitle?.text = inTheaters.title
+        movieCardAdapter.setNewData(inTheaters.subjects)
+        movieAdapter.setNewData(sectionItemList)
+    }
+
+    override fun showError(errorMsg: String) {
+        super.showError(errorMsg)
+        refresh_layout.finishRefresh(false)
+    }
 }

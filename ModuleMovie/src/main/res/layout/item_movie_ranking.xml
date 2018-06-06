@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="2dp"
-    android:layout_marginTop="2dp"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:background="@drawable/selector_item_bg"
     android:paddingEnd="10dp"
     android:paddingStart="10dp"
-    android:stateListAnimator="@drawable/lift_on_touch">
+    android:paddingTop="5dp">
 
     <ImageView
         android:id="@+id/iv_movie"
@@ -23,13 +21,29 @@
         android:id="@+id/tv_movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:ellipsize="end"
         android:lines="1"
-        android:padding="5dp"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/iv_movie"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="天空之城" />
+
+    <TextView
+        android:id="@+id/tv_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:paddingBottom="2dp"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_movie"
+        app:layout_constraintStart_toEndOf="@+id/tv_movie"
+        tools:text="[1999]" />
 
     <RatingBar
         android:id="@+id/rb_score"
@@ -40,7 +54,7 @@
         android:isIndicator="true"
         android:numStars="5"
         app:layout_constraintStart_toEndOf="@+id/iv_movie"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_year" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -54,6 +68,29 @@
         app:layout_constraintTop_toTopOf="@+id/rb_score"
         tools:text="10.0" />
 
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/tag_genres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        app:container_background_color="@android:color/transparent"
+        app:container_border_color="@android:color/transparent"
+        app:container_enable_drag="false"
+        app:horizontal_interval="3dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_movie"
+        app:layout_constraintTop_toBottomOf="@+id/rb_score"
+        app:tag_background_color="@android:color/transparent"
+        app:tag_border_color="@color/grey"
+        app:tag_clickable="false"
+        app:tag_corner_radius="2dp"
+        app:tag_horizontal_padding="4dp"
+        app:tag_text_color="@color/grey"
+        app:tag_text_size="10sp"
+        app:tag_theme="none"
+        app:tag_vertical_padding="3dp"
+        app:vertical_interval="2dp" />
+
     <TextView
         android:id="@+id/tv_ranking"
         android:layout_width="wrap_content"
@@ -65,19 +102,17 @@
         android:textColor="?android:colorAccent"
         android:textSize="14sp"
         android:textStyle="bold|italic"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        tools:text="01" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:background="@color/gray_def"
-        app:layout_constraintStart_toEndOf="@+id/iv_movie"
-        app:layout_constraintTop_toBottomOf="@+id/rb_score" />
+        app:layout_constraintTop_toBottomOf="@id/iv_movie" />
 
 </android.support.constraint.ConstraintLayout>

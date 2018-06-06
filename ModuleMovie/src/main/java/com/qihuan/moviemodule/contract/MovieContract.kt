@@ -2,8 +2,7 @@ package com.qihuan.moviemodule.contract
 
 import com.qihuan.commonmodule.base.BasePresenter
 import com.qihuan.commonmodule.base.BaseView
-import com.qihuan.moviemodule.model.bean.MoviesBean
-import com.qihuan.moviemodule.model.bean.USboxBean
+import com.qihuan.moviemodule.model.bean.MovieHomeBean
 
 /**
  * MovieContract
@@ -12,14 +11,10 @@ import com.qihuan.moviemodule.model.bean.USboxBean
  */
 interface MovieContract {
     interface View : BaseView {
-        fun onInTheaters(moviesBean: MoviesBean)
-        fun onTopMovie(moviesBean: MoviesBean)
-        fun onUsBox(usboxBean: USboxBean)
+        fun onData(movieHomeBean: MovieHomeBean)
     }
 
     interface Presenter : BasePresenter<View> {
-        fun getInTheaters()
-        fun getTopMovie()
-        fun getUsBox()
+        fun getMovieData()
     }
 }

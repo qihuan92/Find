@@ -11,8 +11,7 @@ import com.qihuan.commonmodule.base.BaseMvpFragment
 import com.qihuan.commonmodule.router.Router
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.contract.MovieContract
-import com.qihuan.moviemodule.model.bean.MoviesBean
-import com.qihuan.moviemodule.model.bean.USboxBean
+import com.qihuan.moviemodule.model.bean.MovieHomeBean
 import com.qihuan.moviemodule.presenter.MoviePresenter
 import com.qihuan.moviemodule.view.adapter.MovieCardAdapter
 import com.qihuan.moviemodule.view.adapter.MovieRankingAdapter
@@ -49,28 +48,29 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
         topMovieAdapter = MovieRankingAdapter()
         rv_top_movie.layoutManager = LinearLayoutManager(context)
         rv_top_movie.adapter = topMovieAdapter
+        rv_top_movie.setHasFixedSize(true)
+        rv_top_movie.isNestedScrollingEnabled = false
         // us box
         usBoxAdapter = UsBoxMovieRankingAdapter()
         rv_us_box.layoutManager = LinearLayoutManager(context)
         rv_us_box.adapter = usBoxAdapter
+        rv_us_box.setHasFixedSize(true)
+        rv_us_box.isNestedScrollingEnabled = false
 
-        mPresenter.getInTheaters()
-        mPresenter.getTopMovie()
-        mPresenter.getUsBox()
+        mPresenter.getMovieData()
     }
 
-    override fun onInTheaters(moviesBean: MoviesBean) {
-        tv_in_theaters.text = moviesBean.title
-        movieCardAdapter.setNewData(moviesBean.subjects)
+    override fun onData(movieHomeBean: MovieHomeBean) {
+        movieHomeBean.apply {
+            tv_in_theaters.text = inTheaters.title
+            movieCardAdapter.setNewData(inTheaters.subjects)
+
+            tv_top_movie.text = topMovie.title
+            topMovieAdapter.setNewData(topMovie.subjects)
+
+            tv_us_box.text = usBox.title
+            usBoxAdapter.setNewData(usBox.subjects)
+        }
     }
 
-    override fun onTopMovie(moviesBean: MoviesBean) {
-        tv_top_movie.text = moviesBean.title
-        topMovieAdapter.setNewData(moviesBean.subjects)
-    }
-
-    override fun onUsBox(usboxBean: USboxBean) {
-        tv_us_box.text = usboxBean.title
-        usBoxAdapter.setNewData(usboxBean.subjects)
-    }
 }

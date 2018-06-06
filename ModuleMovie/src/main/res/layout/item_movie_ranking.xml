@@ -8,33 +8,16 @@
     android:layout_marginTop="2dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:paddingEnd="10dp"
-    android:paddingStart="0dp"
+    android:paddingStart="10dp"
     android:stateListAnimator="@drawable/lift_on_touch">
-
-    <TextView
-        android:id="@+id/tv_ranking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="10dp"
-        android:textColor="?android:colorAccent"
-        android:textSize="14sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
 
     <ImageView
         android:id="@+id/iv_movie"
         android:layout_width="40dp"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
         android:scaleType="centerCrop"
-        app:layout_constraintStart_toEndOf="@id/tv_ranking"
-        tools:src="@color/colorPrimary" />
+        tools:src="@color/gray_def" />
 
     <TextView
         android:id="@+id/tv_movie"
@@ -42,7 +25,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lines="1"
-        android:padding="8dp"
+        android:padding="5dp"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/iv_movie"
         app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +36,7 @@
         style="@style/Base.Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="5dp"
         android:isIndicator="true"
         android:numStars="5"
         app:layout_constraintStart_toEndOf="@+id/iv_movie"
@@ -71,11 +54,27 @@
         app:layout_constraintTop_toTopOf="@+id/rb_score"
         tools:text="10.0" />
 
+    <TextView
+        android:id="@+id/tv_ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="10dp"
+        android:textColor="?android:colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginEnd="5dp"
-        android:layout_marginStart="85dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:background="@color/gray_def"
         app:layout_constraintStart_toEndOf="@+id/iv_movie"

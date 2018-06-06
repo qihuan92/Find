@@ -27,6 +27,7 @@ class MoviePresenter : AbsRxPresenter<MovieContract.View>(), MovieContract.Prese
                 Function3<MoviesBean, MoviesBean, USboxBean, MovieHomeBean> { inTheaters, topMovie, usBox ->
                     MovieHomeBean(inTheaters, topMovie, usBox)
                 })
+                .doOnSubscribe { addDisposable(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(

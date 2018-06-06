@@ -21,7 +21,7 @@ class SubjectBean : Serializable {
     var collect_count: Int = 0
     var current_season: Any? = null
     var original_title: String? = null
-    var summary: String? = null
+    var summary: String = ""
     var subtype: String? = null
     var comments_count: Int = 0
     var ratings_count: Int = 0
@@ -29,7 +29,7 @@ class SubjectBean : Serializable {
     var genres: List<String> = ArrayList()
     var casts: List<CastsBean>? = null
     var directors: List<DirectorsBean>? = null
-    var aka: List<String>? = null
+    var aka: List<String> = ArrayList()
 
     var rank = 0
 }

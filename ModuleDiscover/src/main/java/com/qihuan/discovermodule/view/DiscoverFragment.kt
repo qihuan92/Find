@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.qihuan.commonmodule.base.BaseFragment
-import com.qihuan.commonmodule.router.Router
+import com.qihuan.commonmodule.router.Routes
 import com.qihuan.discovermodule.R
 
 /**
@@ -16,7 +16,7 @@ import com.qihuan.discovermodule.R
  *
  * @author Qi
  */
-@Route(path = Router.DISCOVER_FRAGMENT)
+@Route(path = Routes.DISCOVER_FRAGMENT)
 class DiscoverFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

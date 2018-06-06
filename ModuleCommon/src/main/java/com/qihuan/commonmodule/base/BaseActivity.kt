@@ -36,7 +36,7 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
         }
     }
 
-    protected fun setToolBar(toolbar: Toolbar, title: String) {
+    protected fun setToolBar(toolbar: Toolbar, title: String = "") {
         toolbar.title = title
         setSupportActionBar(toolbar)
         supportActionBar?.run {

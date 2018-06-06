@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.qihuan.commonmodule.base.BaseMvpFragment
 import com.qihuan.commonmodule.bus.BindEventBus
 import com.qihuan.commonmodule.bus.event.RefreshEvent
-import com.qihuan.commonmodule.router.Router
+import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.inflate
 import com.qihuan.dailymodule.R
 import com.qihuan.dailymodule.contract.DailyContract
@@ -30,7 +30,7 @@ import org.greenrobot.eventbus.Subscribe
  * @author Qi
  */
 @BindEventBus
-@Route(path = Router.DAILY_FRAGMENT)
+@Route(path = Routes.DAILY_FRAGMENT)
 class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View, BaseQuickAdapter.OnItemClickListener, BGABanner.Delegate<View, TopStoryBean> {
 
     private var bannerView: BGABanner? = null
@@ -88,7 +88,7 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
             return
         }
         ARouter.getInstance()
-                .build(Router.DAILY_DET_ACTIVITY)
+                .build(Routes.DAILY_DET_ACTIVITY)
                 .withInt("id", dailyItemBean.t.id)
                 .navigation()
     }
@@ -96,7 +96,7 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
     override fun onBannerItemClick(banner: BGABanner, itemView: View, model: TopStoryBean?, position: Int) {
         model?.run {
             ARouter.getInstance()
-                    .build(Router.DAILY_DET_ACTIVITY)
+                    .build(Routes.DAILY_DET_ACTIVITY)
                     .withInt("id", id)
                     .navigation()
         }

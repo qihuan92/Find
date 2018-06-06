@@ -7,7 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.base.BaseMvpActivity
-import com.qihuan.commonmodule.router.Router
+import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.commonmodule.utils.loadHtmlWithCss
 import com.qihuan.commonmodule.utils.toastError
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_daily_det.*
  *
  * @author Qi
  */
-@Route(path = Router.DAILY_DET_ACTIVITY)
+@Route(path = Routes.DAILY_DET_ACTIVITY)
 class DailyDetActivity : BaseMvpActivity<DailyDetContract.View, DailyDetContract.Presenter>(), DailyDetContract.View {
     @JvmField
     @Autowired
@@ -38,7 +38,7 @@ class DailyDetActivity : BaseMvpActivity<DailyDetContract.View, DailyDetContract
     }
 
     private fun initView() {
-        setToolBar(toolbar, "")
+        setToolBar(toolbar)
 
         fab_favorite.setOnClickListener { mPresenter.updateFavoriteStory(id) }
 

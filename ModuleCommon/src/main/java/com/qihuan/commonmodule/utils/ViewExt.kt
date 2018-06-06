@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 
 /**
  * ViewExt
@@ -25,6 +26,17 @@ fun TabLayout.setItemReselectedListener(position: Int, listener: () -> Unit) {
     container.getChildAt(position).setOnClickListener {
         if (selectedTabPosition == position) {
             listener()
+        }
+    }
+}
+
+// 设置文字
+fun TextView.appendTextList(listStr: List<String>) {
+    for (i in listStr.indices) {
+        if (i == listStr.size - 1) {
+            append(listStr[i])
+        } else {
+            append("${listStr[i]}/")
         }
     }
 }

@@ -16,9 +16,10 @@ import com.qihuan.moviemodule.contract.MovieDetContract
 import com.qihuan.moviemodule.model.bean.PersonBean
 import com.qihuan.moviemodule.model.bean.SubjectBean
 import com.qihuan.moviemodule.presenter.MovieDetPresenter
-import com.qihuan.moviemodule.view.adapter.ActCardAdapter
 import kotlinx.android.synthetic.main.activity_movie_det.*
 import kotlinx.android.synthetic.main.include_movie_title.*
+import kotlinx.android.synthetic.main.item_act_card.view.*
+import zlc.season.yaksa.linear
 
 /**
  * MovieDetActivity
@@ -33,7 +34,6 @@ class MovieDetActivity : BaseMvpActivity<MovieDetContract.View, MovieDetContract
     var id: String = ""
 
     private var isSummaryExpend = false
-    private lateinit var actCardAdapter: ActCardAdapter
 
     override fun initPresenter(): MovieDetContract.Presenter {
         return MovieDetPresenter()
@@ -54,10 +54,6 @@ class MovieDetActivity : BaseMvpActivity<MovieDetContract.View, MovieDetContract
         //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         setToolBar(toolbar)
-
-        rv_actor.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        actCardAdapter = ActCardAdapter()
-        rv_actor.adapter = actCardAdapter
 
         fab_favorite.setOnClickListener { mPresenter.updateFavoriteMovie(id) }
     }
@@ -112,7 +108,22 @@ class MovieDetActivity : BaseMvpActivity<MovieDetContract.View, MovieDetContract
     override fun onAct(actList: List<PersonBean>) {
         // 影人
         tv_actor_title.setVisible(true)
-        actCardAdapter.setNewData(actList)
+        rv_actor.linear {
+            orientation(LinearLayoutManager.HORIZONTAL)
+            actList.forEach { person ->
+                itemDsl {
+                    xml(R.layout.item_act_card)
+                    render {
+                        it.iv_act.load(person.avatars.medium)
+                        it.iv_act.tagEnable = person.isDirector
+                        it.tv_name.text = person.name
+                        it.setOnClickListener {
+                            toastInfo(person.name)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onFavoriteChange(isFavorite: Boolean) {

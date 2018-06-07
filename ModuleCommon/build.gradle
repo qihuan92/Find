@@ -69,8 +69,9 @@ dependencies {
     }
     // rxpermissions
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
-    // AdapterHelper
+    // list
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+    api 'zlc.season:yaksa:0.1.2'
     // Toasty
     api 'com.github.GrenderG:Toasty:1.2.5'
     // banner

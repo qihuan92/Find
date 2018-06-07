@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="120dp"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginTop="4dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:stateListAnimator="@drawable/lift_on_touch">
 
@@ -15,21 +18,21 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_movie"
+            android:id="@+id/iv_card_movie"
             android:layout_width="120dp"
             android:layout_height="145dp"
             tools:src="@color/colorPrimary" />
 
         <TextView
-            android:id="@+id/tv_movie"
+            android:id="@+id/tv_card_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:lines="1"
             android:paddingEnd="0dp"
-            android:textColor="@color/md_grey_800"
             android:paddingStart="3dp"
+            android:textColor="@color/md_grey_800"
             android:textSize="14sp"
             tools:text="天空之城" />
 
@@ -43,7 +46,7 @@
             android:paddingStart="3dp">
 
             <RatingBar
-                android:id="@+id/rb_score"
+                android:id="@+id/rb_card_score"
                 style="@style/Base.Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +54,7 @@
                 android:numStars="5" />
 
             <TextView
-                android:id="@+id/tv_score"
+                android:id="@+id/tv_card_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"

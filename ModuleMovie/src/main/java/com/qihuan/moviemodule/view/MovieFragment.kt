@@ -12,10 +12,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.base.BaseMvpFragment
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.load
-import com.qihuan.commonmodule.utils.toastInfo
+import com.qihuan.commonmodule.utils.setVisible
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.contract.MovieContract
 import com.qihuan.moviemodule.model.bean.MovieHomeBean
+import com.qihuan.moviemodule.model.bean.MovieListType
 import com.qihuan.moviemodule.presenter.MoviePresenter
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.item_movie_card.view.*
@@ -58,7 +59,7 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                     render {
                         it.tv_section_title.text = title
                         it.tv_section_more.setOnClickListener {
-                            toastInfo("$title more")
+                            startList(title, MovieListType.IN_THEATERS)
                         }
                     }
                 }
@@ -68,7 +69,7 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                     render {
                         it.rv_list.linear {
                             orientation(LinearLayoutManager.HORIZONTAL)
-                            subjects?.forEach { subject ->
+                            subjects.forEach { subject ->
                                 itemDsl {
                                     xml(R.layout.item_movie_card)
                                     render {
@@ -95,12 +96,12 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                     render {
                         it.tv_section_title.text = title
                         it.tv_section_more.setOnClickListener {
-                            toastInfo("$title more")
+                            startList(title, MovieListType.TOP_MOVIE)
                         }
                     }
                 }
                 // item list
-                subjects?.forEachIndexed { index, subject ->
+                subjects.forEachIndexed { index, subject ->
                     itemDsl {
                         xml(R.layout.item_movie_ranking)
                         render {
@@ -128,9 +129,7 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                     xml(R.layout.item_section_movie)
                     render {
                         it.tv_section_title.text = title
-                        it.tv_section_more.setOnClickListener {
-                            toastInfo("$title more")
-                        }
+                        it.tv_section_more.setVisible(false)
                     }
                 }
                 // item list
@@ -166,6 +165,14 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
         ARouter.getInstance()
                 .build(Routes.MOVIE_DET_ACTIVITY)
                 .withString(Routes.MOVIE_DET_ACTIVITY_EXTRA_ID, id)
+                .navigation()
+    }
+
+    private fun startList(title: String, type: Int) {
+        ARouter.getInstance()
+                .build(Routes.MOVIE_LIST_ACTIVITY)
+                .withInt(Routes.MOVIE_LIST_ACTIVITY_EXTRA_TYPE, type)
+                .withString(Routes.MOVIE_LIST_ACTIVITY_EXTRA_TITLE, title)
                 .navigation()
     }
 }

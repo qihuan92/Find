@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
-import android.view.WindowManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -49,12 +48,7 @@ class MovieDetActivity : BaseMvpActivity<MovieDetContract.View, MovieDetContract
     }
 
     private fun initView() {
-        //取消设置透明状态栏,使 ContentView 内容不再沉浸到状态栏下
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         setToolBar(toolbar)
-
         fab_favorite.setOnClickListener { mPresenter.updateFavoriteMovie(id) }
     }
 
@@ -78,7 +72,7 @@ class MovieDetActivity : BaseMvpActivity<MovieDetContract.View, MovieDetContract
             // 电影海报
             iv_movie.load(images.large, 4f, listener = {
                 it?.apply {
-                    //设置状态栏颜色
+                    // 设置状态栏颜色
                     window.statusBarColor = getColor()
                     ctl_movie.setContentScrimColor(getColor())
                     ctl_movie.setBackgroundColor(getColor())

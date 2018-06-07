@@ -3,9 +3,11 @@ package com.qihuan.commonmodule.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Build
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import com.qihuan.commonmodule.R
 
 /**
  * 状态栏工具
@@ -103,6 +105,7 @@ object StatusBarUtils {
  * @return 1:MIUI 2:Flyme 3:android6.0
  */
 fun Activity.statusBarLightMode() {
+    window.statusBarColor = ContextCompat.getColor(this, R.color.background)
     if (DeviceUtils.isMiui) {
         StatusBarUtils.miuiSetStatusBarLightMode(this, true)
         return

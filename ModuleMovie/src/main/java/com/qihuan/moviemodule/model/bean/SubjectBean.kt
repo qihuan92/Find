@@ -30,6 +30,4 @@ class SubjectBean : Serializable {
     var casts: List<PersonBean> = ArrayList()
     var directors: List<PersonBean> = ArrayList()
     var aka: List<String> = ArrayList()
-
-    var rank = 0
 }

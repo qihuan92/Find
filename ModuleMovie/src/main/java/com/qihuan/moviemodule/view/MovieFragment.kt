@@ -77,7 +77,7 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                                         it.tv_card_score.text = subject.rating.average.toString()
                                         it.rb_card_score.rating = (subject.rating.average / 2f).toFloat()
                                         it.setOnClickListener {
-                                            toastInfo(subject.title)
+                                            start(subject.id)
                                         }
                                     }
                                 }
@@ -100,12 +100,12 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                     }
                 }
                 // item list
-                subjects?.forEach { subject ->
+                subjects?.forEachIndexed { index, subject ->
                     itemDsl {
                         xml(R.layout.item_movie_ranking)
                         render {
                             subject.apply {
-                                it.tv_ranking.text = String.format("%02d", rank)
+                                it.tv_ranking.text = String.format("%02d", index + 1)
                                 it.iv_ranking_movie.load(images.small, 4f)
                                 it.tv_ranking_movie.text = title
                                 it.tv_ranking_year.text = "[$year]"
@@ -113,7 +113,7 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                                 it.rb_ranking_score.rating = (rating.average / 2f).toFloat()
                                 it.tag_ranking_genres.tags = genres
                                 it.setOnClickListener {
-                                    toastInfo(title)
+                                    start(id)
                                 }
                             }
                         }
@@ -134,12 +134,12 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                     }
                 }
                 // item list
-                subjects?.forEach { subjects ->
+                subjects?.forEachIndexed { index, subjects ->
                     itemDsl {
                         xml(R.layout.item_movie_ranking)
                         render {
                             subjects.subject.apply {
-                                it.tv_ranking.text = String.format("%02d", rank)
+                                it.tv_ranking.text = String.format("%02d", index + 1)
                                 it.iv_ranking_movie.load(images.small, 4f)
                                 it.tv_ranking_movie.text = title
                                 it.tv_ranking_year.text = "[$year]"
@@ -147,7 +147,7 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                                 it.rb_ranking_score.rating = (rating.average / 2f).toFloat()
                                 it.tag_ranking_genres.tags = genres
                                 it.setOnClickListener {
-                                    toastInfo(title)
+                                    start(id)
                                 }
                             }
                         }
@@ -162,7 +162,7 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
         refresh_layout.finishRefresh(false)
     }
 
-    fun start(id: String) {
+    private fun start(id: String) {
         ARouter.getInstance()
                 .build(Routes.MOVIE_DET_ACTIVITY)
                 .withString(Routes.MOVIE_DET_ACTIVITY_EXTRA_ID, id)

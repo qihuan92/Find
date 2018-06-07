@@ -2,11 +2,10 @@ package com.qihuan.moviemodule.model
 
 import com.qihuan.commonmodule.net.Api
 import com.qihuan.commonmodule.net.ApiManager
-import com.qihuan.moviemodule.model.bean.CastsBean
 import com.qihuan.moviemodule.model.bean.MoviesBean
+import com.qihuan.moviemodule.model.bean.PersonBean
 import com.qihuan.moviemodule.model.bean.SubjectBean
 import com.qihuan.moviemodule.model.bean.USboxBean
-
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -53,7 +52,7 @@ interface DoubanApi {
      */
     @Headers(Api.DOUBAN_DOMAIN)
     @GET("/v2/movie/celebrity/{id}")
-    fun getCastDetail(@Path("id") id: String): Observable<CastsBean>
+    fun getCastDetail(@Path("id") id: String): Observable<PersonBean>
 
     @Headers(Api.DOUBAN_DOMAIN)
     @GET("/v2/movie/search")

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:stateListAnimator="@drawable/lift_on_touch">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:colorBackground"
+        android:orientation="vertical">
+
+        <net.wujingchao.android.view.SimpleTagImageView
+            android:id="@+id/iv_act"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            app:simple_tag_background_color="?android:colorAccent"
+            app:simple_tag_text="导演"
+            app:simple_tag_textColor="@android:color/white"
+            app:simple_tag_textSize="10sp"
+            app:simple_tag_width="15dp"
+            tools:src="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingBottom="5dp"
+            android:paddingEnd="0dp"
+            android:paddingStart="3dp"
+            android:paddingTop="5dp"
+            android:textSize="12sp"
+            tools:text="Qi" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

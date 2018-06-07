@@ -25,10 +25,10 @@ class SubjectBean : Serializable {
     var subtype: String? = null
     var comments_count: Int = 0
     var ratings_count: Int = 0
-    var countries: List<String>? = null
+    var countries: List<String> = ArrayList()
     var genres: List<String> = ArrayList()
-    var casts: List<CastsBean>? = null
-    var directors: List<DirectorsBean>? = null
+    var casts: List<PersonBean> = ArrayList()
+    var directors: List<PersonBean> = ArrayList()
     var aka: List<String> = ArrayList()
 
     var rank = 0

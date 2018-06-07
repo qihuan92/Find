@@ -24,8 +24,8 @@
         android:layout_marginStart="5dp"
         android:ellipsize="end"
         android:lines="1"
+        android:textColor="@color/md_grey_800"
         android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/iv_movie"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="天空之城" />

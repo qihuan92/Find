@@ -91,4 +91,7 @@ dependencies {
     releaseApi 'me.ele:uetool-no-op:1.0.15'
     // tag view
     api 'co.lujun:androidtagview:1.1.4'
+    // tag image
+    api 'net.wujingchao.android.view:simple-tag-imageview:1.0.1'
+
 }

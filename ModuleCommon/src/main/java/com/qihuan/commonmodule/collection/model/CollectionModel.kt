@@ -16,9 +16,10 @@ class CollectionModel : BaseModel {
 
     private val collectionBox: Box<CollectionBean> = BaseApp.instance.boxStore.boxFor(CollectionBean::class.java)
 
-    fun getFavoriteList(id: String, callback: (List<CollectionBean>) -> Unit) {
+    fun getFavoriteList(id: String, type: Int = 0, callback: (List<CollectionBean>) -> Unit) {
         collectionBox.query()
                 .equal(CollectionBean_.collectionId, id)
+                .filter { it.type == type }
                 .build()
                 .subscribe()
                 .single()

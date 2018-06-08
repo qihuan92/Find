@@ -50,6 +50,8 @@ class MovieListActivity : BaseMvpActivity<MovieListContract.View, MovieListContr
     @SuppressLint("SetTextI18n")
     private fun initView() {
         setToolBar(toolbar, title)
+        toolbar.setTitleText(title)
+        toolbar.setOnBackClickListener { onBackPressed() }
 
         refresh_layout.setOnRefreshListener {
             mPresenter.clearData()

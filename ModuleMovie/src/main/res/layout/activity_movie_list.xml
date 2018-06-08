@@ -5,13 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <com.qihuan.commonmodule.views.TitleBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="?android:colorPrimary"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextAppearance="@style/Toolbar.TitleText" />
+        android:layout_height="?android:actionBarSize" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh_layout"

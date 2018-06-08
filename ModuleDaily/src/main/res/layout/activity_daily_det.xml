@@ -65,14 +65,11 @@
                     android:textSize="12sp" />
             </FrameLayout>
 
-            <android.support.v7.widget.Toolbar
+            <com.qihuan.commonmodule.views.TitleBar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
-                app:contentInsetStartWithNavigation="0dp"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:titleTextAppearance="@style/Toolbar.TitleText" />
+                app:layout_collapseMode="pin" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 

@@ -1,14 +1,16 @@
 package com.qihuan.commonmodule.base
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.support.annotation.ColorInt
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.WindowManager
 import com.qihuan.commonmodule.R
 import com.qihuan.commonmodule.bus.BindEventBus
 import com.qihuan.commonmodule.views.LoadingDialog
+import com.qihuan.commonmodule.views.TitleBar
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -51,13 +53,9 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
         }
     }
 
-    protected fun setToolBar(toolbar: Toolbar, title: String = "") {
-        toolbar.title = title
-        setSupportActionBar(toolbar)
-        supportActionBar?.run {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-        }
-        toolbar.setNavigationOnClickListener { onBackPressed() }
+    protected fun setToolBar(toolbar: TitleBar, title: String = "", @ColorInt color: Int = Color.parseColor("#00000000")) {
+        toolbar.setOnBackClickListener { onBackPressed() }
+        toolbar.setTitleText(title)
+        toolbar.setBackgroundColor(color)
     }
 }

@@ -7,7 +7,6 @@ import com.qihuan.commonmodule.bus.BindEventBus
 import com.qihuan.commonmodule.bus.event.BrowserEvent
 import com.qihuan.commonmodule.bus.event.RefreshEvent
 import com.qihuan.commonmodule.utils.setItemReselectedListener
-import com.qihuan.commonmodule.utils.statusBarLightMode
 import com.qihuan.commonmodule.utils.toastInfo
 import com.qihuan.find.R
 import com.qihuan.find.view.adapter.MainPageAdapter
@@ -29,13 +28,11 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mStatusBar.statusBarDarkFont(true, 0.2f).init()
         initView()
     }
 
     private fun initView() {
-        // 状态栏白色主题
-        statusBarLightMode()
-
         val mainPageAdapter = MainPageAdapter(supportFragmentManager)
         vp_content.adapter = mainPageAdapter
         tb_main.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(vp_content))

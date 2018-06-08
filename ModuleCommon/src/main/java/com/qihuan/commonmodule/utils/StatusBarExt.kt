@@ -2,12 +2,12 @@ package com.qihuan.commonmodule.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Color
 import android.os.Build
-import android.support.v4.content.ContextCompat
+import android.support.annotation.ColorInt
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import com.qihuan.commonmodule.R
 
 /**
  * 状态栏工具
@@ -105,7 +105,6 @@ object StatusBarUtils {
  * @return 1:MIUI 2:Flyme 3:android6.0
  */
 fun Activity.statusBarLightMode() {
-    window.statusBarColor = ContextCompat.getColor(this, R.color.background)
     if (DeviceUtils.isMiui) {
         StatusBarUtils.miuiSetStatusBarLightMode(this, true)
         return
@@ -134,4 +133,18 @@ fun Activity.statusBarDarkMode(activity: Activity) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
     }
+}
+
+fun Activity.setStatusBarColor(@ColorInt color: Int) {
+    // 取消设置透明状态栏,使 ContentView 内容不再沉浸到状态栏下
+    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    // 需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    // 设置状态栏颜色
+    window.statusBarColor = color
+}
+
+fun Activity.setStatusBarTans() {
+    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    window.statusBarColor = Color.TRANSPARENT
 }

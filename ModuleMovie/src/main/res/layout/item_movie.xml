@@ -15,7 +15,7 @@
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
         android:scaleType="centerCrop"
-        tools:src="@color/gray_def" />
+        tools:src="@color/colorGrey" />
 
     <TextView
         android:id="@+id/tv_item_movie"
@@ -114,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="5dp"
-        android:background="@color/gray_def"
+        android:background="@color/colorGrey"
         app:layout_constraintTop_toBottomOf="@id/iv_item_movie" />
 
 </android.support.constraint.ConstraintLayout>

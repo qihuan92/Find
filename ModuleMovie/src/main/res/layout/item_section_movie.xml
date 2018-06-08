@@ -26,7 +26,7 @@
         android:paddingEnd="0dp"
         android:paddingStart="5dp"
         android:text="@string/more"
-        android:textColor="@color/gray_def"
+        android:textColor="@color/colorGrey"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_section_title"
         app:layout_constraintEnd_toEndOf="parent"

@@ -16,9 +16,9 @@
             android:id="@+id/ctl_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gray_def"
+            android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/gray_def"
+            app:contentScrim="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -94,7 +94,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:text="@string/more"
-                android:textColor="?android:colorAccent"
+                android:textColor="?android:colorPrimary"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:visibility="gone" />

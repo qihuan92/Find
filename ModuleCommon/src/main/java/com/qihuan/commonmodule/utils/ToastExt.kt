@@ -14,7 +14,7 @@ fun Context.toastInfo(content: String) {
     Toasty.info(this, content, Toast.LENGTH_SHORT).show()
 }
 
-fun Context.toastError(content: String) {
+fun Context.toastError(content: String = "未知错误") {
     Toasty.error(this, content, Toast.LENGTH_SHORT).show()
 }
 

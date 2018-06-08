@@ -32,7 +32,7 @@ fun Fragment.toastInfo(content: String) {
     }
 }
 
-fun Fragment.toastError(content: String) {
+fun Fragment.toastError(content: String = "未知错误") {
     context?.let {
         Toasty.error(it, content, Toast.LENGTH_SHORT).show()
     }

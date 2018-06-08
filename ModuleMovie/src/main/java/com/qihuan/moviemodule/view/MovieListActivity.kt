@@ -7,7 +7,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.base.BaseMvpActivity
 import com.qihuan.commonmodule.router.Routes
-import com.qihuan.commonmodule.utils.appendTextList
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.contract.MovieListContract
@@ -83,7 +82,7 @@ class MovieListActivity : BaseMvpActivity<MovieListContract.View, MovieListContr
                             it.tv_item_score.text = rating.average.toString()
                             it.rb_item_score.rating = (rating.average / 2f).toFloat()
                             it.tag_item_genres.tags = genres
-                            it.tv_item_act.appendTextList(casts.map { it.name }.toList())
+                            it.tv_item_original_title.text = original_title
                             it.setOnClickListener {
                                 start(id)
                             }

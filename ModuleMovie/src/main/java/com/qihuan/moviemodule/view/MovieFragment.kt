@@ -2,6 +2,7 @@ package com.qihuan.moviemodule.view
 
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -9,15 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.qihuan.commonmodule.base.BaseMvpFragment
+import com.qihuan.commonmodule.base.BaseFragment
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.commonmodule.utils.setVisible
+import com.qihuan.commonmodule.utils.toastError
 import com.qihuan.moviemodule.R
-import com.qihuan.moviemodule.contract.MovieContract
 import com.qihuan.moviemodule.model.bean.MovieHomeBean
 import com.qihuan.moviemodule.model.bean.MovieListType
-import com.qihuan.moviemodule.presenter.MoviePresenter
+import com.qihuan.moviemodule.viewmodel.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.item_movie_card.view.*
 import kotlinx.android.synthetic.main.item_movie_ranking.view.*
@@ -31,11 +32,9 @@ import zlc.season.yaksa.linear
  * @author Qi
  */
 @Route(path = Routes.MOVIE_FRAGMENT)
-class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presenter>(), MovieContract.View {
+class MovieFragment : BaseFragment() {
 
-    override fun initPresenter(): MovieContract.Presenter {
-        return MoviePresenter()
-    }
+    private val mViewModel by lazy { ViewModelProviders.of(this).get(MovieViewModel::class.java) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_movie, container, false)
@@ -43,13 +42,24 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        refresh_layout.setOnRefreshListener { mPresenter.getMovieData() }
-        refresh_layout.autoRefresh()
+        mViewModel.getMovieData()
+        mViewModel.bindMovieData(this, ::onData)
+        mViewModel.bindUIState(this) {
+            when (it) {
+                MovieViewModel.UIState.LOADING -> {
+                }
+                MovieViewModel.UIState.FINISH -> {
+                }
+                MovieViewModel.UIState.ERROR -> toastError()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onData(homeBean: MovieHomeBean) {
-        refresh_layout.finishRefresh(true)
+    private fun onData(homeBean: MovieHomeBean?) {
+        if (homeBean == null) {
+            return
+        }
         rv_list.linear {
             // 上映
             homeBean.inTheaters.apply {
@@ -154,11 +164,6 @@ class MovieFragment : BaseMvpFragment<MovieContract.View, MovieContract.Presente
                 }
             }
         }
-    }
-
-    override fun showError(errorMsg: String) {
-        super.showError(errorMsg)
-        refresh_layout.finishRefresh(false)
     }
 
     private fun start(id: String) {

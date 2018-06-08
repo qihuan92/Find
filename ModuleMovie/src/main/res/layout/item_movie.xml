@@ -37,31 +37,29 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lines="1"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp"
+        android:padding="2dp"
         android:textSize="12sp"
         android:textStyle="italic"
         android:typeface="monospace"
-        app:layout_constraintStart_toStartOf="@+id/rb_item_score"
-        app:layout_constraintTop_toBottomOf="@+id/tv_item_movie"
+        app:layout_constraintLeft_toRightOf="@id/tv_item_movie"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_movie"
         tools:text="[1999]" />
 
     <TextView
-        android:id="@+id/tv_item_act"
+        android:id="@+id/tv_item_original_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:ellipsize="end"
         android:maxWidth="200dp"
         android:lines="1"
+        android:layout_marginStart="5dp"
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
         android:textColor="@color/md_grey_500"
         android:textSize="12sp"
         android:typeface="monospace"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_item_year"
-        app:layout_constraintStart_toEndOf="@+id/tv_item_year"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_year"
+        app:layout_constraintStart_toEndOf="@+id/iv_item_movie"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_movie"
         tools:text="1/2/11/2/11/2/11/2/11/2/11/2/11/2/11/2/11/2/11/2/1" />
 
     <RatingBar
@@ -73,7 +71,7 @@
         android:isIndicator="true"
         android:numStars="5"
         app:layout_constraintStart_toEndOf="@+id/iv_item_movie"
-        app:layout_constraintTop_toBottomOf="@+id/tv_item_year" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_original_title" />
 
     <TextView
         android:id="@+id/tv_item_score"
@@ -91,7 +89,7 @@
         android:id="@+id/tag_item_genres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         app:container_background_color="@android:color/transparent"
         app:container_border_color="@android:color/transparent"

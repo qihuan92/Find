@@ -1,11 +1,12 @@
 package com.qihuan.commonmodule.base
 
-import android.graphics.Color
 import android.os.Bundle
-import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
 import android.support.v7.app.AppCompatActivity
 import com.gyf.barlibrary.ImmersionBar
+import com.qihuan.commonmodule.R
 import com.qihuan.commonmodule.bus.BindEventBus
+import com.qihuan.commonmodule.utils.parseColorRes
 import com.qihuan.commonmodule.views.LoadingDialog
 import com.qihuan.commonmodule.views.TitleBar
 import org.greenrobot.eventbus.EventBus
@@ -48,9 +49,10 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
         }
     }
 
-    protected fun setToolBar(toolbar: TitleBar, title: String = "", @ColorInt color: Int = Color.parseColor("#00000000")) {
+    protected fun setToolBar(toolbar: TitleBar, title: String = "", @ColorRes color: Int = R.color.colorPrimary, theme: Int = TitleBar.DARK) {
         toolbar.setOnBackClickListener { onBackPressed() }
         toolbar.setTitleText(title)
-        toolbar.setBackgroundColor(color)
+        toolbar.setBackgroundColor(parseColorRes(color))
+        toolbar.setTheme(theme)
     }
 }

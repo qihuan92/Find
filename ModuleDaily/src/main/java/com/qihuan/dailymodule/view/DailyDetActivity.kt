@@ -38,7 +38,7 @@ class DailyDetActivity : BaseMvpActivity<DailyDetContract.View, DailyDetContract
     }
 
     private fun initView() {
-        setToolBar(toolbar)
+        setToolBar(toolbar, color = android.R.color.transparent)
 
         fab_favorite.setOnClickListener { mPresenter.updateFavoriteStory(id) }
 

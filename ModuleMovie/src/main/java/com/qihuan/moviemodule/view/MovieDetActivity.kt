@@ -48,7 +48,7 @@ class MovieDetActivity : BaseMvpActivity<MovieDetContract.View, MovieDetContract
     }
 
     private fun initView() {
-        setToolBar(toolbar)
+        setToolBar(toolbar, color = android.R.color.transparent)
         fab_favorite.setOnClickListener { mPresenter.updateFavoriteMovie(id) }
     }
 

@@ -19,6 +19,11 @@ import com.qihuan.commonmodule.utils.dp2px
  */
 class TitleBar : Toolbar {
 
+    companion object {
+        const val DARK = 0
+        const val LIGHT = 1
+    }
+
     private val titleText = ""
     private var ibBack: ImageButton? = null
     private var tvTitle: TextView? = null
@@ -75,5 +80,18 @@ class TitleBar : Toolbar {
 
     fun setTitleText(title: String) {
         tvTitle?.text = title
+    }
+
+    fun setTheme(mode: Int) {
+        when(mode) {
+            DARK -> {
+                ibBack?.setImageResource(R.drawable.ic_back_white)
+                tvTitle?.setTextColor(ContextCompat.getColor(context, android.R.color.white))
+            }
+            LIGHT -> {
+                ibBack?.setImageResource(R.drawable.ic_back_black)
+                tvTitle?.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+            }
+        }
     }
 }

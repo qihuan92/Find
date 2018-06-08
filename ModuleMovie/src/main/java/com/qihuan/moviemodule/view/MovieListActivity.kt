@@ -47,11 +47,9 @@ class MovieListActivity : BaseMvpActivity<MovieListContract.View, MovieListContr
         initView()
     }
 
-    @SuppressLint("SetTextI18n")
     private fun initView() {
+        mStatusBar.statusBarColor(R.color.colorPrimaryDark).init()
         setToolBar(toolbar, title)
-        toolbar.setTitleText(title)
-        toolbar.setOnBackClickListener { onBackPressed() }
 
         refresh_layout.setOnRefreshListener {
             mPresenter.clearData()
@@ -63,6 +61,7 @@ class MovieListActivity : BaseMvpActivity<MovieListContract.View, MovieListContr
         refresh_layout.autoRefresh()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onSubjectList(isRefresh: Boolean, subjectList: List<SubjectBean>) {
         if (isRefresh) {
             mSubjectList.clear()

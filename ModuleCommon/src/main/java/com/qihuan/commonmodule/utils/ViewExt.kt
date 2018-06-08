@@ -1,8 +1,13 @@
 package com.qihuan.commonmodule.utils
 
+import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.support.annotation.ColorRes
 import android.support.annotation.LayoutRes
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,4 +48,15 @@ fun TextView.appendTextList(listStr: List<String>) {
 
 fun View.setVisible(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+
+fun Activity.parseColorRes(@ColorRes colorRes: Int): Int {
+    return ContextCompat.getColor(this, colorRes)
+}
+
+fun Fragment.parseColorRes(@ColorRes colorRes: Int): Int {
+    context?.apply {
+        return ContextCompat.getColor(this, colorRes)
+    }
+    return Color.parseColor("#00000000")
 }

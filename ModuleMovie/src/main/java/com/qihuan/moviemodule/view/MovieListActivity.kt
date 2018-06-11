@@ -9,6 +9,7 @@ import com.qihuan.commonmodule.base.BaseActivity
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.commonmodule.utils.toastError
+import com.qihuan.commonmodule.views.TitleBar
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.model.bean.MovieListType
 import com.qihuan.moviemodule.viewmodel.MovieListViewModel
@@ -42,8 +43,8 @@ class MovieListActivity : BaseActivity() {
     }
 
     private fun initView() {
-        mStatusBar.statusBarColor(R.color.colorPrimaryDark).init()
-        setToolBar(toolbar, title)
+        mStatusBar.barColor(android.R.color.white).statusBarDarkFont(true, 0.2f).init()
+        setToolBar(toolbar, title, theme = TitleBar.LIGHT, color = android.R.color.white)
 
         refresh_layout.setOnRefreshListener {
             mViewModel.clearData()

@@ -1,13 +1,12 @@
 package com.qihuan.moviemodule.view
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.qihuan.commonmodule.base.BaseActivity
+import com.qihuan.commonmodule.base.BaseMvvmActivity
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.*
 import com.qihuan.moviemodule.R
@@ -23,9 +22,7 @@ import zlc.season.yaksa.linear
  * @date 2018/6/6
  */
 @Route(path = Routes.MOVIE_DET_ACTIVITY)
-class MovieDetActivity : BaseActivity() {
-
-    private val mViewModel by lazy { ViewModelProviders.of(this).get(MovieDetViewModel::class.java) }
+class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::class.java) {
 
     @JvmField
     @Autowired

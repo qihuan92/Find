@@ -2,7 +2,6 @@ package com.qihuan.moviemodule.view
 
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -10,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.qihuan.commonmodule.base.BaseFragment
+import com.qihuan.commonmodule.base.BaseMvvmFragment
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.commonmodule.utils.setVisible
@@ -32,9 +31,7 @@ import zlc.season.yaksa.linear
  * @author Qi
  */
 @Route(path = Routes.MOVIE_FRAGMENT)
-class MovieFragment : BaseFragment() {
-
-    private val mViewModel by lazy { ViewModelProviders.of(this).get(MovieViewModel::class.java) }
+class MovieFragment : BaseMvvmFragment<MovieViewModel>(MovieViewModel::class.java) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_movie, container, false)

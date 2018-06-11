@@ -1,11 +1,10 @@
 package com.qihuan.moviemodule.view
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.qihuan.commonmodule.base.BaseActivity
+import com.qihuan.commonmodule.base.BaseMvvmActivity
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.commonmodule.utils.toastError
@@ -23,9 +22,7 @@ import zlc.season.yaksa.linear
  * @date 2018/6/6
  */
 @Route(path = Routes.MOVIE_LIST_ACTIVITY)
-class MovieListActivity : BaseActivity() {
-
-    private val mViewModel by lazy { ViewModelProviders.of(this).get(MovieListViewModel::class.java) }
+class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewModel::class.java) {
 
     @JvmField
     @Autowired(name = Routes.MOVIE_LIST_ACTIVITY_EXTRA_TYPE)

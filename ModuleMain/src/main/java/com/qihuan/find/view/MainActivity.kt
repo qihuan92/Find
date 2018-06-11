@@ -34,6 +34,7 @@ class MainActivity : BaseActivity() {
 
     private fun initView() {
         val mainPageAdapter = MainPageAdapter(supportFragmentManager)
+        lifecycle.addObserver(mainPageAdapter)
         vp_content.adapter = mainPageAdapter
         tb_main.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(vp_content))
         vp_content.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tb_main))

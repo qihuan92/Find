@@ -28,5 +28,9 @@ class FragmentFactory {
             }
             return fragment
         }
+
+        fun clear() {
+            fragmentMap.clear()
+        }
     }
 }

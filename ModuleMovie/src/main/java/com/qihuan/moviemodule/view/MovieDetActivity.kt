@@ -104,23 +104,21 @@ class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::
             tv_actor_title.setVisible(true)
             rv_actor.linear {
                 orientation(LinearLayoutManager.HORIZONTAL)
-                actList?.forEach { person ->
-                    itemDsl {
-                        xml(R.layout.item_act_card)
-                        render {
-                            it.iv_act.load(person.avatars.medium)
-                            it.iv_act.tagEnable = person.isDirector
-                            it.tv_name.text = person.name
-                            it.setOnClickListener {
-                                toastInfo(person.name)
-                            }
+                renderItemsByDsl(actList) { person ->
+                    xml(R.layout.item_act_card)
+                    render {
+                        it.iv_act.load(person.avatars.medium)
+                        it.iv_act.tagEnable = person.isDirector
+                        it.tv_name.text = person.name
+                        it.setOnClickListener {
+                            toastInfo(person.name)
                         }
                     }
                 }
             }
         }
 
-        mViewModel.bindFavoriteData(this) {isFavorite ->
+        mViewModel.bindFavoriteData(this) { isFavorite ->
             if (isFavorite == null) {
                 return@bindFavoriteData
             }

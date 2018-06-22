@@ -1,8 +1,6 @@
 package com.qihuan.moviemodule.viewmodel
 
-import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
 import com.qihuan.commonmodule.base.AbsRxViewModel
 import com.qihuan.moviemodule.model.DoubanApi
 import com.qihuan.moviemodule.model.bean.MovieHomeBean
@@ -25,20 +23,60 @@ class MovieViewModel : AbsRxViewModel() {
         LOADING, ERROR, FINISH
     }
 
-    private val movieData by lazy { MutableLiveData<MovieHomeBean>() }
+    val movieInTheaters by lazy { MutableLiveData<MoviesBean>() }
+    val movieTop by lazy { MutableLiveData<MoviesBean>() }
+    val movieUs by lazy { MutableLiveData<USboxBean>() }
+    val uiState by lazy { MutableLiveData<UIState>() }
 
-    private val uiState by lazy { MutableLiveData<UIState>() }
+    fun getInTheaters() {
+        DoubanApi.get().getInTheaters()
+                .doOnSubscribe {
+                    addDisposable(it)
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = {
+                            movieInTheaters.postValue(it)
+                        },
+                        onError = {
 
-    fun bindMovieData(owner: LifecycleOwner, onChange: (MovieHomeBean?) -> Unit) {
-        movieData.observe(owner, Observer {
-            onChange(it)
-        })
+                        }
+                )
     }
 
-    fun bindUIState(owner: LifecycleOwner, onChange: (UIState?) -> Unit) {
-        uiState.observe(owner, Observer {
-            onChange(it)
-        })
+    fun getTopMovie() {
+        DoubanApi.get().getTopMovie(count = 5)
+                .doOnSubscribe {
+                    addDisposable(it)
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = {
+                            movieTop.postValue(it)
+                        },
+                        onError = {
+
+                        }
+                )
+    }
+
+    fun getUsBox() {
+        DoubanApi.get().getUsBox()
+                .doOnSubscribe {
+                    addDisposable(it)
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = {
+                            movieUs.postValue(it)
+                        },
+                        onError = {
+
+                        }
+                )
     }
 
     fun getMovieData() {
@@ -57,7 +95,9 @@ class MovieViewModel : AbsRxViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
-                            movieData.postValue(it)
+                            movieInTheaters.postValue(it.inTheaters)
+                            movieTop.postValue(it.topMovie)
+                            movieUs.postValue(it.usBox)
                             uiState.postValue(UIState.FINISH)
                         },
                         onError = {

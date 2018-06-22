@@ -41,9 +41,9 @@ class MovieDetViewModel : AbsRxViewModel() {
         })
     }
 
-    fun bindActData(owner: LifecycleOwner, onChange: (List<PersonBean>?) -> Unit) {
+    fun bindActData(owner: LifecycleOwner, onChange: (List<PersonBean>) -> Unit) {
         actListData.observe(owner, Observer {
-            onChange(it)
+            it?.let(onChange)
         })
     }
 

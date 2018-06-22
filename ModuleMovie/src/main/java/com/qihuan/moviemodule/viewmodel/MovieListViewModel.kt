@@ -30,9 +30,9 @@ class MovieListViewModel : AbsRxViewModel() {
 
     private val uiState by lazy { MutableLiveData<MovieListViewModel.UIState>() }
 
-    fun bindMovieData(owner: LifecycleOwner, onChange: (List<SubjectBean>?) -> Unit) {
+    fun bindMovieData(owner: LifecycleOwner, onChange: (List<SubjectBean>) -> Unit) {
         subjectList.observe(owner, Observer {
-            onChange(it)
+            it?.let(onChange)
         })
     }
 

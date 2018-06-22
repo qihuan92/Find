@@ -64,21 +64,19 @@ class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewMode
         }
         mViewModel.bindMovieData(this) { subjectList->
             rv_list.linear {
-                subjectList?.forEach { subject ->
-                    itemDsl {
-                        xml(R.layout.item_movie)
-                        render {
-                            subject.apply {
-                                it.iv_item_movie.load(images.small, 4f)
-                                it.tv_item_movie.text = title
-                                it.tv_item_year.text = "[$year]"
-                                it.tv_item_score.text = rating.average.toString()
-                                it.rb_item_score.rating = (rating.average / 2f).toFloat()
-                                it.tag_item_genres.tags = genres
-                                it.tv_item_original_title.text = original_title
-                                it.setOnClickListener {
-                                    start(id)
-                                }
+                renderItemsByDsl(subjectList) { subject ->
+                    xml(R.layout.item_movie)
+                    render {
+                        subject.apply {
+                            it.iv_item_movie.load(images.small, 4f)
+                            it.tv_item_movie.text = title
+                            it.tv_item_year.text = "[$year]"
+                            it.tv_item_score.text = rating.average.toString()
+                            it.rb_item_score.rating = (rating.average / 2f).toFloat()
+                            it.tag_item_genres.tags = genres
+                            it.tv_item_original_title.text = original_title
+                            it.setOnClickListener {
+                                start(id)
                             }
                         }
                     }

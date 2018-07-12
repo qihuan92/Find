@@ -2,14 +2,18 @@ package com.qihuan.dailymodule.contract
 
 import com.qihuan.commonmodule.base.BasePresenter
 import com.qihuan.commonmodule.base.BaseView
-import com.qihuan.dailymodule.model.bean.DailyItemBean
+import com.qihuan.dailymodule.model.bean.StoryBean
 import com.qihuan.dailymodule.model.bean.TopStoryBean
 
 interface DailyContract {
     interface View : BaseView {
-        fun latestDaily(topList: List<TopStoryBean>)
+        fun onBannerData(itemList: Array<TopStoryBean>)
 
-        fun beforeDaily(isRefresh: Boolean, dailyList: List<DailyItemBean>)
+        fun onDailyData(itemList: Array<StoryBean>)
+
+        fun onDailySectionData(item: String)
+
+        fun onRefreshStart()
 
         fun onRefreshEnd(success: Boolean)
 

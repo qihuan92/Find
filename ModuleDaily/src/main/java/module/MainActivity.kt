@@ -12,7 +12,7 @@ import com.qihuan.dailymodule.view.DailyFragment
  */
 class MainActivity : BaseActivity() {
 
-    private val content = DailyFragment.newInstance()
+    private val content = DailyFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

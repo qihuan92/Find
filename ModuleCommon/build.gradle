@@ -74,6 +74,7 @@ dependencies {
     // list
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     api 'zlc.season:yaksa:0.3.1'
+    api 'me.drakeet.multitype:multitype-kotlin:3.4.4'
     // Toasty
     api 'com.github.GrenderG:Toasty:1.2.5'
     // banner

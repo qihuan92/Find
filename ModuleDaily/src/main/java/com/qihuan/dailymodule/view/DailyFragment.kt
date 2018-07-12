@@ -5,23 +5,23 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cn.bingoogolapple.bgabanner.BGABanner
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.qihuan.commonmodule.base.BaseMvpFragment
 import com.qihuan.commonmodule.bus.BindEventBus
 import com.qihuan.commonmodule.bus.event.RefreshEvent
 import com.qihuan.commonmodule.router.Routes
-import com.qihuan.commonmodule.utils.inflate
 import com.qihuan.dailymodule.R
 import com.qihuan.dailymodule.contract.DailyContract
-import com.qihuan.dailymodule.model.bean.DailyItemBean
+import com.qihuan.dailymodule.model.bean.StoryBean
 import com.qihuan.dailymodule.model.bean.TopStoryBean
 import com.qihuan.dailymodule.presenter.DailyPresenter
-import com.qihuan.dailymodule.view.adapter.BannerAdapter
-import com.qihuan.dailymodule.view.adapter.DailyAdapter
+import com.qihuan.dailymodule.view.cell.BannerCell
+import com.qihuan.dailymodule.view.cell.DailyCell
+import com.qihuan.dailymodule.view.cell.DailySectionCell
 import kotlinx.android.synthetic.main.fragment_news.*
+import me.drakeet.multitype.Items
+import me.drakeet.multitype.MultiTypeAdapter
+import me.drakeet.multitype.register
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -31,11 +31,15 @@ import org.greenrobot.eventbus.Subscribe
  */
 @BindEventBus
 @Route(path = Routes.DAILY_FRAGMENT)
-class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View, BaseQuickAdapter.OnItemClickListener, BGABanner.Delegate<View, TopStoryBean> {
+class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View {
 
-    private var bannerView: BGABanner? = null
-    private var dailyAdapter: DailyAdapter? = null
+    private var dailyAdapter: MultiTypeAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
+    private val itemList: Items = Items()
+
+    override fun initPresenter(): DailyContract.Presenter {
+        return DailyPresenter()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_news, container, false)
@@ -48,17 +52,11 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
         linearLayoutManager = LinearLayoutManager(context)
         rv_list.layoutManager = linearLayoutManager
 
-        // banner
-        bannerView = context?.inflate(R.layout.layout_banner, rv_list)
-        bannerView?.setAdapter(BannerAdapter())
-        bannerView?.setDelegate(this)
-
         // adapter
-        dailyAdapter = DailyAdapter()
-        dailyAdapter?.apply {
-            openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM)
-            addHeaderView(bannerView)
-        }?.onItemClickListener = this
+        dailyAdapter = MultiTypeAdapter(itemList)
+        dailyAdapter?.register(Array<TopStoryBean>::class, BannerCell())
+        dailyAdapter?.register(StoryBean::class, DailyCell())
+        dailyAdapter?.register(String::class, DailySectionCell())
         rv_list.adapter = dailyAdapter
 
         // refresh layout
@@ -69,49 +67,27 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        bannerView?.startAutoPlay()
+    override fun onBannerData(itemList: Array<TopStoryBean>) {
+        this.itemList.add(itemList)
+        dailyAdapter?.notifyItemInserted(0)
     }
 
-    override fun onPause() {
-        super.onPause()
-        bannerView?.stopAutoPlay()
+    override fun onDailyData(itemList: Array<StoryBean>) {
+        val start = this.itemList.size
+        this.itemList.addAll(itemList)
+        dailyAdapter?.notifyItemRangeInserted(start, itemList.size)
     }
 
-    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        val dailyItemBean = adapter.data[position] as DailyItemBean
-        if (dailyItemBean.isHeader) {
-            return
-        }
-        if (dailyItemBean.t == null) {
-            return
-        }
-        ARouter.getInstance()
-                .build(Routes.DAILY_DET_ACTIVITY)
-                .withInt("id", dailyItemBean.t.id)
-                .navigation()
+    override fun onDailySectionData(item: String) {
+        val start = this.itemList.size
+        this.itemList.add(item)
+        dailyAdapter?.notifyItemInserted(start)
     }
 
-    override fun onBannerItemClick(banner: BGABanner, itemView: View, model: TopStoryBean?, position: Int) {
-        model?.run {
-            ARouter.getInstance()
-                    .build(Routes.DAILY_DET_ACTIVITY)
-                    .withInt("id", id)
-                    .navigation()
-        }
-    }
-
-    override fun latestDaily(topList: List<TopStoryBean>) {
-        bannerView?.setData(R.layout.item_daily_banner, topList, null)
-    }
-
-    override fun beforeDaily(isRefresh: Boolean, dailyList: List<DailyItemBean>) {
-        if (isRefresh) {
-            dailyAdapter?.setNewData(dailyList)
-        } else {
-            dailyAdapter?.addData(dailyList)
-        }
+    override fun onRefreshStart() {
+        val count = this.itemList.size
+        this.itemList.clear()
+        dailyAdapter?.notifyItemRangeRemoved(0, count)
     }
 
     override fun onRefreshEnd(success: Boolean) {
@@ -151,14 +127,4 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
 
     }
 
-    override fun initPresenter(): DailyContract.Presenter {
-        return DailyPresenter()
-    }
-
-    companion object {
-
-        fun newInstance(): DailyFragment {
-            return DailyFragment()
-        }
-    }
 }

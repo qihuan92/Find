@@ -6,9 +6,6 @@ import com.qihuan.commonmodule.utils.parseDate
 import com.qihuan.commonmodule.utils.timeSub
 import com.qihuan.dailymodule.contract.DailyContract
 import com.qihuan.dailymodule.model.ZhihuApi
-import com.qihuan.dailymodule.model.bean.DailyItemBean
-import com.qihuan.dailymodule.model.bean.StoryBean
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -26,56 +23,43 @@ class DailyPresenter : AbsRxPresenter<DailyContract.View>(), DailyContract.Prese
         view?.showLoading()
         date = getNowDate()
 
-        addDisposable(
-                ZhihuApi.get()
-                        .getLatestDaily()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnNext({ dailyBean -> view?.latestDaily(dailyBean.top_stories) })
-                        .observeOn(Schedulers.io())
-                        .concatMap({ dailyBean -> Observable.fromIterable<StoryBean>(dailyBean.stories) })
-                        //.flatMap(storyBean -> Observable.zip(Observable.just(storyBean), ApiFactory.getApi().getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
-                        .map({ DailyItemBean(it) })
-                        .toList()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy(
-                                onSuccess = {
-                                    view?.beforeDaily(true, it)
-                                    view?.onRefreshEnd(true)
-                                },
-                                onError = {
-                                    view?.onRefreshEnd(false)
-                                    view?.showError(it.message ?: "")
-                                }
-                        )
-        )
+        ZhihuApi.get()
+                .getLatestDaily()
+                .doOnSubscribe { addDisposable(it) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = {
+                            view?.onRefreshStart()
+                            view?.onBannerData(it.top_stories)
+                            view?.onDailyData(it.stories)
+                            view?.onRefreshEnd(true)
+                        },
+                        onError = {
+                            view?.onRefreshEnd(false)
+                            view?.showError(it.message ?: "")
+                        }
+                )
     }
 
     override fun getBeforeDaily() {
         date = timeSub(date)
-        addDisposable(
-                ZhihuApi.get()
-                        .getBeforeDaily(date)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .observeOn(Schedulers.io())
-                        .concatMap({ dailyBean -> Observable.fromIterable<StoryBean>(dailyBean.stories) })
-                        //.flatMap(storyBean -> Observable.zip(Observable.just(storyBean), ApiFactory.getApi().getStoryExtra(storyBean.getId()), StoryBean::setStoryExtraBean))
-                        .map({ DailyItemBean(it) })
-                        .toList()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy(
-                                onSuccess = {
-                                    it.add(0, DailyItemBean(true, parseDate(date)))
-                                    view?.beforeDaily(false, it)
-                                    view?.onLoadMoreEnd(true)
-                                },
-                                onError = {
-                                    view?.onLoadMoreEnd(false)
-                                    view?.showError(it.message ?: "")
-                                }
-                        )
-
-        )
+        ZhihuApi.get()
+                .getBeforeDaily(date)
+                .doOnSubscribe { addDisposable(it) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onNext = {
+                            view?.onDailySectionData(parseDate(date))
+                            view?.onDailyData(it.stories)
+                            view?.onLoadMoreEnd(true)
+                        },
+                        onError = {
+                            view?.onLoadMoreEnd(false)
+                            view?.showError(it.message ?: "")
+                        }
+                )
     }
 }

@@ -26,6 +26,7 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mStatusBar = ImmersionBar.with(this)
+                .navigationBarColor(android.R.color.white)
         mStatusBar.init()
     }
 

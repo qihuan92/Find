@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.2.71'
-    ext.anko_version='0.10.5'
+    ext.anko_version = '0.10.5'
     repositories {
         jcenter()
         google()
@@ -32,13 +32,13 @@ task clean(type: Delete) {
 
 ext {
     versions = [
-            compileSdkVersion       : 28,
-            minSdkVersion           : 21,
-            targetSdkVersion        : 28,
+            compileSdkVersion    : 28,
+            minSdkVersion        : 21,
+            targetSdkVersion     : 28,
             androidSupportVersion: '28.0.0',
-            testJunitVersion: '4.12',
-            testRunnerVersion: '1.0.2',
-            testEspressoVersion: '3.0.2',
+            testJunitVersion     : '4.12',
+            testRunnerVersion    : '1.0.2',
+            testEspressoVersion  : '3.0.2',
     ]
 
     dependencies = [

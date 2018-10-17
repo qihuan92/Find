@@ -99,7 +99,7 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
     }
 
     @Subscribe
-    fun onRefreshEvent(refreshEvent: RefreshEvent) {
+    fun onRefreshEvent(@Suppress("UNUSED_PARAMETER") refreshEvent: RefreshEvent) {
         linearLayoutManager?.run {
             val visibleItemPosition = findFirstCompletelyVisibleItemPosition()
             if (visibleItemPosition == 0) {

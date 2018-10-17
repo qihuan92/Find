@@ -41,10 +41,10 @@ class DailyCell : ItemViewBinder<StoryBean, DailyCell.ViewHolder>() {
 
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        val tvNews: TextView? = itemView?.findViewById(R.id.tv_news)
-        val tvLike: TextView? = itemView?.findViewById(R.id.tv_like)
-        val tvComment: TextView? = itemView?.findViewById(R.id.tv_comment)
-        val ivNews: ImageView? = itemView?.findViewById(R.id.iv_news)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvNews: TextView? = itemView.findViewById(R.id.tv_news)
+        val tvLike: TextView? = itemView.findViewById(R.id.tv_like)
+        val tvComment: TextView? = itemView.findViewById(R.id.tv_comment)
+        val ivNews: ImageView? = itemView.findViewById(R.id.iv_news)
     }
 }

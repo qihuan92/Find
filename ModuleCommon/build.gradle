@@ -6,7 +6,6 @@ apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion rootProject.ext.versions["compileSdkVersion"]
-    buildToolsVersion rootProject.ext.versions["buildToolsVersion"]
     defaultConfig {
         minSdkVersion rootProject.ext.versions["minSdkVersion"]
         targetSdkVersion rootProject.ext.versions["targetSdkVersion"]
@@ -35,7 +34,7 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$rootProject.ext.versions.testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.versions.testEspressoVersion"
     // kotlin
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // anko
     api "org.jetbrains.anko:anko:$anko_version"
     api "org.jetbrains.anko:anko-constraint-layout:$anko_version"

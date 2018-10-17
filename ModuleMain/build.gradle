@@ -13,7 +13,6 @@ android {
         }
     }
     compileSdkVersion rootProject.ext.versions["compileSdkVersion"]
-    buildToolsVersion rootProject.ext.versions["buildToolsVersion"]
     defaultConfig {
         applicationId "com.qihuan.find"
         minSdkVersion rootProject.ext.versions["minSdkVersion"]

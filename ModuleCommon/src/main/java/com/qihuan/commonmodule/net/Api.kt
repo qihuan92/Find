@@ -15,7 +15,7 @@ interface Api {
 
         const val ZHIHU_DOMAIN = DOMAIN_KEY + ZHIHU_DOMAIN_VALUE
 
-        const val ZHIHU_BASE_URL = "http://news-at.zhihu.com"
+        const val ZHIHU_BASE_URL = "https://news-at.zhihu.com"
 
         const val DOUBAN_DOMAIN_VALUE = "douban"
 

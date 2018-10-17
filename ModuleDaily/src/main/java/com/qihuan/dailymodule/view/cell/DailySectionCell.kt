@@ -23,7 +23,7 @@ class DailySectionCell : ItemViewBinder<String, DailySectionCell.ViewHolder>() {
         holder.tvNewsDate?.text = item
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-        val tvNewsDate: TextView? = itemView?.findViewById(R.id.tv_news_date)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvNewsDate: TextView? = itemView.findViewById(R.id.tv_news_date)
     }
 }

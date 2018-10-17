@@ -78,7 +78,7 @@ class MovieListViewModel : AbsRxViewModel() {
         start += moviesBean.subjects.size
     }
 
-    private fun onError(throwable: Throwable) {
+    private fun onError(@Suppress("UNUSED_PARAMETER") throwable: Throwable) {
         uiState.postValue(UIState.ERROR)
     }
 

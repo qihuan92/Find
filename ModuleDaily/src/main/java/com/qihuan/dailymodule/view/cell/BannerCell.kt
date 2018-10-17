@@ -34,7 +34,7 @@ class BannerCell : ItemViewBinder<Array<TopStoryBean>, BannerCell.ViewHolder>() 
         super.onBindViewHolder(holder, item, payloads)
     }
 
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), BGABanner.Adapter<View, TopStoryBean>, BGABanner.Delegate<View, TopStoryBean> {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), BGABanner.Adapter<View, TopStoryBean>, BGABanner.Delegate<View, TopStoryBean> {
 
         val bannerLayout: BGABanner = itemView as BGABanner
 

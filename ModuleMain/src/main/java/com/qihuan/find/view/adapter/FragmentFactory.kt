@@ -17,12 +17,12 @@ class FragmentFactory {
             var fragment = fragmentMap[position]
             if (fragment == null) {
                 fragment = when (position) {
-                    0 -> ARouter.getInstance().build(Routes.DAILY_FRAGMENT).navigation() as Fragment
-                    1 -> ARouter.getInstance().build(Routes.MOVIE_FRAGMENT).navigation() as Fragment
-                    2 -> ARouter.getInstance().build(Routes.DISCOVER_FRAGMENT).navigation() as Fragment
-                    3 -> ARouter.getInstance().build(Routes.USER_FRAGMENT).navigation() as Fragment
-                    else -> ARouter.getInstance().build(Routes.DAILY_FRAGMENT).navigation() as Fragment
-                }
+                    0 -> ARouter.getInstance().build(Routes.DAILY_FRAGMENT).navigation()
+                    1 -> ARouter.getInstance().build(Routes.MOVIE_FRAGMENT).navigation()
+                    2 -> ARouter.getInstance().build(Routes.DISCOVER_FRAGMENT).navigation()
+                    3 -> ARouter.getInstance().build(Routes.USER_FRAGMENT).navigation()
+                    else -> ARouter.getInstance().build(Routes.DAILY_FRAGMENT).navigation()
+                } as Fragment
                 fragmentMap[position] = fragment
                 return fragment
             }

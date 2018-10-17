@@ -73,10 +73,10 @@ class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::
                 iv_movie.load(images.large, 4f, listener = {
                     it?.apply {
                         // 设置状态栏颜色
-                        window.statusBarColor = getColor()
-                        ctl_movie.setContentScrimColor(getColor())
-                        ctl_movie.setBackgroundColor(getColor())
-                        tv_title.setTextColor(getColor())
+                        window.statusBarColor = getSwatchColor()
+                        ctl_movie.setContentScrimColor(getSwatchColor())
+                        ctl_movie.setBackgroundColor(getSwatchColor())
+                        tv_title.setTextColor(getSwatchColor())
                     }
                 })
                 // 简介

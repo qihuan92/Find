@@ -75,7 +75,7 @@ fun ImageView.get(drawable: Drawable): GlideRequest<Drawable> = GlideApp.with(co
  * @param bitmap
  * @return
  */
-fun Bitmap.getColor(): Int {
+fun Bitmap.getSwatchColor(): Int {
     val p = Palette.from(this).generate()
     val swatchMuted = p.darkMutedSwatch
     val swatchVibrant = p.darkVibrantSwatch

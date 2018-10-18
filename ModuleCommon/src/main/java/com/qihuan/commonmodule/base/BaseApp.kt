@@ -3,12 +3,10 @@ package com.qihuan.commonmodule.base
 import android.app.Application
 import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.BuildConfig
-import com.qihuan.commonmodule.collection.bean.MyObjectBox
 import com.qihuan.commonmodule.net.ApiManager
 import com.scwang.smartrefresh.header.DeliveryHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
-import io.objectbox.BoxStore
 import kotlin.properties.Delegates
 
 /**
@@ -17,7 +15,6 @@ import kotlin.properties.Delegates
  * @author Qi
  */
 open class BaseApp : Application() {
-    lateinit var boxStore: BoxStore
 
     override fun onCreate() {
         super.onCreate()
@@ -33,10 +30,6 @@ open class BaseApp : Application() {
             ARouter.printStackTrace()
         }
         ARouter.init(this)
-
-        boxStore = MyObjectBox.builder()
-                .androidContext(this)
-                .build()
     }
 
     companion object {

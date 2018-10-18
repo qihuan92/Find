@@ -42,7 +42,8 @@ dependencies {
     testImplementation "junit:junit:$rootProject.ext.versions.testJunitVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.ext.versions.testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.versions.testEspressoVersion"
-    kapt rootProject.ext.dependencies["aroutercompiler"]
+    kapt rootProject.ext.dependencies.arouterCompiler
+    kapt rootProject.ext.dependencies.roomCompiler
     implementation project(':ModuleCommon')
     if (!isModule.toBoolean()) {
         implementation project(':ModuleDiscover')

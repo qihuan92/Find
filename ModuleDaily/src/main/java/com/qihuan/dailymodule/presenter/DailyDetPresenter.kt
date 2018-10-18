@@ -1,24 +1,20 @@
 package com.qihuan.dailymodule.presenter
 
+import android.util.Log
 import com.qihuan.commonmodule.base.AbsRxPresenter
-import com.qihuan.commonmodule.collection.bean.CollectionBean
-import com.qihuan.commonmodule.collection.model.CollectionModel
+import com.qihuan.commonmodule.collection.CollectionBean
+import com.qihuan.commonmodule.db.AppDatabase
 import com.qihuan.dailymodule.contract.DailyDetContract
 import com.qihuan.dailymodule.model.ZhihuApi
 import com.qihuan.dailymodule.model.bean.StoryContentBean
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContract.Presenter {
 
-    private val collectionModel: CollectionModel = CollectionModel()
     private var storyContentBean: StoryContentBean? = null
-
-    override fun detachView() {
-        super.detachView()
-        collectionModel.onDestroy()
-    }
 
     override fun getStoryContent(id: Int) {
         ZhihuApi.get()
@@ -54,27 +50,45 @@ class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContr
     }
 
     override fun getFavoriteStory(id: Int) {
-        view?.showLoading()
-        collectionModel.getFavoriteList(id.toString()) {
-            view?.run {
-                onFavoriteChange(it.isNotEmpty())
-                hideLoading()
-            }
-        }
+        AppDatabase.instance
+                .collectionDao()
+                .queryOne(id.toString())
+                .doOnSubscribe { addDisposable(it) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            view?.onFavoriteChange(true)
+                        },
+                        onError = {
+                            view?.onFavoriteChange(false)
+                        }
+                )
     }
 
     override fun updateFavoriteStory(id: Int) {
-        storyContentBean?.run {
-            CollectionBean(collectionId = id.toString(), title = title, img = image).let {
-                collectionModel.updateFavorite(it) {
-                    view?.run {
-                        hideLoading()
-                        onFavoriteChange(it)
-                        showUpdateFavoriteInfo(it)
+        AppDatabase.instance
+                .collectionDao()
+                .queryOne(id.toString())
+                .doOnSubscribe { addDisposable(it) }
+                .flatMapCompletable {
+                    return@flatMapCompletable Completable.fromAction { AppDatabase.instance.collectionDao().delete(it) }
+                }
+                .onErrorResumeNext {
+                    return@onErrorResumeNext Completable.fromAction {
+                        AppDatabase.instance.collectionDao().save(CollectionBean(id.toString(), title = storyContentBean?.title, img = storyContentBean?.image))
                     }
                 }
-            }
-        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onComplete = {
+                            Log.e("updateFavoriteStory", "success")
+                        },
+                        onError = {
+                            Log.e("updateFavoriteStory", "onError", it)
+                        }
+                )
     }
 
 }

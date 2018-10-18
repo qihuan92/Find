@@ -4,8 +4,6 @@ import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import com.qihuan.commonmodule.base.AbsRxViewModel
-import com.qihuan.commonmodule.collection.bean.CollectionBean
-import com.qihuan.commonmodule.collection.model.CollectionModel
 import com.qihuan.moviemodule.model.DoubanApi
 import com.qihuan.moviemodule.model.bean.PersonBean
 import com.qihuan.moviemodule.model.bean.SubjectBean
@@ -20,7 +18,6 @@ import io.reactivex.schedulers.Schedulers
  */
 class MovieDetViewModel : AbsRxViewModel() {
 
-    private val collectionModel: CollectionModel = CollectionModel()
     private var subjectBean: SubjectBean? = null
 
     enum class UIState {
@@ -86,23 +83,19 @@ class MovieDetViewModel : AbsRxViewModel() {
     }
 
     fun getFavoriteMovie(id: String) {
-        uiState.postValue(UIState.LOADING)
-        collectionModel.getFavoriteList(id, 1) {
-            isFavorite.postValue(it.isNotEmpty())
-            uiState.postValue(UIState.FINISH)
-        }
+//        collectionModel.getFavoriteList(id, 1) {
+//            isFavorite.postValue(it.isNotEmpty())
+//        }
     }
 
     fun updateFavoriteMovie(id: String) {
-        uiState.postValue(UIState.LOADING)
-        subjectBean?.run {
-            CollectionBean(collectionId = id, title = title, img = images.medium, type = 1).let {
-                collectionModel.updateFavorite(it) {
-                    uiState.postValue(UIState.FINISH)
-                    isFavorite.postValue(it)
-                }
-            }
-        }
+//        subjectBean?.run {
+//            CollectionBean(collectionId = id, title = title, img = images.medium, type = 1).let {
+//                collectionModel.updateFavorite(it) {
+//                    isFavorite.postValue(it)
+//                }
+//            }
+//        }
     }
 
 }

@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion rootProject.ext.versions["compileSdkVersion"]
@@ -54,10 +53,12 @@ dependencies {
     api "com.android.support:palette-v7:$rootProject.ext.versions.androidSupportVersion"
     api "com.android.support.constraint:constraint-layout:1.1.3"
     // android architecture
-    api "android.arch.lifecycle:extensions:1.1.1"
+    api rootProject.ext.dependencies.lifecycle
+    api rootProject.ext.dependencies.room
+    kapt rootProject.ext.dependencies.roomCompiler
     // Arouter
-    api rootProject.ext.dependencies.arouterapi
-    kapt rootProject.ext.dependencies.aroutercompiler
+    api rootProject.ext.dependencies.arouterApi
+    kapt rootProject.ext.dependencies.arouterCompiler
     // glide
     api 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
@@ -98,9 +99,7 @@ dependencies {
     // refresh layout
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'
-    // ue tool
-    debugApi 'me.ele:uetool:1.0.15'
-    releaseApi 'me.ele:uetool-no-op:1.0.15'
+
     // tag view
     api 'co.lujun:androidtagview:1.1.4'
     // tag image
@@ -108,4 +107,6 @@ dependencies {
     // status bar
     api 'com.gyf.barlibrary:barlibrary:2.3.0'
 
+    // 数据库调试
+    debugApi 'com.amitshekhar.android:debug-db:1.0.4'
 }

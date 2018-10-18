@@ -9,7 +9,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath "io.objectbox:objectbox-gradle-plugin:1.4.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -42,7 +41,10 @@ ext {
     ]
 
     dependencies = [
-            arouterapi     : 'com.alibaba:arouter-api:1.4.0',
-            aroutercompiler: 'com.alibaba:arouter-compiler:1.2.1',
+            lifecycle: 'android.arch.lifecycle:extensions:1.1.1',
+            room: 'android.arch.persistence.room:rxjava2:1.1.1',
+            roomCompiler: 'android.arch.persistence.room:compiler:1.1.1',
+            arouterApi     : 'com.alibaba:arouter-api:1.4.0',
+            arouterCompiler: 'com.alibaba:arouter-compiler:1.2.1',
     ]
 }

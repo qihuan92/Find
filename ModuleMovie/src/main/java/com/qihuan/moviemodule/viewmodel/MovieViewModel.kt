@@ -1,6 +1,6 @@
 package com.qihuan.moviemodule.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.qihuan.commonmodule.base.AbsRxViewModel
 import com.qihuan.moviemodule.model.DoubanApi
 import com.qihuan.moviemodule.model.bean.MovieHomeBean

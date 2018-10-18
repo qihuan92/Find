@@ -1,6 +1,6 @@
 package com.qihuan.commonmodule.collection
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import io.reactivex.Single
 
 /**

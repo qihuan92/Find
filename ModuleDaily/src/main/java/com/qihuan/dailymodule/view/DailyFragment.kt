@@ -1,7 +1,7 @@
 package com.qihuan.dailymodule.view
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +34,7 @@ import org.greenrobot.eventbus.Subscribe
 class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View {
 
     private var dailyAdapter: MultiTypeAdapter? = null
-    private var linearLayoutManager: LinearLayoutManager? = null
+    private var linearLayoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
     private val itemList: Items = Items()
 
     override fun initPresenter(): DailyContract.Presenter {
@@ -49,7 +49,7 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
         super.onViewCreated(view, savedInstanceState)
 
         // list
-        linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         rv_list.layoutManager = linearLayoutManager
 
         // adapter

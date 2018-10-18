@@ -1,6 +1,6 @@
 package com.qihuan.dailymodule.view.cell
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +41,7 @@ class DailyCell : ItemViewBinder<StoryBean, DailyCell.ViewHolder>() {
 
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val tvNews: TextView? = itemView.findViewById(R.id.tv_news)
         val tvLike: TextView? = itemView.findViewById(R.id.tv_like)
         val tvComment: TextView? = itemView.findViewById(R.id.tv_comment)

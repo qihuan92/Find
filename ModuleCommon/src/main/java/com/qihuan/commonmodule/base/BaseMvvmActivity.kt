@@ -1,6 +1,6 @@
 package com.qihuan.commonmodule.base
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 
 /**
  * BaseMvpActivity

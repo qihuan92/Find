@@ -1,8 +1,8 @@
 package com.qihuan.moviemodule.viewmodel
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.qihuan.commonmodule.base.AbsRxViewModel
 import com.qihuan.moviemodule.model.DoubanApi
 import com.qihuan.moviemodule.model.bean.MoviesBean

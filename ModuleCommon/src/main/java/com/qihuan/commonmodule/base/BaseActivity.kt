@@ -1,8 +1,8 @@
 package com.qihuan.commonmodule.base
 
 import android.os.Bundle
-import android.support.annotation.ColorRes
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.ColorRes
+import androidx.appcompat.app.AppCompatActivity
 import com.gyf.barlibrary.ImmersionBar
 import com.qihuan.commonmodule.R
 import com.qihuan.commonmodule.bus.BindEventBus

@@ -2,21 +2,21 @@ package module
 
 import android.os.Bundle
 import com.qihuan.commonmodule.base.BaseActivity
-import com.qihuan.discovermodule.R
-import com.qihuan.discovermodule.view.DiscoverFragment
+import com.qihuan.dailymodule.R
+import com.qihuan.dailymodule.view.DailyFragment
 
 /**
- * MainActivity
+ * DailyMainActivity
  *
  * @author Qi
  */
-class MainActivity : BaseActivity() {
+class DailyMainActivity : BaseActivity() {
 
-    private val content = DiscoverFragment.newInstance()
+    private val content = DailyFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_discover)
+        setContentView(R.layout.activity_main_daily)
         initView()
     }
 

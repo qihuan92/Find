@@ -2,21 +2,21 @@ package module
 
 import android.os.Bundle
 import com.qihuan.commonmodule.base.BaseActivity
-import com.qihuan.usermodule.R
-import com.qihuan.usermodule.view.MeFragment
+import com.qihuan.discovermodule.R
+import com.qihuan.discovermodule.view.DiscoverFragment
 
 /**
- * MainActivity
+ * DiscoverMainActivity
  *
  * @author Qi
  */
-class MainActivity : BaseActivity() {
+class DiscoverMainActivity : BaseActivity() {
 
-    private val content = MeFragment.newInstance()
+    private val content = DiscoverFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_user)
+        setContentView(R.layout.activity_main_discover)
         initView()
     }
 

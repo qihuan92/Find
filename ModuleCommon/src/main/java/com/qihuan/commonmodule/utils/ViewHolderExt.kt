@@ -1,7 +1,7 @@
 package com.qihuan.commonmodule.utils
 
-import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import android.widget.ImageView
 import co.lujun.androidtagview.TagContainerLayout
 import com.chad.library.adapter.base.BaseViewHolder

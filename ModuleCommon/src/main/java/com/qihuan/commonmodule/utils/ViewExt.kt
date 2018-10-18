@@ -3,11 +3,11 @@ package com.qihuan.commonmodule.utils
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.ColorRes
-import android.support.annotation.LayoutRes
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.annotation.ColorRes
+import androidx.annotation.LayoutRes
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +54,7 @@ fun Activity.parseColorRes(@ColorRes colorRes: Int): Int {
     return ContextCompat.getColor(this, colorRes)
 }
 
-fun Fragment.parseColorRes(@ColorRes colorRes: Int): Int {
+fun androidx.fragment.app.Fragment.parseColorRes(@ColorRes colorRes: Int): Int {
     context?.apply {
         return ContextCompat.getColor(this, colorRes)
     }

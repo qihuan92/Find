@@ -1,6 +1,6 @@
 package com.qihuan.find.view.adapter
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.router.Routes
 
@@ -11,9 +11,9 @@ import com.qihuan.commonmodule.router.Routes
  */
 class FragmentFactory {
     companion object {
-        var fragmentMap: HashMap<Int, Fragment> = HashMap()
+        var fragmentMap: HashMap<Int, androidx.fragment.app.Fragment> = HashMap()
 
-        fun createFragment(position: Int): Fragment {
+        fun createFragment(position: Int): androidx.fragment.app.Fragment {
             var fragment = fragmentMap[position]
             if (fragment == null) {
                 fragment = when (position) {
@@ -22,7 +22,7 @@ class FragmentFactory {
                     2 -> ARouter.getInstance().build(Routes.DISCOVER_FRAGMENT).navigation()
                     3 -> ARouter.getInstance().build(Routes.USER_FRAGMENT).navigation()
                     else -> ARouter.getInstance().build(Routes.DAILY_FRAGMENT).navigation()
-                } as Fragment
+                } as androidx.fragment.app.Fragment
                 fragmentMap[position] = fragment
                 return fragment
             }

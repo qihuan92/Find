@@ -1,6 +1,5 @@
 package com.qihuan.dailymodule.view.cell
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,7 @@ class BannerCell : ItemViewBinder<Array<TopStoryBean>, BannerCell.ViewHolder>() 
         super.onBindViewHolder(holder, item, payloads)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), BGABanner.Adapter<View, TopStoryBean>, BGABanner.Delegate<View, TopStoryBean> {
+    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), BGABanner.Adapter<View, TopStoryBean>, BGABanner.Delegate<View, TopStoryBean> {
 
         val bannerLayout: BGABanner = itemView as BGABanner
 

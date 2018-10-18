@@ -1,7 +1,7 @@
 package com.qihuan.moviemodule.view
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -103,7 +103,7 @@ class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::
             // 影人
             tv_actor_title.setVisible(true)
             rv_actor.linear {
-                orientation(LinearLayoutManager.HORIZONTAL)
+                orientation(androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL)
                 renderItemsByDsl(actList) { person ->
                     xml(R.layout.item_act_card)
                     render {

@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -45,10 +45,11 @@ kapt {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation "junit:junit:$rootProject.ext.versions.testJunitVersion"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.versions.testRunnerVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.versions.testEspressoVersion"
+    testImplementation rootProject.ext.dependencies.testJunit
+    androidTestImplementation rootProject.ext.dependencies.testRunner
+    androidTestImplementation rootProject.ext.dependencies.testEspresso
+
+    implementation project(':ModuleCommon')
     kapt rootProject.ext.dependencies.arouterCompiler
     kapt rootProject.ext.dependencies.roomCompiler
-    implementation project(':ModuleCommon')
 }

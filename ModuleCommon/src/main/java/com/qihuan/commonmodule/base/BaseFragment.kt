@@ -1,6 +1,6 @@
 package com.qihuan.commonmodule.base
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 import com.qihuan.commonmodule.bus.BindEventBus
 
@@ -13,7 +13,7 @@ import org.greenrobot.eventbus.EventBus
  * @date 2017/6/22
  */
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : androidx.fragment.app.Fragment() {
 
     override fun onStart() {
         super.onStart()

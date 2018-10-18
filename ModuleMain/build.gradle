@@ -19,7 +19,7 @@ android {
         targetSdkVersion rootProject.ext.versions["targetSdkVersion"]
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
         multiDexEnabled true
     }
@@ -39,11 +39,10 @@ kapt {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation "junit:junit:$rootProject.ext.versions.testJunitVersion"
-    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.versions.testRunnerVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.versions.testEspressoVersion"
-    kapt rootProject.ext.dependencies.arouterCompiler
-    kapt rootProject.ext.dependencies.roomCompiler
+    testImplementation rootProject.ext.dependencies.testJunit
+    androidTestImplementation rootProject.ext.dependencies.testRunner
+    androidTestImplementation rootProject.ext.dependencies.testEspresso
+
     implementation project(':ModuleCommon')
     if (!isModule.toBoolean()) {
         implementation project(':ModuleDiscover')
@@ -51,6 +50,8 @@ dependencies {
         implementation project(':ModuleUser')
         implementation project(':ModuleDaily')
     }
+    kapt rootProject.ext.dependencies.arouterCompiler
+    kapt rootProject.ext.dependencies.roomCompiler
     implementation 'com.thefinestartist:finestwebview:1.2.7'
 }
 

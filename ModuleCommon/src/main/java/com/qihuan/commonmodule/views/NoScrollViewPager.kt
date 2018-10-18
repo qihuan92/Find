@@ -1,7 +1,7 @@
 package com.qihuan.commonmodule.views
 
 import android.content.Context
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 
@@ -10,7 +10,7 @@ import android.view.MotionEvent
  * @author qi
  * @date 2018/6/5
  */
-class NoScrollViewPager : ViewPager {
+class NoScrollViewPager : androidx.viewpager.widget.ViewPager {
 
     constructor(context: Context) : super(context)
 

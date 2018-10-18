@@ -35,16 +35,21 @@ ext {
             minSdkVersion        : 21,
             targetSdkVersion     : 28,
             androidSupportVersion: '28.0.0',
-            testJunitVersion     : '4.12',
-            testRunnerVersion    : '1.0.2',
-            testEspressoVersion  : '3.0.2',
     ]
 
     dependencies = [
-            lifecycle: 'android.arch.lifecycle:extensions:1.1.1',
-            room: 'android.arch.persistence.room:rxjava2:1.1.1',
-            roomCompiler: 'android.arch.persistence.room:compiler:1.1.1',
-            arouterApi     : 'com.alibaba:arouter-api:1.4.0',
-            arouterCompiler: 'com.alibaba:arouter-compiler:1.2.1',
+            testJunit       : 'junit:junit:4.12',
+            testRunner      : 'androidx.test:runner:1.1.0-beta02',
+            testEspresso    : 'androidx.test.espresso:espresso-core:3.1.0-beta02',
+            appcompat       : 'androidx.appcompat:appcompat:1.0.0',
+            material        : 'com.google.android.material:material:1.0.0',
+            cardview        : 'androidx.cardview:cardview:1.0.0',
+            palette         : 'androidx.palette:palette:1.0.0',
+            constraintlayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2',
+            lifecycle       : 'androidx.lifecycle:lifecycle-extensions:2.0.0',
+            room            : 'androidx.room:room-rxjava2:2.1.0-alpha01',
+            roomCompiler    : 'androidx.room:room-compiler:2.1.0-alpha01',
+            arouterApi      : 'com.alibaba:arouter-api:1.4.0',
+            arouterCompiler : 'com.alibaba:arouter-compiler:1.2.1',
     ]
 }

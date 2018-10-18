@@ -1,22 +1,23 @@
 package module
 
 import android.os.Bundle
+
 import com.qihuan.commonmodule.base.BaseActivity
-import com.qihuan.dailymodule.R
-import com.qihuan.dailymodule.view.DailyFragment
+import com.qihuan.moviemodule.R
+import com.qihuan.moviemodule.view.MovieFragment
 
 /**
- * MainActivity
+ * MovieMainActivity
  *
  * @author Qi
  */
-class MainActivity : BaseActivity() {
+class MovieMainActivity : BaseActivity() {
 
-    private val content = DailyFragment()
+    private val content = MovieFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_daily)
+        setContentView(R.layout.activity_main_movie)
         initView()
     }
 

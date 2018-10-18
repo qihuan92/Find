@@ -1,10 +1,10 @@
 package com.qihuan.moviemodule.view
 
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +66,7 @@ class MovieFragment : BaseMvvmFragment<MovieViewModel>(MovieViewModel::class.jav
                     xml(R.layout.layout_list)
                     render {
                         it.rv_list.linear {
-                            orientation(LinearLayoutManager.HORIZONTAL)
+                            orientation(androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL)
                             renderItemsByDsl(subjectList) { subject ->
                                 xml(R.layout.item_movie_card)
                                 render {

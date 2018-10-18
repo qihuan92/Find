@@ -1,6 +1,6 @@
 package com.qihuan.dailymodule.view.cell
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +23,7 @@ class DailySectionCell : ItemViewBinder<String, DailySectionCell.ViewHolder>() {
         holder.tvNewsDate?.text = item
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val tvNewsDate: TextView? = itemView.findViewById(R.id.tv_news_date)
     }
 }

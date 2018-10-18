@@ -26,7 +26,7 @@
         android:lines="1"
         android:textColor="@color/md_grey_800"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/iv_ranking_movie"
+        app:layout_constraintStart_toEndOf="@id/iv_ranking_movie"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="天空之城" />
 
@@ -41,8 +41,8 @@
         android:textSize="12sp"
         android:textStyle="italic"
         android:typeface="monospace"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_ranking_movie"
-        app:layout_constraintStart_toEndOf="@+id/tv_ranking_movie"
+        app:layout_constraintBottom_toBottomOf="@id/tv_ranking_movie"
+        app:layout_constraintStart_toEndOf="@id/tv_ranking_movie"
         tools:text="[1999]" />
 
     <RatingBar
@@ -53,8 +53,8 @@
         android:layout_marginStart="5dp"
         android:isIndicator="true"
         android:numStars="5"
-        app:layout_constraintStart_toEndOf="@+id/iv_ranking_movie"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ranking_year" />
+        app:layout_constraintStart_toEndOf="@id/iv_ranking_movie"
+        app:layout_constraintTop_toBottomOf="@id/tv_ranking_year" />
 
     <TextView
         android:id="@+id/tv_ranking_score"
@@ -63,9 +63,9 @@
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/rb_ranking_score"
-        app:layout_constraintStart_toEndOf="@+id/rb_ranking_score"
-        app:layout_constraintTop_toTopOf="@+id/rb_ranking_score"
+        app:layout_constraintBottom_toBottomOf="@id/rb_ranking_score"
+        app:layout_constraintStart_toEndOf="@id/rb_ranking_score"
+        app:layout_constraintTop_toTopOf="@id/rb_ranking_score"
         tools:text="10.0" />
 
     <co.lujun.androidtagview.TagContainerLayout
@@ -78,8 +78,8 @@
         app:container_border_color="@android:color/transparent"
         app:container_enable_drag="false"
         app:horizontal_interval="3dp"
-        app:layout_constraintStart_toEndOf="@+id/iv_ranking_movie"
-        app:layout_constraintTop_toBottomOf="@+id/rb_ranking_score"
+        app:layout_constraintStart_toEndOf="@id/iv_ranking_movie"
+        app:layout_constraintTop_toBottomOf="@id/rb_ranking_score"
         app:tag_background_color="@android:color/transparent"
         app:tag_border_color="@color/grey"
         app:tag_clickable="false"

@@ -26,6 +26,7 @@ class MovieViewModel : AbsRxViewModel() {
     val movieInTheaters by lazy { MutableLiveData<MoviesBean>() }
     val movieTop by lazy { MutableLiveData<MoviesBean>() }
     val movieUs by lazy { MutableLiveData<USboxBean>() }
+    val movieData by lazy { MutableLiveData<MovieHomeBean>() }
     val uiState by lazy { MutableLiveData<UIState>() }
 
     fun getInTheaters() {
@@ -95,6 +96,7 @@ class MovieViewModel : AbsRxViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onNext = {
+                            movieData.postValue(it)
                             movieInTheaters.postValue(it.inTheaters)
                             movieTop.postValue(it.topMovie)
                             movieUs.postValue(it.usBox)

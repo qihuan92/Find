@@ -7,5 +7,5 @@ class MoviesBean : Serializable {
     var start: Int = 0
     var total: Int = 0
     var title: String = ""
-    var subjects: List<SubjectBean> = ArrayList()
+    var subjects: Array<SubjectBean> = emptyArray()
 }

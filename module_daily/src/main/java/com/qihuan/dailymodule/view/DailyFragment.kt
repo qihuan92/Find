@@ -1,14 +1,14 @@
 package com.qihuan.dailymodule.view
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.qihuan.commonmodule.base.BaseMvpFragment
-import com.qihuan.commonmodule.bus.BindEventBus
-import com.qihuan.commonmodule.bus.event.RefreshEvent
+import com.qihuan.commonmodule.bus.EVENT_REFRESH_DAILY
+import com.qihuan.commonmodule.bus.LiveDataBus
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.dailymodule.R
 import com.qihuan.dailymodule.contract.DailyContract
@@ -22,14 +22,12 @@ import kotlinx.android.synthetic.main.fragment_news.*
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
-import org.greenrobot.eventbus.Subscribe
 
 /**
  * DailyFragment
  *
  * @author Qi
  */
-@BindEventBus
 @Route(path = Routes.DAILY_FRAGMENT)
 class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View {
 
@@ -65,6 +63,24 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
             setOnLoadMoreListener { mPresenter.getBeforeDaily() }
             autoRefresh()
         }
+
+        LiveDataBus.get()
+                .with(EVENT_REFRESH_DAILY)
+                .observe(this, Observer {
+                    linearLayoutManager?.run {
+                        val visibleItemPosition = findFirstCompletelyVisibleItemPosition()
+                        if (visibleItemPosition == 0) {
+                            // 刷新
+                            refresh_layout.autoRefresh()
+                            return@run
+                        }
+                        // 超过 20 条, 先滚动到20条, 再平滑滚动
+                        if (visibleItemPosition > 20) {
+                            rv_list.scrollToPosition(20)
+                        }
+                        rv_list.smoothScrollToPosition(0)
+                    }
+                })
     }
 
     override fun onBannerData(itemList: Array<TopStoryBean>) {
@@ -96,23 +112,6 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
 
     override fun onLoadMoreEnd(success: Boolean) {
         refresh_layout.finishLoadMore(success)
-    }
-
-    @Subscribe
-    fun onRefreshEvent(@Suppress("UNUSED_PARAMETER") refreshEvent: RefreshEvent) {
-        linearLayoutManager?.run {
-            val visibleItemPosition = findFirstCompletelyVisibleItemPosition()
-            if (visibleItemPosition == 0) {
-                // 刷新
-                refresh_layout.autoRefresh()
-                return
-            }
-            // 超过 20 条, 先滚动到20条, 再平滑滚动
-            if (visibleItemPosition > 20) {
-                rv_list.scrollToPosition(20)
-            }
-            rv_list.smoothScrollToPosition(0)
-        }
     }
 
     override fun showLoading() {

@@ -1,26 +1,25 @@
 package com.qihuan.find.view
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.qihuan.commonmodule.base.BaseActivity
-import com.qihuan.commonmodule.bus.BindEventBus
-import com.qihuan.commonmodule.bus.event.BrowserEvent
-import com.qihuan.commonmodule.bus.event.RefreshEvent
+import com.qihuan.commonmodule.bus.BrowserEvent
+import com.qihuan.commonmodule.bus.EVENT_OPEN_BROWSER
+import com.qihuan.commonmodule.bus.EVENT_REFRESH_DAILY
+import com.qihuan.commonmodule.bus.LiveDataBus
 import com.qihuan.commonmodule.utils.setItemReselectedListener
 import com.qihuan.commonmodule.utils.toastInfo
 import com.qihuan.find.R
 import com.qihuan.find.view.adapter.MainPageAdapter
 import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 
 /**
  * MainActivity
  *
  * @author Qi
  */
-@BindEventBus
 class MainActivity : BaseActivity() {
 
     private var lastClickTime: Long = 0
@@ -41,21 +40,22 @@ class MainActivity : BaseActivity() {
 
         // 首页刷新
         tb_main.setItemReselectedListener(0) {
-            EventBus.getDefault().post(RefreshEvent())
+            LiveDataBus.get()
+                    .with(EVENT_REFRESH_DAILY)
+                    .postValue(null)
         }
-    }
 
-    @Subscribe
-    fun onBrowserEvent(browserEvent: BrowserEvent?) {
-        browserEvent?.run {
-            val webBuilder = FinestWebView.Builder(applicationContext)
-            if (title.isNotBlank()) {
-                webBuilder.titleDefault(title)
-            }
-            if (url.isNotBlank()) {
-                webBuilder.show(url)
-            }
-        }
+        LiveDataBus.get()
+                .with(EVENT_OPEN_BROWSER, BrowserEvent::class.java)
+                .observe(this, Observer {
+                    val webBuilder = FinestWebView.Builder(applicationContext)
+                    if (title.isNotBlank()) {
+                        webBuilder.titleDefault(it.title)
+                    }
+                    if (it.url.isNotBlank()) {
+                        webBuilder.show(it.url)
+                    }
+                })
     }
 
     override fun onBackPressed() {

@@ -1,20 +1,19 @@
 package com.qihuan.moviemodule.view
 
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.base.BaseMvvmActivity
 import com.qihuan.commonmodule.router.Routes
-import com.qihuan.commonmodule.utils.load
 import com.qihuan.commonmodule.utils.toastError
 import com.qihuan.commonmodule.views.TitleBar
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.model.bean.MovieListType
+import com.qihuan.moviemodule.view.adapter.MovieListAdapter
 import com.qihuan.moviemodule.viewmodel.MovieListViewModel
 import kotlinx.android.synthetic.main.activity_movie_list.*
-import kotlinx.android.synthetic.main.item_movie.view.*
-import zlc.season.yaksa.linear
 
 /**
  * MovieDetActivity
@@ -23,6 +22,8 @@ import zlc.season.yaksa.linear
  */
 @Route(path = Routes.MOVIE_LIST_ACTIVITY)
 class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewModel::class.java) {
+
+    private var adapter: MovieListAdapter? = null
 
     @JvmField
     @Autowired(name = Routes.MOVIE_LIST_ACTIVITY_EXTRA_TYPE)
@@ -62,26 +63,14 @@ class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewMode
                 MovieListViewModel.UIState.LOAD_FINISH -> refresh_layout.finishLoadMore(true)
             }
         }
-        mViewModel.bindMovieData(this) { subjectList->
-            rv_list.linear {
-                renderItemsByDsl(subjectList) { subject ->
-                    xml(R.layout.item_movie)
-                    render {
-                        subject.apply {
-                            it.iv_item_movie.load(images.small, 4f)
-                            it.tv_item_movie.text = title
-                            it.tv_item_year.text = "[$year]"
-                            it.tv_item_score.text = rating.average.toString()
-                            it.rb_item_score.rating = (rating.average / 2f).toFloat()
-                            it.tag_item_genres.tags = genres
-                            it.tv_item_original_title.text = original_title
-                            it.setOnClickListener {
-                                start(id)
-                            }
-                        }
-                    }
-                }
-            }
+
+        rv_list.layoutManager = LinearLayoutManager(this)
+        adapter = MovieListAdapter()
+        rv_list.adapter = adapter
+
+        mViewModel.bindMovieData(this) { subjectList ->
+            adapter?.setMovieList(subjectList)
+            adapter?.notifyDataSetChanged()
         }
     }
 
@@ -90,12 +79,5 @@ class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewMode
             MovieListType.IN_THEATERS -> mViewModel.getInTheaters()
             MovieListType.TOP_MOVIE -> mViewModel.getTopMovie()
         }
-    }
-
-    private fun start(id: String) {
-        ARouter.getInstance()
-                .build(Routes.MOVIE_DET_ACTIVITY)
-                .withString(Routes.MOVIE_DET_ACTIVITY_EXTRA_ID, id)
-                .navigation()
     }
 }

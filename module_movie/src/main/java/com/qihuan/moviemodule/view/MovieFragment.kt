@@ -49,20 +49,8 @@ class MovieFragment : BaseMvvmFragment<MovieViewModel>(MovieViewModel::class.jav
         super.onViewCreated(view, savedInstanceState)
         initView()
         mViewModel.getMovieData()
-    }
-
-    private fun initView() {
-        // list
-        rv_list.layoutManager = LinearLayoutManager(context)
-
-        // adapter
-        adapter = MultiTypeAdapter(itemList)
-        adapter?.register(Array<SubjectBean>::class, MovieBannerCell())
-        adapter?.register(SubjectBean::class, MovieCell())
-        adapter?.register(SectionVO::class, SectionCell())
-        rv_list.adapter = adapter
-
         mViewModel.movieData.observeX { data ->
+            itemList.clear()
             data.inTheaters.let { movie ->
                 itemList.add(SectionVO(movie.title, true, MovieListType.IN_THEATERS))
                 itemList.add(movie.subjects)
@@ -82,5 +70,35 @@ class MovieFragment : BaseMvvmFragment<MovieViewModel>(MovieViewModel::class.jav
 
             adapter?.notifyDataSetChanged()
         }
+        mViewModel.uiState.observeX {
+            when (it) {
+                MovieViewModel.UIState.FINISH -> {
+                    refresh_layout.isRefreshing = false
+                }
+                MovieViewModel.UIState.LOADING -> {
+                    refresh_layout.isRefreshing = true
+                }
+                MovieViewModel.UIState.ERROR -> {
+                    refresh_layout.isRefreshing = false
+                }
+                null -> {
+                }
+            }
+        }
+        refresh_layout.setOnRefreshListener {
+            mViewModel.getMovieData()
+        }
+    }
+
+    private fun initView() {
+        // list
+        rv_list.layoutManager = LinearLayoutManager(context)
+
+        // adapter
+        adapter = MultiTypeAdapter(itemList)
+        adapter?.register(Array<SubjectBean>::class, MovieBannerCell())
+        adapter?.register(SubjectBean::class, MovieCell())
+        adapter?.register(SectionVO::class, SectionCell())
+        rv_list.adapter = adapter
     }
 }

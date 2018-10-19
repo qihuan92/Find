@@ -29,7 +29,7 @@ class MovieCell : ItemViewBinder<SubjectBean, MovieCell.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, item: SubjectBean) {
         item.run {
-            holder.tvRanking?.text = String.format("%02d", holder.adapterPosition + 1)
+            // holder.tvRanking?.text = String.format("%02d", holder.adapterPosition + 1)
             holder.ivMovie?.load(images.small, 4f)
             holder.tvMovie?.text = title
             holder.tvYear?.text = "[$year]"

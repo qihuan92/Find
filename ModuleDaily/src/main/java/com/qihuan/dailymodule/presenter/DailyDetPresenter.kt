@@ -73,18 +73,19 @@ class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContr
                     return@flatMap AppDatabase.instance
                             .collectionDao()
                             .delete(bean)
-                            .map { true }
+                            .map { false }
                 }
                 .onErrorResumeNext { _ ->
                     return@onErrorResumeNext AppDatabase.instance
                             .collectionDao()
                             .save(CollectionBean(id.toString(), title = storyContentBean?.title, img = storyContentBean?.image))
-                            .map { false }
+                            .map { true }
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
+                            view?.onFavoriteChange(it)
                             view?.showUpdateFavoriteInfo(it)
                         },
                         onError = {

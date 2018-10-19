@@ -69,8 +69,7 @@ class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewMode
         rv_list.adapter = adapter
 
         mViewModel.bindMovieData(this) { subjectList ->
-            adapter?.setMovieList(subjectList)
-            adapter?.notifyDataSetChanged()
+            adapter?.itemList = subjectList.toList()
         }
     }
 

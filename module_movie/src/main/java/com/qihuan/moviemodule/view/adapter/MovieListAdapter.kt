@@ -9,11 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import co.lujun.androidtagview.TagContainerLayout
 import com.alibaba.android.arouter.launcher.ARouter
+import com.qihuan.commonmodule.base.AutoUpdatableAdapter
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.model.bean.SubjectBean
-import org.jetbrains.annotations.NotNull
+import kotlin.properties.Delegates
 
 
 /**
@@ -21,9 +22,13 @@ import org.jetbrains.annotations.NotNull
  * @author qi
  * @date 2018/10/18
  */
-class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.ViewHolder>(), AutoUpdatableAdapter {
 
-    var itemList: List<SubjectBean> = ArrayList()
+    var itemList: List<SubjectBean> by Delegates.observable(emptyList()) { property, oldValue, newValue ->
+        autoNotify(oldValue, newValue) { old, new ->
+            old.id == new.id
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
@@ -52,10 +57,6 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
                         .navigation()
             }
         }
-    }
-
-    fun setMovieList(@NotNull itemList: List<SubjectBean>) {
-        this.itemList = itemList
     }
 
     class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {

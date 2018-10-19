@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.qihuan.commonmodule.base.AbsRxViewModel
+import com.qihuan.commonmodule.collection.COLLECTION_TYPE_MOVIE
 import com.qihuan.commonmodule.collection.CollectionBean
 import com.qihuan.commonmodule.db.AppDatabase
 import com.qihuan.moviemodule.model.DoubanApi
@@ -87,7 +88,7 @@ class MovieDetViewModel : AbsRxViewModel() {
     fun getFavoriteMovie(id: String) {
         AppDatabase.instance
                 .collectionDao()
-                .queryOne(id, type = 1)
+                .queryOne(id, type = COLLECTION_TYPE_MOVIE)
                 .doOnSubscribe { addDisposable(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,7 +105,7 @@ class MovieDetViewModel : AbsRxViewModel() {
     fun updateFavoriteMovie(id: String) {
         AppDatabase.instance
                 .collectionDao()
-                .queryOne(id, type = 1)
+                .queryOne(id, type = COLLECTION_TYPE_MOVIE)
                 .doOnSubscribe { addDisposable(it) }
                 .flatMap { bean ->
                     return@flatMap AppDatabase.instance

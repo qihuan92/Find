@@ -41,7 +41,7 @@ class ActorAdapter : RecyclerView.Adapter<ActorAdapter.ViewHolder>(), AutoUpdata
         holder.ivActor?.tagEnable = item.isDirector
         holder.tvActor?.text = item.name
         holder.itemView.setOnClickListener {
-            TODO("跳转到演员详情页面")
+
         }
     }
 

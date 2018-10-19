@@ -1,6 +1,7 @@
 package com.qihuan.dailymodule.presenter
 
 import com.qihuan.commonmodule.base.AbsRxPresenter
+import com.qihuan.commonmodule.collection.COLLECTION_TYPE_DAILY
 import com.qihuan.commonmodule.collection.CollectionBean
 import com.qihuan.commonmodule.db.AppDatabase
 import com.qihuan.dailymodule.contract.DailyDetContract
@@ -50,7 +51,7 @@ class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContr
     override fun getFavoriteStory(id: Int) {
         AppDatabase.instance
                 .collectionDao()
-                .queryOne(id.toString())
+                .queryOne(id.toString(), COLLECTION_TYPE_DAILY)
                 .doOnSubscribe { addDisposable(it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,7 +68,7 @@ class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContr
     override fun updateFavoriteStory(id: Int) {
         AppDatabase.instance
                 .collectionDao()
-                .queryOne(id.toString())
+                .queryOne(id.toString(), COLLECTION_TYPE_DAILY)
                 .doOnSubscribe { addDisposable(it) }
                 .flatMap { bean ->
                     return@flatMap AppDatabase.instance

@@ -39,7 +39,7 @@ class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::
         mViewModel.getSubject(id)
         mViewModel.getFavoriteMovie(id)
 
-        rv_actor.layoutManager = LinearLayoutManager(this)
+        rv_actor.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         adapter = ActorAdapter()
         rv_actor.adapter = adapter
     }

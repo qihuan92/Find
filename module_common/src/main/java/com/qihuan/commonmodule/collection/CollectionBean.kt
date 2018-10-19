@@ -12,6 +12,8 @@ import androidx.room.PrimaryKey
 data class CollectionBean constructor(
         @PrimaryKey
         var id: String = "",
+        @CollectionType
         var type: Int = 0,
         var title: String? = null,
-        var img: String? = null)
+        var img: String? = null
+)

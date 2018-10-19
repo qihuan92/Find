@@ -18,7 +18,7 @@ interface CollectionDao {
     fun delete(collectionBean: CollectionBean): Single<Int>
 
     @Query("select * from collection where id = :id and type = :type")
-    fun queryOne(id: String, type: Int = 0): Single<CollectionBean>
+    fun queryOne(id: String, @CollectionType type: Int): Single<CollectionBean>
 
     @Query("select * from collection")
     fun queryAll(): Single<List<CollectionBean>>

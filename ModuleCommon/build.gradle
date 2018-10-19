@@ -19,6 +19,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 kapt {
@@ -32,33 +36,26 @@ dependencies {
     testImplementation rootProject.ext.dependencies.testJunit
     androidTestImplementation rootProject.ext.dependencies.testRunner
     androidTestImplementation rootProject.ext.dependencies.testEspresso
-
     // kotlin
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     // android support
     api rootProject.ext.dependencies.appcompat
     api rootProject.ext.dependencies.material
     api rootProject.ext.dependencies.cardview
     api rootProject.ext.dependencies.palette
     api rootProject.ext.dependencies.constraintlayout
-
     // android architecture
     api rootProject.ext.dependencies.lifecycle
     api rootProject.ext.dependencies.room
     kapt rootProject.ext.dependencies.roomCompiler
-
     // Arouter
     api rootProject.ext.dependencies.arouterApi
     kapt rootProject.ext.dependencies.arouterCompiler
-
     // glide
     api 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
-
     // gson
     api 'com.google.code.gson:gson:2.8.2'
-
     // retrofit
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -66,45 +63,34 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
     api 'me.jessyan:retrofit-url-manager:1.2.5'
-
     // rx
     api 'io.reactivex.rxjava2:rxandroid:2.0.2'
     api 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-
     // rxpermissions
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
-
     // list
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
     api 'zlc.season:yaksa:0.3.1'
     api 'me.drakeet.multitype:multitype:3.5.0'
     api 'me.drakeet.multitype:multitype-ktx:3.5.0'
-
     // Toasty
     api 'com.github.GrenderG:Toasty:1.2.5'
-
     // banner
     api 'cn.bingoogolapple:bga-banner:2.2.4@aar'
-
     // leakcanary
     debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-
     // bus
     api 'org.greenrobot:eventbus:3.1.1'
-
     // refresh layout
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'
-
     // tag view
     api 'co.lujun:androidtagview:1.1.4'
     // tag image
     api 'net.wujingchao.android.view:simple-tag-imageview:1.0.1'
-
     // status bar
     api 'com.gyf.barlibrary:barlibrary:2.3.0'
-
     // 数据库调试
     debugApi 'com.amitshekhar.android:debug-db:1.0.4'
 }

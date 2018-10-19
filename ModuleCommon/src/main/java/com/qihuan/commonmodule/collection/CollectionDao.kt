@@ -12,10 +12,10 @@ import io.reactivex.Single
 interface CollectionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(collectionBean: CollectionBean)
+    fun save(collectionBean: CollectionBean): Single<Long>
 
     @Delete
-    fun delete(collectionBean: CollectionBean)
+    fun delete(collectionBean: CollectionBean): Single<Int>
 
     @Query("select * from collection where id = :id and type = :type")
     fun queryOne(id: String, type: Int = 0): Single<CollectionBean>

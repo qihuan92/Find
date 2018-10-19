@@ -35,6 +35,10 @@ android {
             }
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 kapt {
@@ -48,7 +52,6 @@ dependencies {
     testImplementation rootProject.ext.dependencies.testJunit
     androidTestImplementation rootProject.ext.dependencies.testRunner
     androidTestImplementation rootProject.ext.dependencies.testEspresso
-
     implementation project(':ModuleCommon')
     kapt rootProject.ext.dependencies.arouterCompiler
     kapt rootProject.ext.dependencies.roomCompiler

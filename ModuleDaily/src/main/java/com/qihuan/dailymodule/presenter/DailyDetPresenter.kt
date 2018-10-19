@@ -1,13 +1,11 @@
 package com.qihuan.dailymodule.presenter
 
-import android.util.Log
 import com.qihuan.commonmodule.base.AbsRxPresenter
 import com.qihuan.commonmodule.collection.CollectionBean
 import com.qihuan.commonmodule.db.AppDatabase
 import com.qihuan.dailymodule.contract.DailyDetContract
 import com.qihuan.dailymodule.model.ZhihuApi
 import com.qihuan.dailymodule.model.bean.StoryContentBean
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -71,22 +69,26 @@ class DailyDetPresenter : AbsRxPresenter<DailyDetContract.View>(), DailyDetContr
                 .collectionDao()
                 .queryOne(id.toString())
                 .doOnSubscribe { addDisposable(it) }
-                .flatMapCompletable {
-                    return@flatMapCompletable Completable.fromAction { AppDatabase.instance.collectionDao().delete(it) }
+                .flatMap { bean ->
+                    return@flatMap AppDatabase.instance
+                            .collectionDao()
+                            .delete(bean)
+                            .map { true }
                 }
-                .onErrorResumeNext {
-                    return@onErrorResumeNext Completable.fromAction {
-                        AppDatabase.instance.collectionDao().save(CollectionBean(id.toString(), title = storyContentBean?.title, img = storyContentBean?.image))
-                    }
+                .onErrorResumeNext { _ ->
+                    return@onErrorResumeNext AppDatabase.instance
+                            .collectionDao()
+                            .save(CollectionBean(id.toString(), title = storyContentBean?.title, img = storyContentBean?.image))
+                            .map { false }
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                        onComplete = {
-                            Log.e("updateFavoriteStory", "success")
+                        onSuccess = {
+                            view?.showUpdateFavoriteInfo(it)
                         },
                         onError = {
-                            Log.e("updateFavoriteStory", "onError", it)
+
                         }
                 )
     }

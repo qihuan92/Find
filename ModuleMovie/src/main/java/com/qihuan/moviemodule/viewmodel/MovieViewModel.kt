@@ -23,62 +23,8 @@ class MovieViewModel : AbsRxViewModel() {
         LOADING, ERROR, FINISH
     }
 
-    val movieInTheaters by lazy { MutableLiveData<MoviesBean>() }
-    val movieTop by lazy { MutableLiveData<MoviesBean>() }
-    val movieUs by lazy { MutableLiveData<USboxBean>() }
     val movieData by lazy { MutableLiveData<MovieHomeBean>() }
     val uiState by lazy { MutableLiveData<UIState>() }
-
-    fun getInTheaters() {
-        DoubanApi.get().getInTheaters()
-                .doOnSubscribe {
-                    addDisposable(it)
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onNext = {
-                            movieInTheaters.postValue(it)
-                        },
-                        onError = {
-
-                        }
-                )
-    }
-
-    fun getTopMovie() {
-        DoubanApi.get().getTopMovie(count = 5)
-                .doOnSubscribe {
-                    addDisposable(it)
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onNext = {
-                            movieTop.postValue(it)
-                        },
-                        onError = {
-
-                        }
-                )
-    }
-
-    fun getUsBox() {
-        DoubanApi.get().getUsBox()
-                .doOnSubscribe {
-                    addDisposable(it)
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onNext = {
-                            movieUs.postValue(it)
-                        },
-                        onError = {
-
-                        }
-                )
-    }
 
     fun getMovieData() {
         Observable.zip(
@@ -97,9 +43,6 @@ class MovieViewModel : AbsRxViewModel() {
                 .subscribeBy(
                         onNext = {
                             movieData.postValue(it)
-                            movieInTheaters.postValue(it.inTheaters)
-                            movieTop.postValue(it.topMovie)
-                            movieUs.postValue(it.usBox)
                             uiState.postValue(UIState.FINISH)
                         },
                         onError = {

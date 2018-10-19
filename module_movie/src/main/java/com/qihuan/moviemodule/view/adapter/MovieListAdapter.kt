@@ -18,7 +18,7 @@ import kotlin.properties.Delegates
 
 
 /**
- * MovieCardAdapter
+ * MovieListAdapter
  * @author qi
  * @date 2018/10/18
  */

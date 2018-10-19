@@ -69,8 +69,6 @@ dependencies {
     // rxpermissions
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     // list
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
-    api 'zlc.season:yaksa:0.3.1'
     api 'me.drakeet.multitype:multitype:3.5.0'
     api 'me.drakeet.multitype:multitype-ktx:3.5.0'
     // Toasty

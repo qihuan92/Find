@@ -1,8 +1,8 @@
 package com.qihuan.moviemodule.view
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -10,11 +10,10 @@ import com.qihuan.commonmodule.base.BaseMvvmActivity
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.*
 import com.qihuan.moviemodule.R
+import com.qihuan.moviemodule.view.adapter.ActorAdapter
 import com.qihuan.moviemodule.viewmodel.MovieDetViewModel
 import kotlinx.android.synthetic.main.activity_movie_det.*
 import kotlinx.android.synthetic.main.include_movie_title.*
-import kotlinx.android.synthetic.main.item_act_card.view.*
-import zlc.season.yaksa.linear
 
 /**
  * MovieDetActivity
@@ -28,6 +27,8 @@ class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::
     @Autowired
     var id: String = ""
 
+    private var adapter: ActorAdapter? = null
+
     private var isSummaryExpend = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,10 @@ class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::
         initView()
         mViewModel.getSubject(id)
         mViewModel.getFavoriteMovie(id)
+
+        rv_actor.layoutManager = LinearLayoutManager(this)
+        adapter = ActorAdapter()
+        rv_actor.adapter = adapter
     }
 
     private fun initView() {
@@ -102,20 +107,7 @@ class MovieDetActivity : BaseMvvmActivity<MovieDetViewModel>(MovieDetViewModel::
         mViewModel.bindActData(this) { actList ->
             // 影人
             tv_actor_title.setVisible(true)
-            rv_actor.linear {
-                orientation(androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL)
-                renderItemsByDsl(actList) { person ->
-                    xml(R.layout.item_act_card)
-                    render {
-                        it.iv_act.load(person.avatars.medium)
-                        it.iv_act.tagEnable = person.isDirector
-                        it.tv_name.text = person.name
-                        it.setOnClickListener {
-                            toastInfo(person.name)
-                        }
-                    }
-                }
-            }
+            adapter?.itemList = actList.toList()
         }
 
         mViewModel.bindFavoriteData(this) { isFavorite ->

@@ -4,6 +4,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.qihuan.commonmodule.base.AbsRxViewModel
+import com.qihuan.commonmodule.collection.CollectionBean
+import com.qihuan.commonmodule.db.AppDatabase
 import com.qihuan.moviemodule.model.DoubanApi
 import com.qihuan.moviemodule.model.bean.PersonBean
 import com.qihuan.moviemodule.model.bean.SubjectBean
@@ -83,19 +85,49 @@ class MovieDetViewModel : AbsRxViewModel() {
     }
 
     fun getFavoriteMovie(id: String) {
-//        collectionModel.getFavoriteList(id, 1) {
-//            isFavorite.postValue(it.isNotEmpty())
-//        }
+        AppDatabase.instance
+                .collectionDao()
+                .queryOne(id, type = 1)
+                .doOnSubscribe { addDisposable(it) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            isFavorite.postValue(true)
+                        },
+                        onError = {
+                            isFavorite.postValue(false)
+                        }
+                )
     }
 
     fun updateFavoriteMovie(id: String) {
-//        subjectBean?.run {
-//            CollectionBean(collectionId = id, title = title, img = images.medium, type = 1).let {
-//                collectionModel.updateFavorite(it) {
-//                    isFavorite.postValue(it)
-//                }
-//            }
-//        }
+        AppDatabase.instance
+                .collectionDao()
+                .queryOne(id, type = 1)
+                .doOnSubscribe { addDisposable(it) }
+                .flatMap { bean ->
+                    return@flatMap AppDatabase.instance
+                            .collectionDao()
+                            .delete(bean)
+                            .map { false }
+                }
+                .onErrorResumeNext { _ ->
+                    return@onErrorResumeNext AppDatabase.instance
+                            .collectionDao()
+                            .save(CollectionBean(id = id, title = subjectBean?.title, img = subjectBean?.images?.medium, type = 1))
+                            .map { true }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                        onSuccess = {
+                            isFavorite.postValue(it)
+                        },
+                        onError = {
+
+                        }
+                )
     }
 
 }

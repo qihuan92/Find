@@ -46,12 +46,12 @@ dependencies {
     testImplementation rootProject.ext.dependencies.testJunit
     androidTestImplementation rootProject.ext.dependencies.testRunner
     androidTestImplementation rootProject.ext.dependencies.testEspresso
-    implementation project(':ModuleCommon')
+    implementation project(':module_common')
     if (!isModule.toBoolean()) {
-        implementation project(':ModuleDiscover')
-        implementation project(':ModuleMovie')
-        implementation project(':ModuleUser')
-        implementation project(':ModuleDaily')
+        implementation project(':module_discover')
+        implementation project(':module_movie')
+        implementation project(':module_user')
+        implementation project(':module_daily')
     }
     kapt rootProject.ext.dependencies.arouterCompiler
     kapt rootProject.ext.dependencies.roomCompiler

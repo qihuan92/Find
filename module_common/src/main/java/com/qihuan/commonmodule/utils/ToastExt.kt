@@ -1,8 +1,8 @@
 package com.qihuan.commonmodule.utils
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import es.dmoral.toasty.Toasty
 
 /**
@@ -26,25 +26,25 @@ fun Context.toastWarning(content: String) {
     Toasty.warning(this, content, Toast.LENGTH_SHORT).show()
 }
 
-fun androidx.fragment.app.Fragment.toastInfo(content: String) {
+fun Fragment.toastInfo(content: String) {
     context?.let {
         Toasty.info(it, content, Toast.LENGTH_SHORT).show()
     }
 }
 
-fun androidx.fragment.app.Fragment.toastError(content: String = "未知错误") {
+fun Fragment.toastError(content: String = "未知错误") {
     context?.let {
         Toasty.error(it, content, Toast.LENGTH_SHORT).show()
     }
 }
 
-fun androidx.fragment.app.Fragment.toastSuccess(content: String) {
+fun Fragment.toastSuccess(content: String) {
     context?.let {
         Toasty.success(it, content, Toast.LENGTH_SHORT).show()
     }
 }
 
-fun androidx.fragment.app.Fragment.toastWarning(content: String) {
+fun Fragment.toastWarning(content: String) {
     context?.let {
         Toasty.warning(it, content, Toast.LENGTH_SHORT).show()
     }

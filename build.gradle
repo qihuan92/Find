@@ -49,6 +49,7 @@ ext {
             lifecycle       : 'androidx.lifecycle:lifecycle-extensions:2.0.0',
             room            : 'androidx.room:room-rxjava2:2.1.0-alpha01',
             roomCompiler    : 'androidx.room:room-compiler:2.1.0-alpha01',
+            workManager    : 'android.arch.work:work-runtime:1.0.0-alpha10',
             arouterApi      : 'com.alibaba:arouter-api:1.4.0',
             arouterCompiler : 'com.alibaba:arouter-compiler:1.2.1',
     ]

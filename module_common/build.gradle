@@ -48,6 +48,7 @@ dependencies {
     api rootProject.ext.dependencies.lifecycle
     api rootProject.ext.dependencies.room
     kapt rootProject.ext.dependencies.roomCompiler
+    api rootProject.ext.dependencies.workManager
     // Arouter
     api rootProject.ext.dependencies.arouterApi
     kapt rootProject.ext.dependencies.arouterCompiler

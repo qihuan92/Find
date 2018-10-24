@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import cn.bingoogolapple.bgabanner.BGABanner
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.qihuan.banner.BannerLayout
 import com.qihuan.commonmodule.router.Routes
+import com.qihuan.commonmodule.utils.dp2px
 import com.qihuan.commonmodule.utils.load
 import com.qihuan.dailymodule.R
 import com.qihuan.dailymodule.model.bean.TopStoryBean
@@ -21,44 +23,38 @@ import me.drakeet.multitype.ItemViewBinder
 class BannerCell : ItemViewBinder<Array<TopStoryBean>, BannerCell.ViewHolder>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
-        val root = inflater.inflate(R.layout.layout_banner, parent, false)
+        val root = BannerLayout<TopStoryBean>(parent.context)
+        root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, parent.context.dp2px(175f))
         return ViewHolder(root)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, itemList: Array<TopStoryBean>) {
-        holder.bannerLayout.setData(R.layout.item_daily_banner, itemList.asList(), null)
+        holder.bannerLayout.setData(itemList.asList())
     }
 
     override fun onBindViewHolder(holder: ViewHolder, item: Array<TopStoryBean>, payloads: MutableList<Any>) {
         super.onBindViewHolder(holder, item, payloads)
     }
 
-    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), BGABanner.Adapter<View, TopStoryBean>, BGABanner.Delegate<View, TopStoryBean> {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val bannerLayout: BGABanner = itemView as BGABanner
+        val bannerLayout: BannerLayout<TopStoryBean> = itemView as BannerLayout<TopStoryBean>
 
         init {
-            bannerLayout.setDelegate(this)
-            bannerLayout.setAdapter(this)
-        }
-
-        override fun fillBannerItem(banner: BGABanner?, itemView: View?, model: TopStoryBean?, position: Int) {
-            val ivBanner: ImageView? = itemView?.findViewById(R.id.iv_banner)
-            val tvBanner: TextView? = itemView?.findViewById(R.id.tv_banner)
-            model?.run {
-                ivBanner?.load(image)
-                tvBanner?.text = title
-            }
-        }
-
-        override fun onBannerItemClick(banner: BGABanner?, itemView: View?, model: TopStoryBean?, position: Int) {
-            model?.run {
+            bannerLayout.setItemView(R.layout.item_daily_banner)
+            bannerLayout.setDot(R.drawable.selector_banner_point)
+            bannerLayout.itemClick { view, data, position ->
                 ARouter.getInstance()
                         .build(Routes.DAILY_DET_ACTIVITY)
-                        .withInt("id", id)
+                        .withInt("id", data.id)
                         .navigation()
             }
+            bannerLayout.loadItem { view, data, position ->
+                val ivBanner: ImageView? = view.findViewById(R.id.iv_banner)
+                val tvBanner: TextView? = view.findViewById(R.id.tv_banner)
+                ivBanner?.load(data.image)
+                tvBanner?.text = data.title
+            }
         }
-
     }
 }

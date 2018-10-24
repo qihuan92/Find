@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies.testRunner
     androidTestImplementation rootProject.ext.dependencies.testEspresso
     // kotlin
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     // android support
     api rootProject.ext.dependencies.appcompat
     api rootProject.ext.dependencies.material
@@ -88,6 +88,8 @@ dependencies {
     api 'net.wujingchao.android.view:simple-tag-imageview:1.0.1'
     // status bar
     api 'com.gyf.barlibrary:barlibrary:2.3.0'
+    // banner layout
+    api project(':lib_banner')
     // 数据库调试
     debugApi 'com.amitshekhar.android:debug-db:1.0.4'
 }

@@ -1,12 +1,7 @@
 package com.qihuan.find.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import com.google.android.material.tabs.TabLayout
 import com.qihuan.commonmodule.base.BaseActivity
 import com.qihuan.commonmodule.bus.BrowserEvent
@@ -17,10 +12,8 @@ import com.qihuan.commonmodule.utils.setItemReselectedListener
 import com.qihuan.commonmodule.utils.toastInfo
 import com.qihuan.find.R
 import com.qihuan.find.view.adapter.MainPageAdapter
-import com.qihuan.find.work.MainWorker
 import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.concurrent.TimeUnit
 
 /**
  * MainActivity
@@ -36,24 +29,6 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         mStatusBar.statusBarDarkFont(true, 0.2f).init()
         initView()
-        initWork()
-    }
-
-    private fun initWork() {
-        val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
-        val worker = PeriodicWorkRequest.Builder(MainWorker::class.java, 15, TimeUnit.MINUTES)
-                .setConstraints(constraints)
-                .build()
-        WorkManager.getInstance().enqueue(worker)
-        WorkManager.getInstance().getStatusByIdLiveData(worker.id)
-                .observe(this, Observer { workStatus ->
-                    if (workStatus != null && workStatus.state.isFinished) {
-                        Log.d("WorkManager", "WorkManager isFinished")
-                    }
-                })
     }
 
     private fun initView() {

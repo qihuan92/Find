@@ -1,1 +1,1 @@
-include ':module_main', ':module_common', ':module_daily', ':module_movie', ':module_discover', ':module_user'
+include ':module_main', ':module_common', ':module_daily', ':module_movie', ':module_discover', ':module_user', ':lib_banner'

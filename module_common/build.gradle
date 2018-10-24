@@ -74,9 +74,12 @@ dependencies {
     api 'me.drakeet.multitype:multitype-ktx:3.5.0'
     // Toasty
     api 'com.github.GrenderG:Toasty:1.2.5'
-    // leakcanary
+    // LeakCanary
     debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    // BlockCanary
+    debugApi 'com.github.markzhai:blockcanary-android:1.5.0'
+    releaseApi 'com.github.markzhai:blockcanary-no-op:1.5.0'
     // refresh layout
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-5'

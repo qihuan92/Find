@@ -2,12 +2,15 @@ package com.qihuan.commonmodule.base
 
 import android.app.Application
 import com.alibaba.android.arouter.launcher.ARouter
+import com.github.moduth.blockcanary.BlockCanary
 import com.qihuan.commonmodule.BuildConfig
 import com.qihuan.commonmodule.net.ApiManager
 import com.scwang.smartrefresh.header.DeliveryHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.squareup.leakcanary.LeakCanary
 import kotlin.properties.Delegates
+
 
 /**
  * BaseApp
@@ -30,6 +33,15 @@ open class BaseApp : Application() {
             ARouter.printStackTrace()
         }
         ARouter.init(this)
+        if (BuildConfig.DEBUG) {
+            // LeakCanary
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                return
+            }
+            LeakCanary.install(this)
+            // BlockCanary
+            BlockCanary.install(this, AppBlockCanaryContext()).start()
+        }
     }
 
     companion object {

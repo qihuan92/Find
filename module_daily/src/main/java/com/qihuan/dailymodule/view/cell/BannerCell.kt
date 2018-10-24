@@ -31,10 +31,6 @@ class BannerCell : ItemViewBinder<Array<TopStoryBean>, BannerCell.ViewHolder>() 
         holder.bannerLayout.setData(itemList.asList())
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, item: Array<TopStoryBean>, payloads: MutableList<Any>) {
-        super.onBindViewHolder(holder, item, payloads)
-    }
-
     class ViewHolder(itemView: BannerLayout<TopStoryBean>) : RecyclerView.ViewHolder(itemView) {
 
         val bannerLayout: BannerLayout<TopStoryBean> = itemView

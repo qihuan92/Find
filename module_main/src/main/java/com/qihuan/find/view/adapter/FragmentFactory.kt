@@ -1,6 +1,5 @@
 package com.qihuan.find.view.adapter
 
-import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.router.Routes
 

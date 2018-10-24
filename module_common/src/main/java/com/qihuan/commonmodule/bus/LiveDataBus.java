@@ -63,7 +63,7 @@ public final class LiveDataBus {
         private class PostValueTask implements Runnable {
             private T newValue;
 
-            public PostValueTask(@NonNull T newValue) {
+            PostValueTask(@NonNull T newValue) {
                 this.newValue = newValue;
             }
 
@@ -73,7 +73,7 @@ public final class LiveDataBus {
             }
         }
 
-        private Map<Observer, Observer> observerMap = new HashMap<>();
+        private Map<Observer<? super T>, Observer<? super T>> observerMap = new HashMap<>();
         private Handler mainHandler = new Handler(Looper.getMainLooper());
 
         @Override
@@ -111,7 +111,7 @@ public final class LiveDataBus {
 
         @Override
         public void removeObserver(@NonNull Observer<? super T> observer) {
-            Observer realObserver = null;
+            Observer<? super T> realObserver;
             if (observerMap.containsKey(observer)) {
                 realObserver = observerMap.remove(observer);
             } else {
@@ -153,7 +153,7 @@ public final class LiveDataBus {
 
         private Observer<T> observer;
 
-        public ObserverWrapper(Observer<T> observer) {
+        ObserverWrapper(Observer<T> observer) {
             this.observer = observer;
         }
 
@@ -169,7 +169,7 @@ public final class LiveDataBus {
 
         private boolean isCallOnObserve() {
             StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-            if (stackTrace != null && stackTrace.length > 0) {
+            if (stackTrace.length > 0) {
                 for (StackTraceElement element : stackTrace) {
                     if ("androidx.lifecycle.LiveData".equals(element.getClassName()) &&
                             "observeForever".equals(element.getMethodName())) {

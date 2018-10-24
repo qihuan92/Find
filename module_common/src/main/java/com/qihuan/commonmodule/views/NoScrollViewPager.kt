@@ -1,7 +1,7 @@
 package com.qihuan.commonmodule.views
 
+import android.annotation.SuppressLint
 import android.content.Context
-import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 
@@ -16,6 +16,7 @@ class NoScrollViewPager : androidx.viewpager.widget.ViewPager {
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
         return false
     }

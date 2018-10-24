@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:layout_marginTop="5dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="5dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:stateListAnimator="@drawable/lift_on_touch"
     app:cardCornerRadius="5dp">
@@ -26,11 +26,11 @@
             android:id="@+id/pb_loading"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/iv_news"
             app:layout_constraintEnd_toEndOf="@+id/iv_news"
             app:layout_constraintStart_toStartOf="@+id/iv_news"
-            app:layout_constraintTop_toTopOf="@+id/iv_news"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="@+id/iv_news" />
 
         <TextView
             android:id="@+id/tv_news"
@@ -51,24 +51,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:drawablePadding="2dp"
             android:drawableStart="@drawable/ic_comment"
+            android:drawablePadding="2dp"
             android:gravity="center"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_like"
+            tools:ignore="SmallSp"
             tools:text="comments" />
 
         <TextView
             android:id="@+id/tv_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="2dp"
             android:drawableStart="@drawable/ic_like"
+            android:drawablePadding="2dp"
             android:gravity="center"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SmallSp"
             tools:text="likes" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,9 +3,8 @@ package com.qihuan.commonmodule.utils
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import androidx.annotation.DrawableRes
-import androidx.palette.graphics.Palette
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.GlideException
@@ -72,7 +71,6 @@ fun ImageView.get(drawable: Drawable): GlideRequest<Drawable> = GlideApp.with(co
 /**
  * 根据bitmap提取颜色
  *
- * @param bitmap
  * @return
  */
 fun Bitmap.getSwatchColor(): Int {

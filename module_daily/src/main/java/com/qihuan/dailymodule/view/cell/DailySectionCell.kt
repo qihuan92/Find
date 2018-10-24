@@ -1,6 +1,5 @@
 package com.qihuan.dailymodule.view.cell
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

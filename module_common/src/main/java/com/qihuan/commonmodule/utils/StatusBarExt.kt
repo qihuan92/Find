@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
-import androidx.annotation.ColorInt
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.annotation.ColorInt
 
 /**
  * 状态栏工具
@@ -31,8 +31,8 @@ object StatusBarUtils {
                 val lp = window.attributes
                 val darkFlag = WindowManager.LayoutParams::class.java.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
                 val meizuFlags = WindowManager.LayoutParams::class.java.getDeclaredField("meizuFlags")
-                darkFlag.setAccessible(true)
-                meizuFlags.setAccessible(true)
+                darkFlag.isAccessible = true
+                meizuFlags.isAccessible = true
                 val bit = darkFlag.getInt(null)
                 var value = meizuFlags.getInt(lp)
                 if (dark) {
@@ -101,7 +101,6 @@ object StatusBarUtils {
  * 状态栏亮色模式，设置状态栏黑色文字、图标，
  * 适配4.4以上版本MIUI、Flyme和6.0以上版本其他Android
  *
- * @param activity activity
  * @return 1:MIUI 2:Flyme 3:android6.0
  */
 fun Activity.statusBarLightMode() {

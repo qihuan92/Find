@@ -50,6 +50,8 @@ class IndicatorLayout : LinearLayout {
             dotView.setImageResource(drawableResId)
             addView(dotView)
         }
+
+        setSelectedPosition(0)
     }
 
     fun setSelectedPosition(position: Int) {

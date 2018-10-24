@@ -74,8 +74,6 @@ dependencies {
     api 'me.drakeet.multitype:multitype-ktx:3.5.0'
     // Toasty
     api 'com.github.GrenderG:Toasty:1.2.5'
-    // banner
-    api 'cn.bingoogolapple:bga-banner:2.2.4@aar'
     // leakcanary
     debugApi 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'

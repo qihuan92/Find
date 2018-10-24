@@ -26,8 +26,8 @@ class BannerLayout<T> : RelativeLayout, ViewPager.OnPageChangeListener {
     private var dotDrawableResId: Int = 0
     private var dotMarginHorizontal: Int = context.dp2px(3f)
     private var dotMarginVertical: Int = context.dp2px(3f)
+    private var autoPlayTask: AutoPlayTask<T>? = null
     var intervalMillis: Long = 3000
-    var autoPlayTask: AutoPlayTask<T>? = null
     var isAutoPlay: Boolean = true
 
     constructor(context: Context) : super(context) {

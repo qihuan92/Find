@@ -1,7 +1,6 @@
 package com.qihuan.dailymodule.view.cell
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -36,9 +35,9 @@ class BannerCell : ItemViewBinder<Array<TopStoryBean>, BannerCell.ViewHolder>() 
         super.onBindViewHolder(holder, item, payloads)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: BannerLayout<TopStoryBean>) : RecyclerView.ViewHolder(itemView) {
 
-        val bannerLayout: BannerLayout<TopStoryBean> = itemView as BannerLayout<TopStoryBean>
+        val bannerLayout: BannerLayout<TopStoryBean> = itemView
 
         init {
             bannerLayout.setItemView(R.layout.item_daily_banner)

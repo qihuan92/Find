@@ -1,7 +1,5 @@
 package module
 
-import android.os.Bundle
-
 import com.qihuan.commonmodule.base.BaseActivity
 import com.qihuan.moviemodule.R
 import com.qihuan.moviemodule.view.MovieFragment
@@ -14,12 +12,6 @@ import com.qihuan.moviemodule.view.MovieFragment
 class MovieMainActivity : BaseActivity() {
 
     private val content = MovieFragment()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_movie)
-        initView()
-    }
 
     override fun layoutResId(): Int {
         return R.layout.activity_main_movie

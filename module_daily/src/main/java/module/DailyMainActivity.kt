@@ -1,6 +1,5 @@
 package module
 
-import android.os.Bundle
 import com.qihuan.commonmodule.base.BaseActivity
 import com.qihuan.dailymodule.R
 import com.qihuan.dailymodule.view.DailyFragment
@@ -19,12 +18,6 @@ class DailyMainActivity : BaseActivity() {
     }
 
     override fun init() {
-        initView()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_daily)
         initView()
     }
 

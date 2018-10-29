@@ -116,7 +116,7 @@ class MovieDetViewModel : AbsRxViewModel() {
                 .onErrorResumeNext { _ ->
                     return@onErrorResumeNext AppDatabase.instance
                             .collectionDao()
-                            .save(CollectionBean(id = id, title = subjectBean?.title, img = subjectBean?.images?.medium, type = 1))
+                            .save(CollectionBean(id = id, title = subjectBean?.title, img = subjectBean?.images?.medium, type = COLLECTION_TYPE_MOVIE))
                             .map { true }
                 }
                 .subscribeOn(Schedulers.io())

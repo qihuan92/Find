@@ -1,10 +1,8 @@
 package com.qihuan.moviemodule.view
 
-import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.qihuan.commonmodule.base.BaseMvvmActivity
 import com.qihuan.commonmodule.router.Routes
 import com.qihuan.commonmodule.utils.toastError
@@ -22,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_movie_list.*
  */
 @Route(path = Routes.MOVIE_LIST_ACTIVITY)
 class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewModel::class.java) {
-
     private var adapter: MovieListAdapter? = null
 
     @JvmField
@@ -33,10 +30,11 @@ class MovieListActivity : BaseMvvmActivity<MovieListViewModel>(MovieListViewMode
     @Autowired(name = Routes.MOVIE_LIST_ACTIVITY_EXTRA_TITLE)
     var title: String = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_list)
-        ARouter.getInstance().inject(this)
+    override fun layoutResId(): Int {
+        return R.layout.activity_movie_list
+    }
+
+    override fun init() {
         initView()
     }
 

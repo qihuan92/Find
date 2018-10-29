@@ -21,6 +21,14 @@ class MovieMainActivity : BaseActivity() {
         initView()
     }
 
+    override fun layoutResId(): Int {
+        return R.layout.activity_main_movie
+    }
+
+    override fun init() {
+        initView()
+    }
+
     private fun initView() {
         supportFragmentManager.beginTransaction()
                 .add(R.id.fl_content, content)

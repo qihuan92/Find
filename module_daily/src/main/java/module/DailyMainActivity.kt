@@ -14,6 +14,14 @@ class DailyMainActivity : BaseActivity() {
 
     private val content = DailyFragment()
 
+    override fun layoutResId(): Int {
+        return R.layout.activity_main_daily
+    }
+
+    override fun init() {
+        initView()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_daily)

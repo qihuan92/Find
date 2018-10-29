@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.qihuan.commonmodule.base.BaseMvpFragment
 import com.qihuan.commonmodule.bus.EVENT_REFRESH_DAILY
@@ -32,7 +33,7 @@ import me.drakeet.multitype.register
 class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presenter>(), DailyContract.View {
 
     private var dailyAdapter: MultiTypeAdapter? = null
-    private var linearLayoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
+    private var linearLayoutManager: LinearLayoutManager? = null
     private val itemList: Items = Items()
 
     override fun initPresenter(): DailyContract.Presenter {
@@ -47,7 +48,7 @@ class DailyFragment : BaseMvpFragment<DailyContract.View, DailyContract.Presente
         super.onViewCreated(view, savedInstanceState)
 
         // list
-        linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        linearLayoutManager = LinearLayoutManager(context)
         rv_list.layoutManager = linearLayoutManager
 
         // adapter

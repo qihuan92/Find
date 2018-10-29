@@ -1,6 +1,5 @@
 package com.qihuan.find.view
 
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.qihuan.commonmodule.base.BaseActivity
@@ -24,9 +23,11 @@ class MainActivity : BaseActivity() {
 
     private var lastClickTime: Long = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun layoutResId(): Int {
+        return R.layout.activity_main
+    }
+
+    override fun init() {
         mStatusBar.statusBarDarkFont(true, 0.2f).init()
         initView()
     }

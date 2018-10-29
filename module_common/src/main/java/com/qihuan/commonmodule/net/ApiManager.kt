@@ -30,7 +30,7 @@ class ApiManager private constructor() {
                 .build()
         retrofit = Retrofit.Builder()
                 .baseUrl(APP_DEFAULT_DOMAIN)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

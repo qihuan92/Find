@@ -1,6 +1,5 @@
 package module
 
-import android.os.Bundle
 import com.qihuan.commonmodule.base.BaseActivity
 import com.qihuan.discovermodule.R
 import com.qihuan.discovermodule.view.DiscoverFragment
@@ -14,9 +13,11 @@ class DiscoverMainActivity : BaseActivity() {
 
     private val content = DiscoverFragment.newInstance()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_discover)
+    override fun layoutResId(): Int {
+        return R.layout.activity_main_discover
+    }
+
+    override fun init() {
         initView()
     }
 

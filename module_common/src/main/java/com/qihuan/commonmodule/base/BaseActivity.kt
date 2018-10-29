@@ -3,6 +3,7 @@ package com.qihuan.commonmodule.base
 import android.os.Bundle
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.barlibrary.ImmersionBar
 import com.qihuan.commonmodule.R
 import com.qihuan.commonmodule.utils.parseColorRes
@@ -23,9 +24,14 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (layoutResId() != 0) {
+            setContentView(layoutResId())
+        }
         mStatusBar = ImmersionBar.with(this)
                 .navigationBarColor(android.R.color.white)
         mStatusBar.init()
+        ARouter.getInstance().inject(this)
+        init()
     }
 
     override fun onDestroy() {
@@ -33,6 +39,10 @@ abstract class BaseActivity : AppCompatActivity(), LoadingDialogManager {
         mStatusBar.destroy()
         loadingDialog.dismiss()
     }
+
+    abstract fun layoutResId(): Int
+
+    abstract fun init()
 
     protected fun setToolBar(toolbar: TitleBar, title: String = "", @ColorRes color: Int = R.color.colorPrimary, theme: Int = TitleBar.DARK) {
         toolbar.setOnBackClickListener { onBackPressed() }

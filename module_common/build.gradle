@@ -93,4 +93,6 @@ dependencies {
     api project(':lib_banner')
     // 数据库调试
     debugApi 'com.amitshekhar.android:debug-db:1.0.4'
+    // aop
+    api project(':lib_aop')
 }

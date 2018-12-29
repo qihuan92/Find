@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingEnd="10dp"
+    android:paddingStart="10dp"
+    android:paddingTop="5dp">
+
+    <ImageView
+        android:id="@+id/iv_ranking_movie"
+        android:layout_width="40dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        tools:src="@color/colorGrey" />
+
+    <TextView
+        android:id="@+id/tv_ranking_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/md_grey_800"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/iv_ranking_movie"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="天空之城" />
+
+    <TextView
+        android:id="@+id/tv_ranking_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:paddingBottom="2dp"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="@id/tv_ranking_movie"
+        app:layout_constraintStart_toEndOf="@id/tv_ranking_movie"
+        tools:text="[1999]" />
+
+    <RatingBar
+        android:id="@+id/rb_ranking_score"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        app:layout_constraintStart_toEndOf="@id/iv_ranking_movie"
+        app:layout_constraintTop_toBottomOf="@id/tv_ranking_year" />
+
+    <TextView
+        android:id="@+id/tv_ranking_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/rb_ranking_score"
+        app:layout_constraintStart_toEndOf="@id/rb_ranking_score"
+        app:layout_constraintTop_toTopOf="@id/rb_ranking_score"
+        tools:text="10.0" />
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/tag_ranking_genres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        app:container_background_color="@android:color/transparent"
+        app:container_border_color="@android:color/transparent"
+        app:container_enable_drag="false"
+        app:horizontal_interval="3dp"
+        app:layout_constraintStart_toEndOf="@id/iv_ranking_movie"
+        app:layout_constraintTop_toBottomOf="@id/rb_ranking_score"
+        app:tag_background_color="@android:color/transparent"
+        app:tag_border_color="@color/grey"
+        app:tag_clickable="false"
+        app:tag_corner_radius="2dp"
+        app:tag_horizontal_padding="4dp"
+        app:tag_text_color="@color/grey"
+        app:tag_text_size="10sp"
+        app:tag_theme="none"
+        app:tag_vertical_padding="3dp"
+        app:vertical_interval="2dp" />
+
+    <TextView
+        android:id="@+id/tv_ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="10dp"
+        android:textColor="?android:colorAccent"
+        android:textSize="14sp"
+        android:textStyle="bold|italic"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="01" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorGrey"
+        app:layout_constraintTop_toBottomOf="@id/iv_ranking_movie" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">common</string>
+    <string name="double_click_exit">再按一次退出应用</string>
+    <string name="loading_text">加载中…</string>
+</resources>

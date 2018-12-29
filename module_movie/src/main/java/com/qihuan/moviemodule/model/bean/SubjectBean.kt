@@ -1,0 +1,31 @@
+package com.qihuan.moviemodule.model.bean
+
+data class SubjectBean(
+        var rating: RatingBean = RatingBean(),
+        var reviews_count: Int = 0,
+        var wish_count: Int = 0,
+        var douban_site: String = "",
+        var year: String = "",
+        var images: ImagesBean = ImagesBean(),
+        var alt: String = "",
+        var id: String = "",
+        var mobile_url: String = "",
+        var title: String = "",
+        var do_count: Any? = null,
+        var share_url: String? = null,
+        var seasons_count: Any? = null,
+        var schedule_url: String? = null,
+        var episodes_count: Any? = null,
+        var collect_count: Int = 0,
+        var current_season: Any? = null,
+        var original_title: String? = null,
+        var summary: String = "",
+        var subtype: String? = null,
+        var comments_count: Int = 0,
+        var ratings_count: Int = 0,
+        var countries: List<String> = ArrayList(),
+        var genres: List<String> = ArrayList(),
+        var casts: List<PersonBean> = ArrayList(),
+        var directors: List<PersonBean> = ArrayList(),
+        var aka: List<String> = ArrayList()
+)

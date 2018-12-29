@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_section_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?android:colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="豆瓣热门" />
+
+    <TextView
+        android:id="@+id/tv_section_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableEnd="@drawable/ic_arr_right"
+        android:gravity="center"
+        android:paddingEnd="0dp"
+        android:paddingStart="5dp"
+        android:text="@string/more"
+        android:textColor="@color/colorGrey"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_section_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_section_title" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,9 @@
+apply from: '../default.gradle'
+
+android {
+
+}
+
+dependencies {
+
+}

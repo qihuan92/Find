@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'android-aspectjx'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'find'
+            keyPassword '123456'
+            storeFile file('../find.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion rootProject.ext.versions["compileSdkVersion"]
+    defaultConfig {
+        applicationId "com.qihuan.find"
+        minSdkVersion rootProject.ext.versions["minSdkVersion"]
+        targetSdkVersion rootProject.ext.versions["targetSdkVersion"]
+        versionCode rootProject.ext.versions.appVersionCode
+        versionName rootProject.ext.versions.appVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation rootProject.ext.dependencies.testJunit
+    androidTestImplementation rootProject.ext.dependencies.testRunner
+    androidTestImplementation rootProject.ext.dependencies.testEspresso
+    implementation project(':module_common')
+    if (!isModule.toBoolean()) {
+        implementation project(':module_discover')
+        implementation project(':module_movie')
+        implementation project(':module_user')
+        implementation project(':module_daily')
+    }
+    kapt rootProject.ext.dependencies.arouterCompiler
+    kapt rootProject.ext.dependencies.roomCompiler
+    implementation 'com.thefinestartist:finestwebview:1.2.7'
+}
+
+// copy apk files to build/bakApk/buildType
+build {
+    doLast {
+        def buildTime = new Date().format("MMdd-HH-mm-ss", TimeZone.getDefault())
+        def appName = 'find'
+        android.applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def intoFile = "${buildDir}/bakApk/${appName}-${variant.versionName}-${buildTime}/${variant.buildType.name}/"
+                if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+                    def apkName = "${appName}-${variant.buildType.name}.apk"
+                    copy {
+                        from output.outputFile
+                        into intoFile
+                        rename {
+                            apkName
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
